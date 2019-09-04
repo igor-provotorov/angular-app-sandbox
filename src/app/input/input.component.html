@@ -1,7 +1,3 @@
-<input
-  type="text"
-  #inputElement
-  (keydown.enter)="changeInputValue($event.target.value)"
-/>
+<input type="text" #inputElement (keydown.enter)="changeInputValue($event.target.value)" />
 <button (click)="changeInputValue(inputElement.value)">Click me</button>
 <p>{{ inputValue }}</p>
