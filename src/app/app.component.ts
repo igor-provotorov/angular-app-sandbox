@@ -1,10 +1,20 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+    selector: "app-root",
+    templateUrl: "./app.component.html",
+    styleUrls: ["./app.component.scss"],
 })
 export class AppComponent {
-  title = 'angular-app-sandbox';
+    /**
+     * Title in paragraph
+     */
+    public title: string = "";
+
+    /**
+     * Update title in paragraph.
+     */
+    public updateInfo(inputVal: string): void {
+        this.title = inputVal;
+    }
 }
