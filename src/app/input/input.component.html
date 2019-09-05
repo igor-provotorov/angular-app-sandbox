@@ -1,3 +1,10 @@
-<input type="text" #inputElement (keydown.enter)="changeInputValue($event.target.value)" />
-<button (click)="changeInputValue(inputElement.value)">Click me</button>
-<p>{{ inputValue }}</p>
+<div>
+  <input
+    type="text"
+    (keydown.enter)="onChangeInput()"
+    [(ngModel)]="inputValue"
+    placeholder="Type something..."
+    autofocus
+  />
+  <button (click)="onChangeInput()" class="btn">Click to print this text</button>
+</div>

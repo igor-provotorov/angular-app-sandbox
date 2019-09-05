@@ -6,5 +6,9 @@ import { Component } from "@angular/core";
     styleUrls: ["./app.component.scss"],
 })
 export class AppComponent {
-    title = "angular-app-sandbox";
+    title = "";
+
+    updateInfo(inpitVal: string) {
+        this.title = inpitVal;
+    }
 }
