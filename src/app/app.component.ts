@@ -6,9 +6,9 @@ import { Component } from "@angular/core";
     styleUrls: ["./app.component.scss"],
 })
 export class AppComponent {
-    title = "";
+    public title = "";
 
-    updateInfo(inpitVal: string) {
-        this.title = inpitVal;
+    public updateInfo(inputVal: string): void {
+        this.title = inputVal;
     }
 }

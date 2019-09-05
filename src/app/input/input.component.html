@@ -1,10 +1,11 @@
-<div>
+<form action="" (submit)="onChangeInput()">
   <input
     type="text"
-    (keydown.enter)="onChangeInput()"
     [(ngModel)]="inputValue"
+    name="inputValue"
     placeholder="Type something..."
+    autocomplete="off"
     autofocus
   />
-  <button (click)="onChangeInput()" class="btn">Click to print this text</button>
-</div>
+  <button type="submit" class="btn">Click to print this text</button>
+</form>

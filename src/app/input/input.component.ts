@@ -6,12 +6,14 @@ import { Component, Output, EventEmitter } from "@angular/core";
     styleUrls: ["./input.component.scss"],
 })
 export class InputComponent {
-    @Output() addValue: EventEmitter<string> = new EventEmitter<string>();
+    @Output()
+    public addValue: EventEmitter<string> = new EventEmitter<string>();
 
-    inputValue = "";
+    public inputValue = "";
 
-    onChangeInput() {
+    public onChangeInput(): boolean {
         this.addValue.emit(this.inputValue);
         this.inputValue = "";
+        return false;
     }
 }
