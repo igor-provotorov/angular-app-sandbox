@@ -1,4 +1,5 @@
 <div class="container">
-  <app-input></app-input>
-  <p></p>
+  <h1>My Angular app</h1>
+  <app-input (addValue)="updateInfo($event)"></app-input>
+  <p>{{ title }}</p>
 </div>
