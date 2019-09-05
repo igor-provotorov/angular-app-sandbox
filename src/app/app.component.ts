@@ -5,8 +5,6 @@ import { Component } from "@angular/core";
     templateUrl: "./app.component.html",
     styleUrls: ["./app.component.scss"],
 })
-
-/** Main component class */
 export class AppComponent {
     /**
      * Title in paragraph
@@ -15,7 +13,6 @@ export class AppComponent {
 
     /**
      * Update title in paragraph.
-     * @param inputVal Value from input
      */
     public updateInfo(inputVal: string): void {
         this.title = inputVal;

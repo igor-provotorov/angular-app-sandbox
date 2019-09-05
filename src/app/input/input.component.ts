@@ -5,8 +5,6 @@ import { Component, Output, EventEmitter } from "@angular/core";
     templateUrl: "./input.component.html",
     styleUrls: ["./input.component.scss"],
 })
-
-/** Class representing a search input component */
 export class InputComponent {
     /**
      * Create output new EventEmmiter
@@ -21,7 +19,6 @@ export class InputComponent {
 
     /**
      * Emit value from input and clear input value.
-     * @return {false} Form doesn't send
      */
     public onChangeInput(): boolean {
         this.addValue.emit(this.inputValue);
