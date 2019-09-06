@@ -3,11 +3,11 @@ import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 
 import { AppComponent } from "./app.component";
-import { InputComponent } from "./input/input.component";
+import { SearchInputComponent } from "./search-input/search-input.component";
 import { from } from "rxjs";
 
 @NgModule({
-    declarations: [AppComponent, InputComponent],
+    declarations: [AppComponent, SearchInputComponent],
     imports: [BrowserModule, FormsModule],
     providers: [],
     bootstrap: [AppComponent],

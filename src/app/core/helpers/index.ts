@@ -1,0 +1,1 @@
+export { getSearchUrl } from "./getSearchUrl";
