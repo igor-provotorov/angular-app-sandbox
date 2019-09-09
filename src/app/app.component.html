@@ -1,5 +1,12 @@
 <div class="container">
   <h1>My Angular app</h1>
-  <app-search-input (addValue)="updateInfo($event)"></app-search-input>
-  <p>{{ title }}</p>
+
+  <app-search-input (addValue)="getFilmsFromApi($event)"></app-search-input>
+
+  <ul *ngIf="!isLoading; else loading">
+    <li *ngFor="let film of resultFilms">{{ film }}</li>
+  </ul>
+  <ng-template #loading>
+    <p>Loading...</p>
+  </ng-template>
 </div>
