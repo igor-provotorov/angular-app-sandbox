@@ -15,6 +15,7 @@ describe("workspace-project App", () => {
 
     afterEach(async () => {
         // Assert that there are no errors emitted from the browser
+        // tslint:disable-next-line: typedef
         const logs = await browser
             .manage()
             .logs()

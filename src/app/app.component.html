@@ -1,10 +1,10 @@
 <div class="container">
   <h1>My Angular app</h1>
 
-  <app-search-input (addValue)="getFilmsFromApi($event)"></app-search-input>
+  <app-search-input (addValue)="loadFilms($event)"></app-search-input>
 
   <ul *ngIf="!isLoading; else loading">
-    <li *ngFor="let film of resultFilms">{{ film }}</li>
+    <li *ngFor="let film of resultsFilms">{{ film }}</li>
   </ul>
   <ng-template #loading>
     <p>Loading...</p>

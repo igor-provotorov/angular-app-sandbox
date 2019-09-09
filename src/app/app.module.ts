@@ -5,12 +5,12 @@ import { HttpClientModule } from "@angular/common/http";
 
 import { AppComponent } from "./app.component";
 import { SearchInputComponent } from "./search-input/search-input.component";
-import { from } from "rxjs";
+import { SearchFilmsService } from "./core/services";
 
 @NgModule({
     declarations: [AppComponent, SearchInputComponent],
     imports: [BrowserModule, FormsModule, HttpClientModule],
-    providers: [],
+    providers: [SearchFilmsService],
     bootstrap: [AppComponent],
 })
 export class AppModule {}

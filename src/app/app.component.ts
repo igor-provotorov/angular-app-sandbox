@@ -1,10 +1,6 @@
 import { Component } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
 
-import { Observable } from "rxjs";
-import { map, distinctUntilChanged } from "rxjs/operators";
-
-import { getSearchUrl } from "./core/helpers";
+import { SearchFilmsService } from "./core/services";
 
 @Component({
     selector: "app-root",
@@ -13,6 +9,11 @@ import { getSearchUrl } from "./core/helpers";
 })
 export class AppComponent {
     /**
+     * SearchFilmsService.
+     */
+    private searchFilmsService: SearchFilmsService;
+
+    /**
      * Loading flag.
      */
     public isLoading: boolean = false;
@@ -20,40 +21,33 @@ export class AppComponent {
     /**
      * Array of films from API.
      */
-    public resultFilms: Array<string> = [];
+    public resultsFilms: Array<string> = [];
+
+    constructor(searchFilmsService: SearchFilmsService) {
+        this.searchFilmsService = searchFilmsService;
+    }
 
     /**
-     * Makes response to API and fetching mapped-data to resultFilms Array
+     * Makes response to API and fetching mapped-data to resultsFilms Array.
      */
-    public getFilmsFromApi(searchQuery: string): void {
+    public loadFilms(searchQuery: string): void {
         this.isLoading = true;
         if (!searchQuery.trim()) {
-            this.resultFilms = ["Type something for search"];
+            this.resultsFilms = ["Type something for search"];
         } else {
-            const filmsStream$: Observable<any> = this.http.get(getSearchUrl(searchQuery)).pipe(
-                distinctUntilChanged(),
-                map((data: any) => {
-                    if (data.results.length > 10) {
-                        data.results.length = 10;
-                    }
-                    return data.results.map((result: any) => result.title);
-                })
-            );
-            filmsStream$.subscribe(
+            this.searchFilmsService.getFilmsFromApi(searchQuery).subscribe(
                 (response: Array<string>): void => {
                     if (!response.length) {
-                        this.resultFilms = ["There are no such films"];
+                        this.resultsFilms = ["There are no such films"];
                     } else {
-                        this.resultFilms = response;
+                        this.resultsFilms = response;
                     }
                 },
-                (error: any): void => {
+                (error: Error): void => {
                     console.log(error.message);
                 }
             );
         }
         this.isLoading = false;
     }
-
-    constructor(private http: HttpClient) {}
 }
