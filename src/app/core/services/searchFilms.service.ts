@@ -6,6 +6,13 @@ import { map, distinctUntilChanged } from "rxjs/operators";
 
 import { getSearchUrl } from "../helpers";
 
+export interface SearchFilms {
+    page: number;
+    total_results: number;
+    total_pages: number;
+    results: any[];
+}
+
 @Injectable()
 export class SearchFilmsService {
     private http: HttpClient;
@@ -17,9 +24,9 @@ export class SearchFilmsService {
      * Makes response to API and fetching mapped-data.
      */
     public getFilmsFromApi(searchQuery: string): Observable<any> {
-        const filmsStream$: Observable<any> = this.http.get(getSearchUrl(searchQuery)).pipe(
+        const filmsStream$: Observable<string[]> = this.http.get<SearchFilms>(getSearchUrl(searchQuery)).pipe(
             distinctUntilChanged(),
-            map((data: any) => {
+            map((data: SearchFilms) => {
                 if (data.results.length > 10) {
                     data.results.length = 10;
                 }
