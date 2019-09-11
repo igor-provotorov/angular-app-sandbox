@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
 import { Observable } from "rxjs";
-import { map, distinctUntilChanged } from "rxjs/operators";
+import { map } from "rxjs/operators";
 
 import { getSearchUrl } from "../../helpers";
 import { SearchFilms } from "./models/search-films.interface";
@@ -17,11 +17,14 @@ export class SearchFilmsService {
     }
     /** Makes response to API and fetching mapped-data. */
     public getFilmsFromApi(searchQuery: string): Observable<Array<string>> {
-        const filmsStream$: Observable<string[]> = this.http.get(getSearchUrl(searchQuery)).pipe(
-            distinctUntilChanged(),
-            map((data: SearchFilms) => data.results.map((result: ResultMovie) => result.title))
+        return this.http.get<SearchFilms>(getSearchUrl(searchQuery)).pipe(
+            map((data: SearchFilms) => {
+                if (!data.results.length) {
+                    return ["There are no such films"];
+                } else {
+                    return data.results.map((result: ResultMovie) => result.title);
+                }
+            })
         );
-
-        return filmsStream$;
     }
 }

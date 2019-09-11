@@ -1,11 +1,11 @@
 <div class="container">
   <h1>Search movies app</h1>
+
   <app-search-input (addValue)="loadFilms($event)"></app-search-input>
 
-  <ul *ngIf="!isLoading; else loading">
-    <li *ngFor="let film of resultsFilms">{{ film }}</li>
+  <ul>
+    <li *ngFor="let film of resultsFilms | async">{{ film }}</li>
   </ul>
-  <ng-template #loading>
-    <p>Loading...</p>
-  </ng-template>
+
+  <p *ngIf="isLoading">Loading...</p>
 </div>
