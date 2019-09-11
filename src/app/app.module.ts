@@ -1,14 +1,14 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
-import { FormsModule } from "@angular/forms";
 
 import { AppComponent } from "./app.component";
-import { InputComponent } from "./input/input.component";
-import { from } from "rxjs";
+
+import { CoreModule } from "./core/core.module";
+import { MovieSearchPageModule } from "./movie-search-page/movie-search-page.module";
 
 @NgModule({
-    declarations: [AppComponent, InputComponent],
-    imports: [BrowserModule, FormsModule],
+    declarations: [AppComponent],
+    imports: [BrowserModule, CoreModule, MovieSearchPageModule],
     providers: [],
     bootstrap: [AppComponent],
 })
