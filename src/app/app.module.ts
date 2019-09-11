@@ -4,13 +4,13 @@ import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 
 import { AppComponent } from "./app.component";
-import { SearchInputComponent } from "./search-input/search-input.component";
-import { SearchFilmsService } from "./core/services";
+import { CoreModule } from "./core/core.module";
+import { MovieSearchPageModule } from "./movie-search-page/movie-search-page.module";
 
 @NgModule({
-    declarations: [AppComponent, SearchInputComponent],
-    imports: [BrowserModule, FormsModule, HttpClientModule],
-    providers: [SearchFilmsService],
+    declarations: [AppComponent],
+    imports: [BrowserModule, FormsModule, HttpClientModule, CoreModule, MovieSearchPageModule],
+    providers: [],
     bootstrap: [AppComponent],
 })
 export class AppModule {}

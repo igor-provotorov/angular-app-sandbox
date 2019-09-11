@@ -20,18 +20,11 @@ export class SearchFilmsService {
     constructor(http: HttpClient) {
         this.http = http;
     }
-    /**
-     * Makes response to API and fetching mapped-data.
-     */
+    /** Makes response to API and fetching mapped-data. */
     public getFilmsFromApi(searchQuery: string): Observable<any> {
         const filmsStream$: Observable<string[]> = this.http.get<SearchFilms>(getSearchUrl(searchQuery)).pipe(
             distinctUntilChanged(),
-            map((data: SearchFilms) => {
-                if (data.results.length > 10) {
-                    data.results.length = 10;
-                }
-                return data.results.map((result: any) => result.title);
-            })
+            map((data: SearchFilms) => data.results.map((result: any) => result.title))
         );
 
         return filmsStream$;
