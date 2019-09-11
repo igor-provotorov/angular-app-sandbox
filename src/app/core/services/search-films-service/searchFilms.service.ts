@@ -4,9 +4,9 @@ import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 
-import { getSearchUrl } from "../../helpers";
-import { SearchFilms } from "./models/search-films.interface";
-import { ResultMovie } from "./models/result-movie.interface";
+import { getSearchUrl } from "../../helpers/index";
+import { SearchFilms } from "./models/index";
+import { ResultMovie } from "./models/index";
 
 @Injectable()
 export class SearchFilmsService {
