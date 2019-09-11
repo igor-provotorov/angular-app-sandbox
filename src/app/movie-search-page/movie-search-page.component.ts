@@ -11,13 +11,13 @@ export class MovieSearchPageComponent implements OnDestroy {
     /** SearchFilmsService. */
     private searchFilmsService: SearchFilmsService;
 
+    private subscriptions: Subscription[] = [];
+
     /** Loading flag. */
     public isLoading: boolean = false;
 
     /** Array of films from API. */
     public resultsFilms: Array<string> = [];
-
-    private subscriptions: Subscription[] = [];
 
     constructor(searchFilmsService: SearchFilmsService) {
         this.searchFilmsService = searchFilmsService;

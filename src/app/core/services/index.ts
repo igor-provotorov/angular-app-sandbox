@@ -1,1 +1,1 @@
-export { SearchFilmsService } from "./searchFilms.service";
+export { SearchFilmsService } from "./search-films-service/searchFilms.service";
