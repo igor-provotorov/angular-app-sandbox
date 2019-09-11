@@ -5,8 +5,7 @@ import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 
 import { getSearchUrl } from "../../helpers/index";
-import { SearchFilms } from "./models/index";
-import { ResultMovie } from "./models/index";
+import { SearchFilms, ResultMovie } from "./models/index";
 
 @Injectable()
 export class SearchFilmsService {
