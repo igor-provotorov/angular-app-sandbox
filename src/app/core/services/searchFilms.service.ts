@@ -22,7 +22,7 @@ export class SearchFilmsService {
     }
     /** Makes response to API and fetching mapped-data. */
     public getFilmsFromApi(searchQuery: string): Observable<any> {
-        const filmsStream$: Observable<string[]> = this.http.get<SearchFilms>(getSearchUrl(searchQuery)).pipe(
+        const filmsStream$: Observable<string[]> = this.http.get(getSearchUrl(searchQuery)).pipe(
             distinctUntilChanged(),
             map((data: SearchFilms) => data.results.map((result: any) => result.title))
         );
