@@ -21,7 +21,6 @@ export function transformResultMovies(movies: Array<ExtendedResultMovie>): Array
                       return actor;
                   })
                 : null,
-            id: movie.id,
             overview: movie.overview,
             release_date: movie.release_date,
             title: movie.title,
