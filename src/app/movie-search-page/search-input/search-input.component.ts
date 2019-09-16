@@ -15,6 +15,9 @@ export class SearchInputComponent {
 
     /** Emit value from input and clear input value. */
     public onChangeInput(): boolean {
+        // if (!this.inputValue.trim()) {
+        //     this.addValue.emit(this.inputValue);
+        // }
         this.addValue.emit(this.inputValue);
         this.inputValue = "";
         return false;

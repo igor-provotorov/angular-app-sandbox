@@ -3,8 +3,31 @@
 
   <app-search-input (addValue)="loadFilms($event)"></app-search-input>
 
-  <ul>
-    <li *ngFor="let film of resultsFilms | async">{{ film }}</li>
+  <ul class="movies">
+    <li class="card-panel" *ngFor="let film of resultsFilms | async">
+      <h3>{{ film.title }}</h3>
+
+      <p *ngIf="film.release_date" style="text-align: center">
+        <strong>Release date: </strong>{{ film.release_date | date }}
+      </p>
+
+      <img *ngIf="film.poster_path" [src]="film.poster_path" [alt]="film.title" width="100%" />
+
+      <p>{{ film.overview }}</p>
+
+      <p>
+        <a *ngIf="film.videos" [href]="film.videos" class="btn" target="_blank">{{ "View trailer" | uppercase }}</a>
+      </p>
+
+      <h5 *ngIf="film.credits">Actors:</h5>
+
+      <ul>
+        <li *ngFor="let actor of film.credits">
+          <p>{{ actor.name }}</p>
+          <img [src]="actor.profile_path" [alt]="actor.name" />
+        </li>
+      </ul>
+    </li>
   </ul>
 
   <p *ngIf="isLoading">Loading...</p>
