@@ -1,4 +1,4 @@
-import { Genres, Credits, Videos, ProductionCompanies, ProductionCountries } from "./index";
+import { Genres, Credits, Videos, ProductionCompanies, ProductionCountries, Languages } from "./index";
 
 export interface ExtendedResultMovie {
     adult: boolean;
@@ -20,7 +20,7 @@ export interface ExtendedResultMovie {
     release_date: string;
     revenue: number;
     runtime: number;
-    spoken_languages: Array<any>;
+    spoken_languages: Array<Languages>;
     status: string;
     tagline: string;
     title: string;
