@@ -4,9 +4,9 @@
     flex-wrap: wrap;
 
     & li {
+        margin: 15px 0;
         padding: 0 10px;
-        max-width: 500px;
-        margin-bottom: 15px;
+        max-width: 400px;
         border-radius: 5px;
     }
 
@@ -32,7 +32,7 @@
         flex-wrap: wrap;
 
         & li {
-            width: 20%;
+            max-width: 20%;
 
             & p {
                 margin: 0 auto;
