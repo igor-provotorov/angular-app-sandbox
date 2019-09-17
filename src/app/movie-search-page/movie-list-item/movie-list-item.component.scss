@@ -1,0 +1,45 @@
+li.card-panel {
+    margin: 15px 10px;
+    padding: 0 10px;
+    max-width: 500px;
+    min-height: 97%;
+    border-radius: 5px;
+}
+
+h3 {
+    color: teal;
+    text-align: center;
+    border-radius: 5px;
+    padding: 10px 0;
+}
+
+p:not(:nth-child(2)) {
+    text-align: center;
+}
+
+h5 {
+    color: teal;
+    text-align: center;
+}
+
+ul {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+
+    & li {
+        margin: 15px 0;
+        padding: 0 10px;
+        max-width: 20%;
+
+        & p {
+            margin: 0 auto;
+            padding: 0 10px;
+            min-height: 66px;
+        }
+
+        & img {
+            width: 100%;
+        }
+    }
+}

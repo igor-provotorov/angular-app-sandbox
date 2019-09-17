@@ -19,19 +19,19 @@ export class MovieSearchPageComponent {
     public isLoading: boolean = false;
 
     /** Array of films from API. */
-    public resultsFilms: Observable<Array<ModifiedResultMovie>>;
+    public resultsFilms$: Observable<Array<ModifiedResultMovie>>;
 
     constructor(searchFilmsService: SearchFilmsService) {
         this.searchFilmsService = searchFilmsService;
     }
 
-    /** Makes response to API and fetching mapped-data to resultsFilms Array. */
+    /** Makes response to API and fetching mapped-data to resultsFilms$ Array. */
     public loadFilms(searchQuery: string): void {
         if (!searchQuery.trim()) {
-            this.resultsFilms = of([{ title: "Type something for search" }]);
+            this.resultsFilms$ = of([{ title: "Type something for search" }]);
         } else {
             this.isLoading = true;
-            this.resultsFilms = this.searchFilmsService.getFilmsFromApi(searchQuery).pipe(
+            this.resultsFilms$ = this.searchFilmsService.getFilmsFromApi(searchQuery).pipe(
                 tap(() => {
                     this.isLoading = false;
                 })
