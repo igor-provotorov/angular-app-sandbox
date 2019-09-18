@@ -12,20 +12,28 @@ import { ModifiedResultMovie } from "../core/services/search-films-service/model
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MovieSearchPageComponent {
-    /** SearchFilmsService. */
+    /**
+     * SearchFilmsService.
+     */
     private searchFilmsService: SearchFilmsService;
 
-    /** Loading flag. */
+    /**
+     * Loading flag.
+     */
     public isLoading: boolean = false;
 
-    /** Array of films from API. */
+    /**
+     * Array of films from API.
+     */
     public resultsFilms$: Observable<Array<ModifiedResultMovie>>;
 
     constructor(searchFilmsService: SearchFilmsService) {
         this.searchFilmsService = searchFilmsService;
     }
 
-    /** Makes response to API and fetching mapped-data to resultsFilms$ Array. */
+    /**
+     *  Makes response to API and fetching mapped-data to resultsFilms$ Array.
+     */
     public loadFilms(searchQuery: string): void {
         if (!searchQuery.trim()) {
             this.resultsFilms$ = of([{ title: "Type something for search" }]);

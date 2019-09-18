@@ -4,7 +4,7 @@ import { getMovieTrailerUrl } from "./getMovieTrailerUrl";
 import { NO_ACTOR_IMAGE_URL } from "../constants/index";
 
 /**
- * create array of objects with combined data about movies, their trailers and actors.
+ * Create array of objects with combined data about movies, their trailers and actors.
  */
 export function transformResultMovies(movies: Array<ExtendedResultMovie>): Array<ModifiedResultMovie> {
     return movies.map((movie: ExtendedResultMovie) => {

@@ -9,7 +9,9 @@ import { ModifiedResultMovie } from "src/app/core/services/search-films-service/
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MovieListComponent {
-    /** import array of data about found movies. */
+    /**
+     * Import array of data about found movies.
+     */
     @Input()
     public resultsFilms$: Array<ModifiedResultMovie>;
 }
