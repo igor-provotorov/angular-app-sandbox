@@ -5,7 +5,8 @@ import { Observable, of, forkJoin } from "rxjs";
 import { map, switchMap } from "rxjs/operators";
 
 import { SearchFilms, ResultMovie, ModifiedResultMovie, NoSuchMovies, ExtendedResultMovie } from "./models/index";
-import { getSearchUrl, getMovieDetailsUrl, transformResultMovies } from "../../utils/index";
+import { getSearchUrl, getMovieDetailsUrl } from "../../utils/index";
+import { transformResultMovies } from "../../mappers/index";
 
 @Injectable()
 export class SearchFilmsService {
