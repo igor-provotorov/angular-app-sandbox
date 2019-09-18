@@ -1,4 +1,4 @@
-import { ResultMovie } from "./result-movie.interface";
+import { ResultMovie } from "./result-movie.model";
 
 export interface SearchFilms {
     page: number;

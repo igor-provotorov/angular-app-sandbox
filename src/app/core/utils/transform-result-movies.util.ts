@@ -1,6 +1,6 @@
 import { ExtendedResultMovie, ModifiedResultMovie, Actor } from "../services/search-films-service/models/index";
-import { getImagesUrl } from "./getImagesUrl";
-import { getMovieTrailerUrl } from "./getMovieTrailerUrl";
+import { getImagesUrl } from "./get-images-url.util";
+import { getMovieTrailerUrl } from "./get-movie-trailer-url.util";
 import { NO_ACTOR_IMAGE_URL } from "../constants/index";
 
 /**
