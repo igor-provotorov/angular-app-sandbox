@@ -10,7 +10,9 @@
   <p>{{ film.overview }}</p>
 
   <p>
-    <a *ngIf="film.videos" [href]="film.videos" class="btn" target="_blank">{{ "View trailer" | uppercase }}</a>
+    <a mat-raised-button color="primary" *ngIf="film.videos" [href]="film.videos" class="btn" target="_blank">{{
+      "View trailer" | uppercase
+    }}</a>
   </p>
 
   <h5 *ngIf="film.credits">Actors:</h5>
