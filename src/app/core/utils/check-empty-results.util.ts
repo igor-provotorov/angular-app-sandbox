@@ -2,12 +2,9 @@ import { NO_SUCH_MOVIES } from "../constants/index";
 import { ModifiedResultMovie } from "../services/search-films-service/models/index";
 
 /**
- * Returns images url for pictures in movies.
+ * Check if results is empty.
  */
-const checkEmptyResults = (data: Array<ModifiedResultMovie>) => {
-    if (data[0].title === NO_SUCH_MOVIES) {
-        return true;
-    }
-};
+const checkEmptyResults: (param: Array<ModifiedResultMovie>) => boolean = (data: Array<ModifiedResultMovie>): boolean =>
+    data[0].title !== NO_SUCH_MOVIES;
 
 export { checkEmptyResults };

@@ -4,6 +4,7 @@ import { Observable, of } from "rxjs";
 import { tap } from "rxjs/operators";
 
 import { ModifiedResultMovie } from "../core/services/search-films-service/models/index";
+import { checkEmptyResults } from "../core/utils/check-empty-results.util";
 
 @Component({
     selector: "app-movie-search-page",
@@ -22,7 +23,10 @@ export class MovieSearchPageComponent {
      */
     public isLoading: boolean = false;
 
-    public isSearched: boolean = false;
+    /**
+     * If searching films exists flag.
+     */
+    public isSearchedFilms: boolean = false;
 
     /**
      * Array of films from API.
@@ -37,7 +41,7 @@ export class MovieSearchPageComponent {
      *  Makes response to API and fetching mapped-data to resultsFilms$ Array.
      */
     public loadFilms(searchQuery: string): void {
-        this.isSearched = false;
+        this.isSearchedFilms = false;
         if (!searchQuery || !searchQuery.trim()) {
             this.resultsFilms$ = of([{ title: "Type something for search" }]);
         } else {
@@ -45,9 +49,7 @@ export class MovieSearchPageComponent {
             this.resultsFilms$ = this.searchFilmsService.getFilmsFromApi(searchQuery).pipe(
                 tap((data: Array<ModifiedResultMovie>) => {
                     this.isLoading = false;
-                    if (data[0].title !== "No such movies") {
-                        this.isSearched = true;
-                    }
+                    this.isSearchedFilms = checkEmptyResults(data);
                 })
             );
         }

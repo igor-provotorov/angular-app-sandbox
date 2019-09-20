@@ -5,7 +5,7 @@ const API_KEY: string = "026c9d92e76619507fb31d8065f3304d";
 const PER_PAGE: number = 20;
 const NO_ACTOR_IMAGE_URL: string =
     "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/User-Pict-Profil.svg/400px-User-Pict-Profil.svg.png";
-const NO_SUCH_MOVIES = "No such movies";
+const NO_SUCH_MOVIES: string = "No such movies";
 
 export {
     BASE_SEARCH_URL,
