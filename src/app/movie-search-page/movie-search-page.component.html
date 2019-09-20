@@ -7,5 +7,5 @@
 
   <app-movie-list [resultsFilms$]="resultsFilms$ | async"></app-movie-list>
 
-  <p *ngIf="isLoading">Loading...</p>
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
 </div>

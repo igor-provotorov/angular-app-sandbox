@@ -6,6 +6,7 @@ import { MatInputModule } from "@angular/material/input";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
 import { SearchInputComponent } from "./search-input/search-input.component";
 import { MovieSearchPageComponent } from "./movie-search-page.component";
@@ -14,7 +15,15 @@ import { MovieListComponent } from "./movie-list/movie-list.component";
 
 @NgModule({
     declarations: [MovieSearchPageComponent, SearchInputComponent, MovieListItemComponent, MovieListComponent],
-    imports: [CommonModule, FormsModule, MatInputModule, MatToolbarModule, MatButtonModule, MatCheckboxModule],
+    imports: [
+        CommonModule,
+        FormsModule,
+        MatInputModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatCheckboxModule,
+        MatProgressSpinnerModule,
+    ],
     providers: [],
     exports: [MovieSearchPageComponent],
 })
