@@ -22,6 +22,8 @@ export class MovieSearchPageComponent {
      */
     public isLoading: boolean = false;
 
+    public isSearched: boolean = false;
+
     /**
      * Array of films from API.
      */
@@ -35,15 +37,21 @@ export class MovieSearchPageComponent {
      *  Makes response to API and fetching mapped-data to resultsFilms$ Array.
      */
     public loadFilms(searchQuery: string): void {
+        this.isSearched = false;
         if (!searchQuery || !searchQuery.trim()) {
             this.resultsFilms$ = of([{ title: "Type something for search" }]);
         } else {
             this.isLoading = true;
             this.resultsFilms$ = this.searchFilmsService.getFilmsFromApi(searchQuery).pipe(
-                tap(() => {
+                tap((data: Array<ModifiedResultMovie>) => {
                     this.isLoading = false;
+                    if (data[0].title !== "No such movies") {
+                        this.isSearched = true;
+                    }
                 })
             );
         }
     }
+
+    public LoadMoreMovies(): void {}
 }

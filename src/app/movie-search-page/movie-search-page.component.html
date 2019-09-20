@@ -8,4 +8,8 @@
   <app-movie-list [resultsFilms$]="resultsFilms$ | async"></app-movie-list>
 
   <mat-spinner *ngIf="isLoading"></mat-spinner>
+
+  <button *ngIf="isSearched" type="submit" mat-raised-button color="primary" (click)="LoadMoreMovies()">
+    Load more films
+  </button>
 </div>
