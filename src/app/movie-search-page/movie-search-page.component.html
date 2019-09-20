@@ -1,15 +1,17 @@
 <div class="container mat-app-background">
-  <mat-toolbar>
-    <span>Search movies app</span>
-  </mat-toolbar>
+  <div class="wrapper">
+    <mat-toolbar>
+      <span>Search movies app</span>
+    </mat-toolbar>
 
-  <app-search-input (addValue)="loadFilms($event)"></app-search-input>
+    <app-search-input (addValue)="loadFilms($event)"></app-search-input>
 
-  <app-movie-list [resultsFilms$]="resultsFilms$ | async"></app-movie-list>
+    <app-movie-list [resultsFilms$]="resultsFilms$ | async"></app-movie-list>
 
-  <mat-spinner *ngIf="isLoading"></mat-spinner>
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
 
-  <button *ngIf="isSearchedFilms" type="submit" mat-raised-button color="primary" (click)="LoadMoreMovies()">
-    Load more films
-  </button>
+    <button *ngIf="isSearchedFilms" type="submit" mat-raised-button color="primary" (click)="LoadMoreMovies()">
+      Load more films
+    </button>
+  </div>
 </div>
