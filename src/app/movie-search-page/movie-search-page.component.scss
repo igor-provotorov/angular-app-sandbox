@@ -3,3 +3,9 @@
     min-width: 540px;
     width: 90%;
 }
+
+button,
+mat-spinner {
+    display: block;
+    margin: 0 auto;
+}

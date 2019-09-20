@@ -1,7 +1,7 @@
-<li class="card-panel">
-  <h3>{{ film.title }}</h3>
+<li class="card-panel mat-typography">
+  <h3 class="mat-h1" color="primary">{{ film.title }}</h3>
 
-  <p *ngIf="film.release_date" style="text-align: center">
+  <p *ngIf="film.release_date" class="mat-typography mat-h5">
     <strong>Release date: </strong>{{ film.release_date | date }}
   </p>
 
@@ -15,7 +15,7 @@
     }}</a>
   </p>
 
-  <h5 *ngIf="film.credits">Actors:</h5>
+  <h5 class="mat-h3" *ngIf="film.credits">Actors:</h5>
 
   <ul>
     <li *ngFor="let actor of film.credits">
