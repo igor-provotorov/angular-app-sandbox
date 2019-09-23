@@ -4,7 +4,7 @@ export interface ModifiedResultMovie {
     title: string;
     credits?: Array<Actor> | null;
     overview?: string;
-    poster_path?: string | null;
-    release_date?: string;
+    posterPath?: string | null;
+    releaseDate?: string;
     videos?: string | null;
 }
