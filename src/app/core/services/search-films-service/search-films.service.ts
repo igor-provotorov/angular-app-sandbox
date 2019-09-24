@@ -22,7 +22,7 @@ export class SearchFilmsService {
     public startPage: number = 1;
 
     /**
-     * Subject that emit fetchin data from current page.
+     * Subject that emit fetching data from current page.
      */
     public behaviorSubject$: BehaviorSubject<number> = new BehaviorSubject<number>(this.startPage);
 
@@ -31,25 +31,11 @@ export class SearchFilmsService {
      */
     public getFilmsFromApi(searchQuery: string): Observable<Array<ModifiedResultMovie>> {
         return this.behaviorSubject$.pipe(
-            switchMap((currPage: number) => {
-                console.log(currPage);
-
-                return this.http.get<SearchFilms>(getSearchUrl(searchQuery, currPage));
-            }),
+            switchMap((currPage: number) => this.http.get<SearchFilms>(getSearchUrl(searchQuery, currPage))),
 
             map((data: SearchFilms) => data.results),
 
-            switchMap((movies: Array<ResultMovie>) => {
-                if (movies.length) {
-                    return forkJoin(
-                        movies.map((movie: ResultMovie) =>
-                            this.http.get<ExtendedResultMovie>(getMovieDetailsUrl(movie.id))
-                        )
-                    );
-                } else {
-                    return of([]);
-                }
-            }),
+            switchMap((movies: Array<ResultMovie>) => this.getDetailsFilmsInfo(movies)),
 
             map((data: Array<ExtendedResultMovie>) => {
                 if (data.length) {
@@ -83,8 +69,24 @@ export class SearchFilmsService {
         );
     }
 
+    /**
+     * Emit fetching data from next page.
+     */
     public nextPage(): void {
         this.startPage++;
         this.behaviorSubject$.next(this.startPage);
+    }
+
+    /**
+     * Fetch details movies info (actors, images, trailers)
+     */
+    private getDetailsFilmsInfo(movies: Array<ResultMovie>): Observable<Array<ExtendedResultMovie>> {
+        if (movies.length) {
+            return forkJoin(
+                movies.map((movie: ResultMovie) => this.http.get<ExtendedResultMovie>(getMovieDetailsUrl(movie.id)))
+            );
+        } else {
+            return of([]);
+        }
     }
 }
