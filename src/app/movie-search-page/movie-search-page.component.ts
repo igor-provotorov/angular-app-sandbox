@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy } from "@angular/core";
 import { SearchFilmsService } from "../core/services";
 import { Observable, of } from "rxjs";
-import { tap } from "rxjs/operators";
+import { tap, publishReplay, refCount } from "rxjs/operators";
 
 import { ModifiedResultMovie } from "../core/services/search-films-service/models/index";
 import { checkEmptyResults } from "../core/utils/check-empty-results.util";
@@ -55,5 +55,7 @@ export class MovieSearchPageComponent {
         }
     }
 
-    public LoadMoreMovies(): void {}
+    public LoadMoreMovies(): void {
+        this.searchFilmsService.nextPage();
+    }
 }
