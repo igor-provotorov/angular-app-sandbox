@@ -12,7 +12,16 @@
 
     <mat-spinner *ngIf="isLoading"></mat-spinner>
 
-    <button *ngIf="isSearchedFilms" type="submit" mat-raised-button color="primary" (click)="LoadMoreMovies()">
+    <p class="mat-typography" *ngIf="isNoMoreResults">There are no more movies</p>
+
+    <button
+      *ngIf="isSearchedFilms"
+      type="submit"
+      mat-raised-button
+      color="primary"
+      (click)="LoadMoreMovies()"
+      [disabled]="isNoMoreResults"
+    >
       Load more films
     </button>
   </div>

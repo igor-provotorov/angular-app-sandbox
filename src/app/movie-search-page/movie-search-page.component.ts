@@ -24,6 +24,11 @@ export class MovieSearchPageComponent {
     public isLoading: boolean = false;
 
     /**
+     * Is no more results flag.
+     */
+    public isNoMoreResults: boolean = false;
+
+    /**
      * If searching films exists flag.
      */
     public isSearchedFilms: boolean = false;
@@ -60,5 +65,6 @@ export class MovieSearchPageComponent {
      */
     public LoadMoreMovies(): void {
         this.searchFilmsService.nextPage();
+        this.isNoMoreResults = this.searchFilmsService.isNoMoreResults;
     }
 }

@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
 import { Observable, of, forkJoin, BehaviorSubject } from "rxjs";
-import { map, switchMap, scan, catchError } from "rxjs/operators";
+import { map, switchMap, scan, catchError, tap } from "rxjs/operators";
 
 import { SearchFilms, ResultMovie, ModifiedResultMovie, NoSuchMovies, ExtendedResultMovie } from "./models/index";
 import { getSearchUrl, getMovieDetailsUrl } from "../../utils/index";
@@ -12,14 +12,24 @@ import { transformResultMovies } from "../../mappers/index";
 export class SearchFilmsService {
     private http: HttpClient;
 
+    /**
+     * Current page query parameter for searching data from API.
+     */
+    private startPage: number = 1;
+
+    /**
+     * Number of total pages in this particular query search.
+     */
+    private totalPages: number = 0;
+
     constructor(http: HttpClient) {
         this.http = http;
     }
 
     /**
-     * Current page query parameter for searching data from API.
+     * Is no more results flag.
      */
-    public startPage: number = 1;
+    public isNoMoreResults: boolean = false;
 
     /**
      * Subject that emit fetching data from current page.
@@ -32,6 +42,8 @@ export class SearchFilmsService {
     public getFilmsFromApi(searchQuery: string): Observable<Array<ModifiedResultMovie>> {
         return this.behaviorSubject$.pipe(
             switchMap((currPage: number) => this.http.get<SearchFilms>(getSearchUrl(searchQuery, currPage))),
+
+            tap((data: SearchFilms) => (this.totalPages = data.total_pages)),
 
             map((data: SearchFilms) => data.results),
 
@@ -73,8 +85,12 @@ export class SearchFilmsService {
      * Emit fetching data from next page.
      */
     public nextPage(): void {
-        this.startPage++;
-        this.behaviorSubject$.next(this.startPage);
+        if (this.startPage < this.totalPages) {
+            this.startPage++;
+            this.behaviorSubject$.next(this.startPage);
+        } else {
+            this.isNoMoreResults = true;
+        }
     }
 
     /**
