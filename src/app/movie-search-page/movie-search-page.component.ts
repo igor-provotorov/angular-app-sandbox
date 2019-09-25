@@ -64,6 +64,7 @@ export class MovieSearchPageComponent {
      * Emit fetching data from next page when user click "Load More" button.
      */
     public LoadMoreMovies(): void {
+        this.isLoading = true;
         this.searchFilmsService.nextPage();
         this.isNoMoreResults = this.searchFilmsService.isNoMoreResults;
     }

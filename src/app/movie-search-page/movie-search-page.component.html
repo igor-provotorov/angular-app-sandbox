@@ -10,9 +10,9 @@
 
     <app-movie-list [resultsFilms$]="resultsFilms$ | async"></app-movie-list>
 
-    <mat-spinner *ngIf="isLoading"></mat-spinner>
-
     <p class="mat-typography" *ngIf="isNoMoreResults">There are no more movies</p>
+
+    <mat-spinner id="mat-spinnerr" *ngIf="isLoading"></mat-spinner>
 
     <button
       *ngIf="isSearchedFilms"

@@ -1,12 +1,13 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 
-import { Observable, of, forkJoin, BehaviorSubject } from "rxjs";
-import { map, switchMap, scan, catchError, tap } from "rxjs/operators";
+import { Observable, of, forkJoin, BehaviorSubject, throwError } from "rxjs";
+import { map, switchMap, scan, catchError, tap, retryWhen, delay } from "rxjs/operators";
 
 import { SearchFilms, ResultMovie, ModifiedResultMovie, NoSuchMovies, ExtendedResultMovie } from "./models/index";
 import { getSearchUrl, getMovieDetailsUrl } from "../../utils/index";
 import { transformResultMovies } from "../../mappers/index";
+import { REQUEST_COUNT_IS_OVER_THE_ALLOWED_LIMIT } from "../../constants";
 
 @Injectable()
 export class SearchFilmsService {
@@ -63,16 +64,25 @@ export class SearchFilmsService {
                 }
             }),
 
+            retryWhen((errorObservable: Observable<HttpErrorResponse>) =>
+                errorObservable.pipe(
+                    switchMap((sourceErr: HttpErrorResponse) =>
+                        sourceErr.status === REQUEST_COUNT_IS_OVER_THE_ALLOWED_LIMIT ? of(true) : throwError(sourceErr)
+                    ),
+                    delay(1000)
+                )
+            ),
+
             scan((acc: Array<ModifiedResultMovie>, movies: Array<ModifiedResultMovie>) => {
                 acc = [...acc, ...movies];
 
                 return acc;
             }, []),
 
-            catchError((err: Error) => {
+            catchError((err: HttpErrorResponse) => {
                 const result: Array<NoSuchMovies> = [
                     {
-                        title: `#Error: ${err.name}`,
+                        title: `#Error: ${err.error.status_message}`,
                     },
                 ];
 
