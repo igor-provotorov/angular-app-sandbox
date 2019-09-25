@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 
 import { Observable, of, forkJoin, BehaviorSubject, throwError } from "rxjs";
-import { map, switchMap, scan, catchError, tap, retryWhen, delay } from "rxjs/operators";
+import { map, switchMap, scan, catchError, retryWhen, delay } from "rxjs/operators";
 
 import { SearchFilms, ResultMovie, ModifiedResultMovie, NoSuchMovies, ExtendedResultMovie } from "./models/index";
 import { getSearchUrl, getMovieDetailsUrl } from "../../utils/index";
@@ -50,13 +50,14 @@ export class SearchFilmsService {
         return this.behaviorSubject$.pipe(
             switchMap((currPage: number) => this.http.get<SearchFilms>(getSearchUrl(searchQuery, currPage))),
 
-            tap((data: SearchFilms) => (this.totalPages = data.total_pages)),
-
-            map((data: SearchFilms) => data.results),
+            map((data: SearchFilms) => {
+                this.totalPages = data.total_pages;
+                return data.results;
+            }),
 
             switchMap((movies: Array<ResultMovie>) => this.getDetailsFilmsInfo(movies)),
 
-            map((data: Array<ExtendedResultMovie>) => this.checkNoMovies(data)),
+            map((movies: Array<ExtendedResultMovie>) => this.checkNoMovies(movies)),
 
             retryWhen((errorObservable: Observable<HttpErrorResponse>) =>
                 errorObservable.pipe(
