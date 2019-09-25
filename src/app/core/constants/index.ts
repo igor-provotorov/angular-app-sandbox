@@ -5,6 +5,9 @@ const API_KEY: string = "026c9d92e76619507fb31d8065f3304d";
 const PAGE: number = 1;
 const OVER_THE_ALLOWED_LIMIT: number = 429;
 const DELAY_TIME: number = 2500;
+const DIGITS: { ONE: number } = {
+    ONE: 1,
+};
 const NO_ACTOR_IMAGE_URL: string =
     "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/User-Pict-Profil.svg/400px-User-Pict-Profil.svg.png";
 const NO_SUCH_MOVIES: string = "No such movies";
@@ -18,6 +21,7 @@ export {
     PAGE,
     OVER_THE_ALLOWED_LIMIT,
     DELAY_TIME,
+    DIGITS,
     NO_ACTOR_IMAGE_URL,
     NO_SUCH_MOVIES,
     ERROR,

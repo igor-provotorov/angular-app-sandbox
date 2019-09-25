@@ -7,7 +7,7 @@ import { map, switchMap, scan, catchError, tap, retryWhen, delay } from "rxjs/op
 import { SearchFilms, ResultMovie, ModifiedResultMovie, NoSuchMovies, ExtendedResultMovie } from "./models/index";
 import { getSearchUrl, getMovieDetailsUrl } from "../../utils/index";
 import { transformResultMovies } from "../../mappers/index";
-import { OVER_THE_ALLOWED_LIMIT, DELAY_TIME } from "../../constants";
+import { OVER_THE_ALLOWED_LIMIT, DELAY_TIME, DIGITS } from "../../constants";
 
 @Injectable()
 export class SearchFilmsService {
@@ -42,7 +42,7 @@ export class SearchFilmsService {
      * Makes response to API and fetching mapped-data.
      */
     public getFilmsFromApi(searchQuery: string): Observable<Array<ModifiedResultMovie>> {
-        this.startPage = 1;
+        this.startPage = DIGITS.ONE;
         this.isNoMoreResults = false;
 
         this.behaviorSubject$ = new BehaviorSubject<number>(this.startPage);
