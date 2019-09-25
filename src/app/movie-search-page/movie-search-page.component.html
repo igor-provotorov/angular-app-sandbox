@@ -12,7 +12,7 @@
 
     <p class="mat-typography" *ngIf="isNoMoreResults">There are no more movies</p>
 
-    <mat-spinner id="mat-spinnerr" *ngIf="isLoading"></mat-spinner>
+    <mat-spinner *ngIf="isLoading && !isNoMoreResults"></mat-spinner>
 
     <button
       *ngIf="isSearchedFilms"

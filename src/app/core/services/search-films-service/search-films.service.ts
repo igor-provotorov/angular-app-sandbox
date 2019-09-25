@@ -7,7 +7,7 @@ import { map, switchMap, scan, catchError, tap, retryWhen, delay } from "rxjs/op
 import { SearchFilms, ResultMovie, ModifiedResultMovie, NoSuchMovies, ExtendedResultMovie } from "./models/index";
 import { getSearchUrl, getMovieDetailsUrl } from "../../utils/index";
 import { transformResultMovies } from "../../mappers/index";
-import { REQUEST_COUNT_IS_OVER_THE_ALLOWED_LIMIT } from "../../constants";
+import { OVER_THE_ALLOWED_LIMIT, DELAY_TIME } from "../../constants";
 
 @Injectable()
 export class SearchFilmsService {
@@ -16,31 +16,37 @@ export class SearchFilmsService {
     /**
      * Current page query parameter for searching data from API.
      */
-    private startPage: number = 1;
+    private startPage: number;
 
     /**
      * Number of total pages in this particular query search.
      */
-    private totalPages: number = 0;
+    private totalPages: number;
 
     constructor(http: HttpClient) {
         this.http = http;
     }
 
     /**
-     * Is no more results flag.
+     * If no more results flag.
      */
     public isNoMoreResults: boolean = false;
 
     /**
      * Subject that emit fetching data from current page.
      */
-    public behaviorSubject$: BehaviorSubject<number> = new BehaviorSubject<number>(this.startPage);
+
+    public behaviorSubject$: BehaviorSubject<number>;
 
     /**
      * Makes response to API and fetching mapped-data.
      */
     public getFilmsFromApi(searchQuery: string): Observable<Array<ModifiedResultMovie>> {
+        this.startPage = 1;
+        this.isNoMoreResults = false;
+
+        this.behaviorSubject$ = new BehaviorSubject<number>(this.startPage);
+
         return this.behaviorSubject$.pipe(
             switchMap((currPage: number) => this.http.get<SearchFilms>(getSearchUrl(searchQuery, currPage))),
 
@@ -50,26 +56,14 @@ export class SearchFilmsService {
 
             switchMap((movies: Array<ResultMovie>) => this.getDetailsFilmsInfo(movies)),
 
-            map((data: Array<ExtendedResultMovie>) => {
-                if (data.length) {
-                    return transformResultMovies(data);
-                } else {
-                    const result: Array<NoSuchMovies> = [
-                        {
-                            title: "No such movies",
-                        },
-                    ];
-
-                    return result;
-                }
-            }),
+            map((data: Array<ExtendedResultMovie>) => this.checkNoMovies(data)),
 
             retryWhen((errorObservable: Observable<HttpErrorResponse>) =>
                 errorObservable.pipe(
                     switchMap((sourceErr: HttpErrorResponse) =>
-                        sourceErr.status === REQUEST_COUNT_IS_OVER_THE_ALLOWED_LIMIT ? of(true) : throwError(sourceErr)
+                        sourceErr.status === OVER_THE_ALLOWED_LIMIT ? of(true) : throwError(sourceErr)
                     ),
-                    delay(1000)
+                    delay(DELAY_TIME)
                 )
             ),
 
@@ -80,11 +74,7 @@ export class SearchFilmsService {
             }, []),
 
             catchError((err: HttpErrorResponse) => {
-                const result: Array<NoSuchMovies> = [
-                    {
-                        title: `#Error: ${err.error.status_message}`,
-                    },
-                ];
+                const result: Array<NoSuchMovies> = [{ title: `#Error: ${err.error.status_message}` }];
 
                 return of(result);
             })
@@ -114,5 +104,12 @@ export class SearchFilmsService {
         } else {
             return of([]);
         }
+    }
+
+    /**
+     * Check if there are no movies found.
+     */
+    private checkNoMovies(movies: Array<ExtendedResultMovie>): Array<ModifiedResultMovie> {
+        return movies.length ? transformResultMovies(movies) : [{ title: "No such movies" }];
     }
 }

@@ -8,6 +8,7 @@ const checkEmptyResults: (param: Array<ModifiedResultMovie>) => boolean = (
     data: Array<ModifiedResultMovie>
 ): boolean => {
     const res: boolean = data[0].title !== NO_SUCH_MOVIES && data[0].title.slice(0, 7) !== ERROR;
+
     return res;
 };
 
