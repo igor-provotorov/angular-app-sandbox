@@ -61,11 +61,13 @@ export class SearchFilmsService {
                 )
             ),
             scan((acc: Array<ModifiedResultMovie>, movies: Array<ModifiedResultMovie>) => [...acc, ...movies], []),
-            catchError((err: HttpErrorResponse) => {
-                const result: Array<NoSuchMovies> = [{ title: `#Error: ${err.error.status_message}` }];
+            catchError(
+                (err: HttpErrorResponse): Observable<Array<NoSuchMovies>> => {
+                    const errorMessage: string = err.error.status_message || err.error.errors;
 
-                return of(result);
-            })
+                    return of([{ title: `#Error: ${errorMessage}` }]);
+                }
+            )
         );
     }
 

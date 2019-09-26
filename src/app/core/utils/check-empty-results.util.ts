@@ -7,7 +7,7 @@ import { ModifiedResultMovie } from "../services/search-films-service/models/ind
 const checkEmptyResults: (param: Array<ModifiedResultMovie>) => boolean = (
     data: Array<ModifiedResultMovie>
 ): boolean => {
-    const res: boolean = data[0].title !== NO_SUCH_MOVIES && data[0].title.slice(0, 7) !== ERROR;
+    const res: boolean = data[0].title !== NO_SUCH_MOVIES && !data[0].title.includes(ERROR);
 
     return res;
 };
