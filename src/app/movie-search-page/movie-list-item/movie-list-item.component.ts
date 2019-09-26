@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, Input } from "@angular/core";
 
-import { ModifiedResultMovie } from "src/app/core/services/search-films-service/models/index";
+import { ModifiedResultMovie } from "../../core/services/search-films-service/models/index";
 
 @Component({
     selector: "app-movie-list-item",
