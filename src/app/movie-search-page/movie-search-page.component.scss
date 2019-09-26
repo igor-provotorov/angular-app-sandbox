@@ -1,25 +1,25 @@
 .container {
     margin: 0 auto;
-    margin-bottom: 15px;
-    min-height: calc(100vh - 15px);
+    margin-bottom: 1rem;
+    min-height: calc(100vh - 1rem);
 }
 
 .wrapper {
     margin: 0 auto;
     min-width: 540px;
     width: 90%;
-    padding-bottom: 15px;
+    padding-bottom: 1rem;
 }
 
-button,
-mat-spinner {
+.load-more-button,
+.mat-spinner {
     display: block;
     margin: 0 auto;
-    margin-top: 10px;
+    margin-top: 0.625rem;
 }
 
-mat-toolbar {
-    padding: 40px 15px;
+.mat-toolbar {
+    padding: 2.5rem 1rem;
 }
 
 .mat-h1 {
@@ -28,6 +28,6 @@ mat-toolbar {
     margin: 0;
 }
 
-p {
+.no-movies-paragraph {
     text-align: center;
 }

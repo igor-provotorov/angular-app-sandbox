@@ -6,10 +6,11 @@
     </mat-toolbar>
     <div class="wrapper">
         <app-search-input (addValue)="loadFilms($event)"></app-search-input>
-        <app-movie-list [resultsFilms$]="resultsFilms$ | async"></app-movie-list>
-        <p class="mat-typography" *ngIf="isNoMoreResults">There are no more movies</p>
+        <app-movie-list [resultsFilms]="resultsFilms$ | async"></app-movie-list>
+        <p class="no-movies-paragraph mat-typography" *ngIf="isNoMoreResults">There are no more movies</p>
         <mat-spinner *ngIf="isLoading && !isNoMoreResults"></mat-spinner>
         <button
+            class="load-more-button"
             *ngIf="isSearchedFilms"
             type="submit"
             mat-raised-button
