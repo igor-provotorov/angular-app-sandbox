@@ -46,7 +46,8 @@ export class MovieSearchPageComponent {
      *  Makes response to API and fetching mapped-data to resultsFilms$ Array.
      */
     public loadFilms(searchQuery: string): void {
-        this.isSearchedFilms = this.isNoMoreResults = false;
+        this.isSearchedFilms = false;
+        this.isNoMoreResults = false;
 
         if (!searchQuery || !searchQuery.trim()) {
             this.resultsFilms$ = of([{ title: "Type something for search" }]);
