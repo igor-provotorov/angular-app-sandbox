@@ -13,5 +13,5 @@ export class MovieListComponent {
      * Import array of data about found movies.
      */
     @Input()
-    public resultsFilms$: Array<ModifiedResultMovie>;
+    public resultsFilms: Array<ModifiedResultMovie>;
 }
