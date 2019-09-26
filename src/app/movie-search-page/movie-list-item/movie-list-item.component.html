@@ -1,26 +1,22 @@
 <li class="card-panel mat-typography">
-  <h3 class="mat-h1">{{ film.title }}</h3>
+    <h3 class="mat-h1">{{ film.title }}</h3>
 
-  <p *ngIf="film.releaseDate" class="mat-typography mat-h5">
-    <strong>Release date: </strong>{{ film.releaseDate | date }}
-  </p>
+    <p *ngIf="film.releaseDate" class="mat-typography mat-h5">
+        <strong>Release date: </strong>{{ film.releaseDate | date }}
+    </p>
 
-  <img *ngIf="film.posterPath" [src]="film.posterPath" [alt]="film.title" width="100%" />
-
-  <p>{{ film.overview }}</p>
-
-  <p>
-    <a mat-raised-button color="primary" *ngIf="film.videos" [href]="film.videos" target="_blank">{{
-      "View trailer" | uppercase
-    }}</a>
-  </p>
-
-  <h5 class="mat-h3" *ngIf="film.credits">Actors:</h5>
-
-  <ul>
-    <li *ngFor="let actor of film.credits">
-      <p>{{ actor.name }}</p>
-      <img [src]="actor.profile_path" [alt]="actor.name" />
-    </li>
-  </ul>
+    <img *ngIf="film.posterPath" [src]="film.posterPath" [alt]="film.title" width="100%" />
+    <p>{{ film.overview }}</p>
+    <p>
+        <a mat-raised-button color="primary" *ngIf="film.videos" [href]="film.videos" target="_blank">{{
+            "View trailer" | uppercase
+        }}</a>
+    </p>
+    <h5 class="mat-h3" *ngIf="film.credits">Actors:</h5>
+    <ul>
+        <li *ngFor="let actor of film.credits">
+            <p>{{ actor.name }}</p>
+            <img [src]="actor.profile_path" [alt]="actor.name" />
+        </li>
+    </ul>
 </li>

@@ -1,28 +1,23 @@
 <div class="container mat-app-background">
-  <mat-toolbar>
+    <mat-toolbar>
+        <div class="wrapper">
+            <span class="mat-h1">Search movies app</span>
+        </div>
+    </mat-toolbar>
     <div class="wrapper">
-      <span class="mat-h1">Search movies app</span>
+        <app-search-input (addValue)="loadFilms($event)"></app-search-input>
+        <app-movie-list [resultsFilms$]="resultsFilms$ | async"></app-movie-list>
+        <p class="mat-typography" *ngIf="isNoMoreResults">There are no more movies</p>
+        <mat-spinner *ngIf="isLoading && !isNoMoreResults"></mat-spinner>
+        <button
+            *ngIf="isSearchedFilms"
+            type="submit"
+            mat-raised-button
+            color="primary"
+            (click)="LoadMoreMovies()"
+            [disabled]="isNoMoreResults"
+        >
+            Load more films
+        </button>
     </div>
-  </mat-toolbar>
-
-  <div class="wrapper">
-    <app-search-input (addValue)="loadFilms($event)"></app-search-input>
-
-    <app-movie-list [resultsFilms$]="resultsFilms$ | async"></app-movie-list>
-
-    <p class="mat-typography" *ngIf="isNoMoreResults">There are no more movies</p>
-
-    <mat-spinner *ngIf="isLoading && !isNoMoreResults"></mat-spinner>
-
-    <button
-      *ngIf="isSearchedFilms"
-      type="submit"
-      mat-raised-button
-      color="primary"
-      (click)="LoadMoreMovies()"
-      [disabled]="isNoMoreResults"
-    >
-      Load more films
-    </button>
-  </div>
 </div>
