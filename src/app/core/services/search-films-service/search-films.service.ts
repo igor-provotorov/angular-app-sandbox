@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 
 import { Observable, of, forkJoin, BehaviorSubject, throwError } from "rxjs";
-import { map, switchMap, scan, catchError, retryWhen, delay } from "rxjs/operators";
+import { map, switchMap, scan, catchError, retryWhen, delay, tap } from "rxjs/operators";
 
 import { SearchFilms, ResultMovie, ModifiedResultMovie, NoSuchMovies, ExtendedResultMovie } from "./models/index";
 import { getSearchUrl, getMovieDetailsUrl } from "../../utils/index";
@@ -44,21 +44,14 @@ export class SearchFilmsService {
     public getFilmsFromApi(searchQuery: string): Observable<Array<ModifiedResultMovie>> {
         this.startPage = DIGITS.ONE;
         this.isNoMoreResults = false;
-
         this.behaviorSubject$ = new BehaviorSubject<number>(this.startPage);
 
         return this.behaviorSubject$.pipe(
             switchMap((currPage: number) => this.http.get<SearchFilms>(getSearchUrl(searchQuery, currPage))),
-
-            map((data: SearchFilms) => {
-                this.totalPages = data.total_pages;
-                return data.results;
-            }),
-
+            tap((data: SearchFilms) => (this.totalPages = data.total_pages)),
+            map((data: SearchFilms) => data.results),
             switchMap((movies: Array<ResultMovie>) => this.getDetailsFilmsInfo(movies)),
-
             map((movies: Array<ExtendedResultMovie>) => this.checkNoMovies(movies)),
-
             retryWhen((errorObservable: Observable<HttpErrorResponse>) =>
                 errorObservable.pipe(
                     switchMap((sourceErr: HttpErrorResponse) =>
@@ -67,13 +60,7 @@ export class SearchFilmsService {
                     delay(DELAY_TIME)
                 )
             ),
-
-            scan((acc: Array<ModifiedResultMovie>, movies: Array<ModifiedResultMovie>) => {
-                acc = [...acc, ...movies];
-
-                return acc;
-            }, []),
-
+            scan((acc: Array<ModifiedResultMovie>, movies: Array<ModifiedResultMovie>) => [...acc, ...movies], []),
             catchError((err: HttpErrorResponse) => {
                 const result: Array<NoSuchMovies> = [{ title: `#Error: ${err.error.status_message}` }];
 
