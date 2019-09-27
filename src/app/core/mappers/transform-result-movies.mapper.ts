@@ -24,7 +24,7 @@ export function transformResultMovies(movies: Array<ExtendedResultMovie>): Array
             overview: movie.overview,
             releaseDate: movie.release_date,
             title: movie.title,
-            videos: movie.videos.results.length ? getMovieTrailerUrl(movie.videos.results.shift().key) : null,
+            videos: movie.videos.results.length ? getMovieTrailerUrl(movie.videos.results[0].key) : null,
         };
 
         return result;
