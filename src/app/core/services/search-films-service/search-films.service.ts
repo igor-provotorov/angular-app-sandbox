@@ -45,7 +45,7 @@ export class SearchFilmsService {
     /**
      * Makes response to API and fetching mapped-data.
      */
-    public getFilmsFromApi(searchQuery: string): Observable<Array<ModifiedResultMovie | NoSuchMovies> | object> {
+    public getFilmsFromApi(searchQuery: string): Observable<Array<ModifiedResultMovie | NoSuchMovies>> {
         this.startPage = DIGITS.ONE;
         this.isNoMoreResults = false;
         this.behaviorSubject$ = new BehaviorSubject<number>(this.startPage);
@@ -55,23 +55,20 @@ export class SearchFilmsService {
             switchMap((currPage: number) => this.http.get<SearchFilms>(getSearchUrl(searchQuery, currPage))),
             tap((data: SearchFilms) => (this.totalPages = data.total_pages)),
             map((data: SearchFilms) => data.results),
-            switchMap((movies: Array<ResultMovie>) => this.getDetailsFilmsInfo(movies)),
-            map((movies: Array<ExtendedResultMovie>) => this.checkNoMovies(movies)),
-            retryWhen((errorObservable: Observable<HttpErrorResponse>) =>
-                errorObservable.pipe(
-                    switchMap((sourceErr: HttpErrorResponse) =>
-                        sourceErr.status === OVER_THE_ALLOWED_LIMIT ? of(true) : throwError(sourceErr)
+            switchMap((searchFilms: Array<ResultMovie>) =>
+                this.getDetailsFilmsInfo(searchFilms).pipe(
+                    map((moviesArr: Array<ExtendedResultMovie>) => this.checkNoMovies(moviesArr)),
+                    retryWhen((errorObservable: Observable<HttpErrorResponse>) =>
+                        errorObservable.pipe(
+                            switchMap((sourceErr: HttpErrorResponse) =>
+                                sourceErr.status === OVER_THE_ALLOWED_LIMIT ? of(true) : throwError(sourceErr)
+                            )
+                        )
                     )
                 )
             ),
             tap(() => (this.lastFetchingDate = Date.now())),
-            scan(
-                (acc: Array<ModifiedResultMovie | NoSuchMovies>, movies: Array<ModifiedResultMovie | NoSuchMovies>) => [
-                    ...acc,
-                    ...movies,
-                ],
-                []
-            ),
+            scan((acc: Array<ModifiedResultMovie>, movies: Array<ModifiedResultMovie>) => [...acc, ...movies], []),
             catchError((err: HttpErrorResponse) => {
                 const errorMessage: string = err.error.status_message || err.error.errors.toString();
 
