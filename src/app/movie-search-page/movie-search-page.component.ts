@@ -3,7 +3,7 @@ import { SearchFilmsService } from "../core/services";
 import { Observable, of } from "rxjs";
 import { tap } from "rxjs/operators";
 
-import { ModifiedResultMovie } from "../core/services/search-films-service/models/index";
+import { ModifiedResultMovie, NoSuchMovies } from "../core/services/search-films-service/models/index";
 import { checkEmptyResults } from "../core/utils/check-empty-results.util";
 
 @Component({
@@ -36,7 +36,7 @@ export class MovieSearchPageComponent {
     /**
      * Array of films from API.
      */
-    public resultsFilms$: Observable<Array<ModifiedResultMovie>>;
+    public resultsFilms$: Observable<Array<ModifiedResultMovie | NoSuchMovies>>;
 
     constructor(searchFilmsService: SearchFilmsService) {
         this.searchFilmsService = searchFilmsService;
@@ -54,7 +54,7 @@ export class MovieSearchPageComponent {
         } else {
             this.isLoading = true;
             this.resultsFilms$ = this.searchFilmsService.getFilmsFromApi(searchQuery).pipe(
-                tap((data: Array<ModifiedResultMovie>) => {
+                tap((data: Array<ModifiedResultMovie | NoSuchMovies>) => {
                     this.isLoading = false;
                     this.isSearchedFilms = checkEmptyResults(data);
                 })
