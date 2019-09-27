@@ -1,0 +1,58 @@
+.card-panel {
+    border: 0.06rem solid #5555;
+    margin: 0 0.625rem;
+    margin-bottom: 1rem;
+    padding: 0 0.625rem;
+    width: 380px;
+    min-height: 99%;
+    border-radius: 0.3rem;
+    background-color: #fffc;
+    text-align: center;
+
+    & .card-release-date {
+        text-align: center;
+    }
+
+    & .card-poster {
+        width: 100%;
+    }
+}
+
+.card-title {
+    text-align: center;
+    border-radius: 0.3rem;
+    padding: 0.625rem 0;
+    font-size: 1.375rem;
+}
+
+.actors-title {
+    margin: 0;
+    font-size: 1rem;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.actors-list {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding: 0;
+    list-style: none;
+
+    & .actors-list__item {
+        margin: 1rem 0;
+        padding: 0;
+        max-width: 18%;
+        border-radius: 0.3rem;
+
+        & .actors-list__actor-name {
+            margin: 0 auto;
+            min-height: 4.125rem;
+        }
+
+        & .actors-list__actor-photo {
+            border-radius: 0.3rem;
+            width: 100%;
+        }
+    }
+}

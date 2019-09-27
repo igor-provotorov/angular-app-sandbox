@@ -1,0 +1,22 @@
+<li class="card-panel mat-typography">
+    <h3 class="card-title mat-h1">{{ film.title }}</h3>
+
+    <p class="card-release-date mat-typography mat-h5" *ngIf="film.releaseDate">
+        <strong>Release date: </strong>{{ film.releaseDate | date }}
+    </p>
+
+    <img class="card-poster" *ngIf="film.posterPath" [src]="film.posterPath" [alt]="film.title" />
+    <p>{{ film.overview }}</p>
+    <p>
+        <a mat-raised-button color="primary" *ngIf="film.videos" [href]="film.videos" target="_blank">{{
+            "View trailer" | uppercase
+        }}</a>
+    </p>
+    <h5 class="actors-title mat-h3" *ngIf="film.credits">Actors:</h5>
+    <ul class="actors-list">
+        <li class="actors-list__item" *ngFor="let actor of film.credits">
+            <p class="actors-list__actor-name">{{ actor.name }}</p>
+            <img class="actors-list__actor-photo" [src]="actor.profile_path" [alt]="actor.name" />
+        </li>
+    </ul>
+</li>

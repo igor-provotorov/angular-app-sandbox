@@ -6,14 +6,20 @@ import { Component, Output, EventEmitter } from "@angular/core";
     styleUrls: ["./search-input.component.scss"],
 })
 export class SearchInputComponent {
-    /** Create output new EventEmmiter. */
+    /**
+     * Create output new EventEmmiter.
+     */
     @Output()
     public addValue: EventEmitter<string> = new EventEmitter<string>();
 
-    /** Value from input. */
+    /**
+     * Value from input.
+     */
     public inputValue: string;
 
-    /** Emit value from input and clear input value. */
+    /**
+     * Emit value from input and clear input value.
+     */
     public onChangeInput(): boolean {
         this.addValue.emit(this.inputValue);
         this.inputValue = "";

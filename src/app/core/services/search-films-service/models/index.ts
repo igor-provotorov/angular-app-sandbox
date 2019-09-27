@@ -1,4 +1,14 @@
-import { ResultMovie } from "./result-movie.interface";
-import { SearchFilms } from "./search-films.interface";
-
-export { ResultMovie, SearchFilms };
+export { SearchFilms } from "./search-films.model";
+export { ResultMovie } from "./result-movie.model";
+export { ExtendedResultMovie } from "./extended-result-movie.model";
+export { Actor } from "./actor.model";
+export { Crew } from "./crew.model";
+export { Credits } from "./credits.model";
+export { ModifiedResultMovie } from "./modified-result-movie.model";
+export { VideoTrailer } from "./video-trailer.model";
+export { NoSuchMovies } from "./no-such-movies.model";
+export { Genres } from "./genres.model";
+export { ProductionCompanies } from "./production-companies.model";
+export { ProductionCountries } from "./production-countries.model";
+export { Languages } from "./languages.model";
+export { Videos } from "./videos.model";

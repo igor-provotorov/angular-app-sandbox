@@ -1,7 +1,33 @@
-li {
-    padding: 5px 0;
+.container {
+    margin: 0 auto;
+    margin-bottom: 1rem;
+    min-height: calc(100vh - 1rem);
+}
 
-    &:nth-child(even) {
-        background-color: #26a69a25;
-    }
+.wrapper {
+    margin: 0 auto;
+    min-width: 540px;
+    width: 90%;
+    padding-bottom: 1rem;
+}
+
+.load-more-button,
+.mat-spinner {
+    display: block;
+    margin: 0 auto;
+    margin-top: 0.625rem;
+}
+
+.mat-toolbar {
+    padding: 2.5rem 1rem;
+}
+
+.mat-h1 {
+    display: block;
+    padding: 0;
+    margin: 0;
+}
+
+.no-movies-paragraph {
+    text-align: center;
 }
