@@ -14,4 +14,8 @@ export class MovieListComponent {
      */
     @Input()
     public resultsFilms: Array<ModifiedResultMovie>;
+
+    trackByFn(_: number, film: ModifiedResultMovie): number {
+        return film.id;
+    }
 }

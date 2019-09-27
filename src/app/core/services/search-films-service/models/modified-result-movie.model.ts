@@ -1,6 +1,7 @@
 import { Actor } from "./index";
 
 export interface ModifiedResultMovie {
+    id: number;
     title: string;
     credits: Array<Actor> | null;
     overview: string;
