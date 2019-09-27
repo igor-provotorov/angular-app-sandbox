@@ -68,7 +68,13 @@ export class SearchFilmsService {
                 )
             ),
             tap(() => (this.lastFetchingDate = Date.now())),
-            scan((acc: Array<ModifiedResultMovie>, movies: Array<ModifiedResultMovie>) => [...acc, ...movies], []),
+            scan(
+                (acc: Array<ModifiedResultMovie | NoSuchMovies>, movies: Array<ModifiedResultMovie | NoSuchMovies>) => [
+                    ...acc,
+                    ...movies,
+                ],
+                []
+            ),
             catchError((err: HttpErrorResponse) => {
                 const errorMessage: string = err.error.status_message || err.error.errors.toString();
 

@@ -1,6 +1,4 @@
-import { getSearchUrl } from "./get-search-url.util";
-import { getImagesUrl } from "./get-images-url.util";
-import { getMovieDetailsUrl } from "./get-movie-details-url.util";
-import { getMovieTrailerUrl } from "./get-movie-trailer-url.util";
-
-export { getSearchUrl, getImagesUrl, getMovieDetailsUrl, getMovieTrailerUrl };
+export { getSearchUrl } from "./get-search-url.util";
+export { getImagesUrl } from "./get-images-url.util";
+export { getMovieDetailsUrl } from "./get-movie-details-url.util";
+export { getMovieTrailerUrl } from "./get-movie-trailer-url.util";

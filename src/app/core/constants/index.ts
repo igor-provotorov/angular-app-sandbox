@@ -1,6 +1,11 @@
 const BASE_SEARCH_URL: string = "https://api.themoviedb.org/3/";
-const BASE_SEARCH_IMAGES_URL: string = "https://image.tmdb.org/t/p/w500";
+const BASE_SEARCH_IMAGES_URL: string = "https://image.tmdb.org/t/p/w";
 const BASE_YOUTUBE_VIDEOS_URL: string = "https://www.youtube.com/watch?v=";
+const POSTER_IMAGE_SIZE_PX: number = 500;
+const POSTER: string = "poster";
+const ACTOR_IMAGE_SIZE_PX: number = 92;
+const ACTOR: string = "actor";
+const DEFAULT_IMAGE_SIZE_PX: number = 500;
 const API_KEY: string = "026c9d92e76619507fb31d8065f3304d";
 const OVER_THE_ALLOWED_LIMIT: number = 429;
 const SERVER_DELAY_TIME: number = 10000;
@@ -17,6 +22,11 @@ export {
     BASE_SEARCH_URL,
     BASE_SEARCH_IMAGES_URL,
     BASE_YOUTUBE_VIDEOS_URL,
+    POSTER_IMAGE_SIZE_PX,
+    POSTER,
+    ACTOR_IMAGE_SIZE_PX,
+    ACTOR,
+    DEFAULT_IMAGE_SIZE_PX,
     API_KEY,
     OVER_THE_ALLOWED_LIMIT,
     SERVER_DELAY_TIME,
