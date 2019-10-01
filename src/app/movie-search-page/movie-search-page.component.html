@@ -16,7 +16,7 @@
             mat-raised-button
             color="primary"
             (click)="LoadMoreMovies()"
-            [disabled]="isNoMoreResults"
+            [disabled]="isLoading || isNoMoreResults"
         >
             Load more films
         </button>
