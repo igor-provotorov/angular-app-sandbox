@@ -1,0 +1,15 @@
+<mat-toolbar color="primary">
+    <div class="wrapper">
+        <span class="mat-h1">Search movies app</span>
+        <span
+            ><a
+                [routerLink]="['/']"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                class="menu-link"
+                >Home</a
+            ></span
+        >
+        <span><a [routerLink]="['films-to-watch']" routerLinkActive="active" class="menu-link">Films to watch</a></span>
+    </div>
+</mat-toolbar>
