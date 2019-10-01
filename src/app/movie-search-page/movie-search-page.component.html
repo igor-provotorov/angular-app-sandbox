@@ -1,9 +1,4 @@
 <div class="container mat-app-background">
-    <mat-toolbar>
-        <div class="wrapper">
-            <span class="mat-h1">Search movies app</span>
-        </div>
-    </mat-toolbar>
     <div class="wrapper">
         <app-search-input (addValue)="loadFilms($event)"></app-search-input>
         <app-movie-list [resultsFilms]="resultsFilms$ | async"></app-movie-list>
