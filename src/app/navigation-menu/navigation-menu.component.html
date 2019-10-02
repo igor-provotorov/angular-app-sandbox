@@ -1,15 +1,22 @@
 <mat-toolbar color="primary">
     <div class="wrapper">
-        <span class="mat-h1">Search movies app</span>
-        <span
-            ><a
-                [routerLink]="['/']"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                class="menu-link"
-                >Home</a
-            ></span
-        >
-        <span><a [routerLink]="['films-to-watch']" routerLinkActive="active" class="menu-link">Films to watch</a></span>
+        <p class="title"><a class="title__link" [routerLink]="['/']">Search movies app</a></p>
+        <ul class="navigation-menu">
+            <li class="navigation-menu__link">
+                <a
+                    [routerLink]="['/']"
+                    routerLinkActive="active"
+                    [routerLinkActiveOptions]="{ exact: true }"
+                    class="link mat-typography"
+                    mat-button
+                    >Home</a
+                >
+            </li>
+            <li class="navigation-menu__link">
+                <a [routerLink]="['films-to-watch']" routerLinkActive="active" class="link  mat-typography" mat-button
+                    >Films to watch</a
+                >
+            </li>
+        </ul>
     </div>
 </mat-toolbar>
