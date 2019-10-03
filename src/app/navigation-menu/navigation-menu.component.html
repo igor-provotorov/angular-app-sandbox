@@ -1,0 +1,22 @@
+<mat-toolbar color="primary">
+    <div class="wrapper">
+        <p class="title"><a class="title__link" [routerLink]="['/']">Search movies app</a></p>
+        <ul class="navigation-menu">
+            <li class="navigation-menu__link">
+                <a
+                    [routerLink]="['/']"
+                    routerLinkActive="active"
+                    [routerLinkActiveOptions]="{ exact: true }"
+                    class="link mat-typography"
+                    mat-button
+                    >Home</a
+                >
+            </li>
+            <li class="navigation-menu__link">
+                <a [routerLink]="['films-to-watch']" routerLinkActive="active" class="link  mat-typography" mat-button
+                    >Films to watch</a
+                >
+            </li>
+        </ul>
+    </div>
+</mat-toolbar>
