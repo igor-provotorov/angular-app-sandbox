@@ -35,7 +35,21 @@
                 "use strict";
                 __webpack_require__.r(__webpack_exports__);
                 /* harmony default export */ __webpack_exports__["default"] =
-                    "<app-movie-search-page></app-movie-search-page>\n";
+                    "<app-navigation-menu></app-navigation-menu>\n\n<router-outlet></router-outlet>\n";
+
+                /***/
+            },
+
+        /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/films-to-watch-page/films-to-watch-page.component.html":
+            /*!**************************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/films-to-watch-page/films-to-watch-page.component.html ***!
+  \**************************************************************************************************************/
+            /*! exports provided: default */
+            /***/ function(module, __webpack_exports__, __webpack_require__) {
+                "use strict";
+                __webpack_require__.r(__webpack_exports__);
+                /* harmony default export */ __webpack_exports__["default"] =
+                    '<mat-accordion>\n    <mat-expansion-panel\n        *ngFor="let film of filmsToWatch$ | async"\n        class="mat-expansion-panel"\n        (opened)="panelOpenState = true"\n        (closed)="panelOpenState = false"\n    >\n        <mat-expansion-panel-header>\n            <mat-panel-title class="mat-panel-title">\n                {{ film.title }}\n            </mat-panel-title>\n            <mat-panel-description class="mat-panel-description">\n                {{ film.releaseDate | date: "yyyy" }}</mat-panel-description\n            >\n        </mat-expansion-panel-header>\n        <p>{{ film.overview }}</p>\n        <button mat-raised-button color="primary" (click)="onRemoveButtonClick(film)">Remove movie from list</button>\n    </mat-expansion-panel>\n</mat-accordion>\n<div class="container mat-h2" *ngIf="!(filmsToWatch$ | async).length">\n    There are no movies in list\n</div>\n';
 
                 /***/
             },
@@ -49,7 +63,7 @@
                 "use strict";
                 __webpack_require__.r(__webpack_exports__);
                 /* harmony default export */ __webpack_exports__["default"] =
-                    '<li class="card-panel mat-typography">\n    <h3 class="card-title mat-h1">{{ film.title }}</h3>\n\n    <p class="card-release-date mat-typography mat-h5" *ngIf="film.releaseDate">\n        <strong>Release date: </strong>{{ film.releaseDate | date }}\n    </p>\n\n    <img class="card-poster" *ngIf="film.posterPath" [src]="film.posterPath" [alt]="film.title" />\n    <p>{{ film.overview }}</p>\n    <p>\n        <a mat-raised-button color="primary" *ngIf="film.videos" [href]="film.videos" target="_blank">{{\n            "View trailer" | uppercase\n        }}</a>\n    </p>\n    <h5 class="actors-title mat-h3" *ngIf="film.credits">Actors:</h5>\n    <ul class="actors-list">\n        <li class="actors-list__item" *ngFor="let actor of film.credits">\n            <p class="actors-list__actor-name">{{ actor.name }}</p>\n            <img class="actors-list__actor-photo" [src]="actor.profile_path" [alt]="actor.name" />\n        </li>\n    </ul>\n</li>\n';
+                    '<li class="card-panel mat-typography">\n    <h3 class="card-title mat-h1">{{ film.title }}</h3>\n\n    <p class="card-release-date mat-typography mat-h5" *ngIf="film.releaseDate">\n        <strong>Release date: </strong>{{ film.releaseDate | date }}\n    </p>\n\n    <img class="card-poster" *ngIf="film.posterPath" [src]="film.posterPath" [alt]="film.title" />\n    <p>{{ film.overview }}</p>\n    <p>\n        <a mat-raised-button color="primary" *ngIf="film.videos" [href]="film.videos" target="_blank">{{\n            "View trailer" | uppercase\n        }}</a>\n    </p>\n    <h5 class="actors-title mat-h3" *ngIf="film.credits">Actors:</h5>\n    <ul class="actors-list">\n        <li class="actors-list__item" *ngFor="let actor of film.credits">\n            <p class="actors-list__actor-name">{{ actor.name }}</p>\n            <img class="actors-list__actor-photo" [src]="actor.profile_path" [alt]="actor.name" />\n        </li>\n    </ul>\n    <div class="wish-list" *ngIf="film.id">\n        <mat-checkbox\n            class="wish-list__checkbox"\n            color="primary"\n            (change)="onCheckboxClicked($event)"\n            [(ngModel)]="film.checkboxValue"\n            >Add movie to wish list</mat-checkbox\n        >\n    </div>\n</li>\n';
 
                 /***/
             },
@@ -63,7 +77,7 @@
                 "use strict";
                 __webpack_require__.r(__webpack_exports__);
                 /* harmony default export */ __webpack_exports__["default"] =
-                    '<ul class="movies">\n    <app-movie-list-item *ngFor="let film of resultsFilms; trackBy: trackByFn" [film]="film"></app-movie-list-item>\n</ul>\n';
+                    '<ul class="movies">\n    <app-movie-list-item\n        *ngFor="let film of resultsFilms; trackBy: trackByFn"\n        [film]="film"\n        (checkBoxClicked)="onCheckBoxClicked($event)"\n    ></app-movie-list-item>\n</ul>\n';
 
                 /***/
             },
@@ -77,7 +91,7 @@
                 "use strict";
                 __webpack_require__.r(__webpack_exports__);
                 /* harmony default export */ __webpack_exports__["default"] =
-                    '<div class="container mat-app-background">\n    <mat-toolbar>\n        <div class="wrapper">\n            <span class="mat-h1">Search movies app</span>\n        </div>\n    </mat-toolbar>\n    <div class="wrapper">\n        <app-search-input (addValue)="loadFilms($event)"></app-search-input>\n        <app-movie-list [resultsFilms]="resultsFilms$ | async"></app-movie-list>\n        <p class="no-movies-paragraph mat-typography" *ngIf="isNoMoreResults">There are no more movies</p>\n        <mat-spinner *ngIf="isLoading && !isNoMoreResults"></mat-spinner>\n        <button\n            class="load-more-button"\n            *ngIf="isSearchedFilms"\n            type="submit"\n            mat-raised-button\n            color="primary"\n            (click)="LoadMoreMovies()"\n            [disabled]="isNoMoreResults"\n        >\n            Load more films\n        </button>\n    </div>\n</div>\n';
+                    '<div class="container mat-app-background">\n    <div class="wrapper">\n        <app-search-input (addValue)="loadFilms($event)"></app-search-input>\n        <app-movie-list\n            [resultsFilms]="resultsFilms$ | async"\n            (checkBoxClicked)="onCheckBoxClicked($event)"\n        ></app-movie-list>\n        <p class="no-movies-paragraph mat-typography" *ngIf="isNoMoreResults">There are no more movies</p>\n        <mat-spinner *ngIf="isLoading && !isNoMoreResults" diameter="50"></mat-spinner>\n        <button\n            class="load-more-button"\n            *ngIf="isSearchedFilms"\n            type="submit"\n            mat-raised-button\n            color="primary"\n            (click)="LoadMoreMovies()"\n            [disabled]="isLoading || isNoMoreResults"\n        >\n            Load more films\n        </button>\n    </div>\n</div>\n';
 
                 /***/
             },
@@ -92,6 +106,20 @@
                 __webpack_require__.r(__webpack_exports__);
                 /* harmony default export */ __webpack_exports__["default"] =
                     '<form action="" (submit)="onChangeInput()">\n    <mat-form-field>\n        <input\n            type="text"\n            matInput\n            [(ngModel)]="inputValue"\n            name="inputValue"\n            placeholder="Type something for search..."\n            autocomplete="off"\n            autofocus\n        />\n    </mat-form-field>\n    <button class="submit-button" type="submit" mat-raised-button color="primary">Click to find films</button>\n</form>\n';
+
+                /***/
+            },
+
+        /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/navigation-menu/navigation-menu.component.html":
+            /*!******************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/navigation-menu/navigation-menu.component.html ***!
+  \******************************************************************************************************/
+            /*! exports provided: default */
+            /***/ function(module, __webpack_exports__, __webpack_require__) {
+                "use strict";
+                __webpack_require__.r(__webpack_exports__);
+                /* harmony default export */ __webpack_exports__["default"] =
+                    '<mat-toolbar color="primary">\n    <div class="wrapper">\n        <p class="title"><a class="title__link" [routerLink]="[\'/\']">Search movies app</a></p>\n        <ul class="navigation-menu">\n            <li class="navigation-menu__link">\n                <a\n                    [routerLink]="[\'/\']"\n                    routerLinkActive="active"\n                    [routerLinkActiveOptions]="{ exact: true }"\n                    class="link mat-typography"\n                    mat-button\n                    >Home</a\n                >\n            </li>\n            <li class="navigation-menu__link">\n                <a [routerLink]="[\'films-to-watch\']" routerLinkActive="active" class="link mat-typography" mat-button\n                    >Films to watch</a\n                >\n            </li>\n        </ul>\n    </div>\n</mat-toolbar>\n';
 
                 /***/
             },
@@ -573,6 +601,67 @@ and limitations under the License.
                 /***/
             },
 
+        /***/ "./src/app/app-routing.module.ts":
+            /*!***************************************!*\
+  !*** ./src/app/app-routing.module.ts ***!
+  \***************************************/
+            /*! exports provided: AppRoutingModule */
+            /***/ function(module, __webpack_exports__, __webpack_require__) {
+                "use strict";
+                __webpack_require__.r(__webpack_exports__);
+                /* harmony export (binding) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "AppRoutingModule",
+                    function() {
+                        return AppRoutingModule;
+                    }
+                );
+                /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+                    /*! tslib */ "./node_modules/tslib/tslib.es6.js"
+                );
+                /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+                    /*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js"
+                );
+                /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+                    /*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js"
+                );
+                /* harmony import */ var _movie_search_page_movie_search_page_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+                    /*! ./movie-search-page/movie-search-page.component */ "./src/app/movie-search-page/movie-search-page.component.ts"
+                );
+                /* harmony import */ var _films_to_watch_page_films_to_watch_page_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+                    /*! ./films-to-watch-page/films-to-watch-page.component */ "./src/app/films-to-watch-page/films-to-watch-page.component.ts"
+                );
+
+                const routes = [
+                    {
+                        path: "",
+                        component:
+                            _movie_search_page_movie_search_page_component__WEBPACK_IMPORTED_MODULE_3__[
+                                "MovieSearchPageComponent"
+                            ],
+                    },
+                    {
+                        path: "films-to-watch",
+                        component:
+                            _films_to_watch_page_films_to_watch_page_component__WEBPACK_IMPORTED_MODULE_4__[
+                                "FilmsToWatchPageComponent"
+                            ],
+                    },
+                ];
+                let AppRoutingModule = class AppRoutingModule {};
+                AppRoutingModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"](
+                    [
+                        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
+                            imports: [_angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"].forRoot(routes)],
+                            exports: [_angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"]],
+                        }),
+                    ],
+                    AppRoutingModule
+                );
+
+                /***/
+            },
+
         /***/ "./src/app/app.component.scss":
             /*!************************************!*\
   !*** ./src/app/app.component.scss ***!
@@ -654,11 +743,20 @@ and limitations under the License.
                 /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
                     /*! ./app.component */ "./src/app/app.component.ts"
                 );
-                /* harmony import */ var _core_core_module__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
-                    /*! ./core/core.module */ "./src/app/core/core.module.ts"
+                /* harmony import */ var _core_index__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+                    /*! ./core/index */ "./src/app/core/index.ts"
                 );
-                /* harmony import */ var _movie_search_page_movie_search_page_module__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
-                    /*! ./movie-search-page/movie-search-page.module */ "./src/app/movie-search-page/movie-search-page.module.ts"
+                /* harmony import */ var _movie_search_page_index__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+                    /*! ./movie-search-page/index */ "./src/app/movie-search-page/index.ts"
+                );
+                /* harmony import */ var _navigation_menu_index__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+                    /*! ./navigation-menu/index */ "./src/app/navigation-menu/index.ts"
+                );
+                /* harmony import */ var _films_to_watch_page_index__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+                    /*! ./films-to-watch-page/index */ "./src/app/films-to-watch-page/index.ts"
+                );
+                /* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+                    /*! ./app-routing.module */ "./src/app/app-routing.module.ts"
                 );
 
                 let AppModule = class AppModule {};
@@ -668,13 +766,14 @@ and limitations under the License.
                             declarations: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"]],
                             imports: [
                                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"],
-                                _core_core_module__WEBPACK_IMPORTED_MODULE_5__["CoreModule"],
-                                _movie_search_page_movie_search_page_module__WEBPACK_IMPORTED_MODULE_6__[
-                                    "MovieSearchPageModule"
-                                ],
+                                _core_index__WEBPACK_IMPORTED_MODULE_5__["CoreModule"],
+                                _movie_search_page_index__WEBPACK_IMPORTED_MODULE_6__["MovieSearchPageModule"],
                                 _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_3__[
                                     "BrowserAnimationsModule"
                                 ],
+                                _app_routing_module__WEBPACK_IMPORTED_MODULE_9__["AppRoutingModule"],
+                                _navigation_menu_index__WEBPACK_IMPORTED_MODULE_7__["NavigationMenuModule"],
+                                _films_to_watch_page_index__WEBPACK_IMPORTED_MODULE_8__["FilmsToWatchPageModule"],
                             ],
                             providers: [],
                             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"]],
@@ -690,7 +789,7 @@ and limitations under the License.
             /*!*****************************************!*\
   !*** ./src/app/core/constants/index.ts ***!
   \*****************************************/
-            /*! exports provided: BASE_SEARCH_URL, BASE_SEARCH_IMAGES_URL, BASE_YOUTUBE_VIDEOS_URL, POSTER_IMAGE_SIZE_PX, POSTER, ACTOR_IMAGE_SIZE_PX, ACTOR, DEFAULT_IMAGE_SIZE_PX, API_KEY, OVER_THE_ALLOWED_LIMIT, SERVER_DELAY_TIME, DIGITS, NO_ACTOR_IMAGE_URL, NO_SUCH_MOVIES, ERROR */
+            /*! exports provided: BASE_SEARCH_URL, BASE_SEARCH_IMAGES_URL, BASE_YOUTUBE_VIDEOS_URL, POSTER_IMAGE_SIZE_PX, POSTER, ACTOR_IMAGE_SIZE_PX, ACTOR, DEFAULT_IMAGE_SIZE_PX, API_KEY, OVER_THE_ALLOWED_LIMIT, SERVER_DELAY_TIME, DIGITS, NO_ACTOR_IMAGE_URL, NO_SUCH_MOVIES, ERROR, FILMS_TO_WATCH_KEY */
             /***/ function(module, __webpack_exports__, __webpack_require__) {
                 "use strict";
                 __webpack_require__.r(__webpack_exports__);
@@ -775,6 +874,13 @@ and limitations under the License.
                 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ERROR", function() {
                     return ERROR;
                 });
+                /* harmony export (binding) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "FILMS_TO_WATCH_KEY",
+                    function() {
+                        return FILMS_TO_WATCH_KEY;
+                    }
+                );
                 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
                     /*! tslib */ "./node_modules/tslib/tslib.es6.js"
                 );
@@ -798,6 +904,7 @@ and limitations under the License.
                     "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/User-Pict-Profil.svg/400px-User-Pict-Profil.svg.png";
                 const NO_SUCH_MOVIES = "No such movies";
                 const ERROR = "#Error:";
+                const FILMS_TO_WATCH_KEY = "FILMS_TO_WATCH";
 
                 /***/
             },
@@ -819,19 +926,473 @@ and limitations under the License.
                 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
                     /*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js"
                 );
-                /* harmony import */ var _services_service_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-                    /*! ./services/service.module */ "./src/app/core/services/service.module.ts"
+                /* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+                    /*! @ngrx/store */ "./node_modules/@ngrx/store/fesm2015/store.js"
+                );
+                /* harmony import */ var _ngrx_store_devtools__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+                    /*! @ngrx/store-devtools */ "./node_modules/@ngrx/store-devtools/fesm2015/store-devtools.js"
+                );
+                /* harmony import */ var _ngrx_effects__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+                    /*! @ngrx/effects */ "./node_modules/@ngrx/effects/fesm2015/effects.js"
+                );
+                /* harmony import */ var _services_index__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+                    /*! ./services/index */ "./src/app/core/services/index.ts"
+                );
+                /* harmony import */ var _store_index__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+                    /*! ./store/index */ "./src/app/core/store/index.ts"
+                );
+                /* harmony import */ var _store_facades_index__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+                    /*! ./store-facades/index */ "./src/app/core/store-facades/index.ts"
+                );
+                /* harmony import */ var _environments_index__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+                    /*! ../../environments/index */ "./src/environments/index.ts"
+                );
+                /* harmony import */ var _effects_index__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+                    /*! ./effects/index */ "./src/app/core/effects/index.ts"
                 );
 
                 let CoreModule = class CoreModule {};
                 CoreModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"](
                     [
                         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
-                            imports: [_services_service_module__WEBPACK_IMPORTED_MODULE_2__["ServiceModule"]],
+                            imports: [
+                                _services_index__WEBPACK_IMPORTED_MODULE_5__["ServiceModule"],
+                                _ngrx_store__WEBPACK_IMPORTED_MODULE_2__["StoreModule"].forRoot(
+                                    _store_index__WEBPACK_IMPORTED_MODULE_6__["reducers"]
+                                ),
+                                _store_facades_index__WEBPACK_IMPORTED_MODULE_7__["StoreFacadeModule"],
+                                _ngrx_store_devtools__WEBPACK_IMPORTED_MODULE_3__["StoreDevtoolsModule"].instrument({
+                                    maxAge: 25,
+                                    logOnly: _environments_index__WEBPACK_IMPORTED_MODULE_8__["environment"].production,
+                                }),
+                                _ngrx_effects__WEBPACK_IMPORTED_MODULE_4__["EffectsModule"].forRoot(
+                                    _effects_index__WEBPACK_IMPORTED_MODULE_9__["effects"]
+                                ),
+                            ],
+                            providers: [
+                                {
+                                    provide: _angular_core__WEBPACK_IMPORTED_MODULE_1__["APP_INITIALIZER"],
+                                    useFactory: store => {
+                                        return () => {
+                                            store.dispatch(
+                                                new _store_index__WEBPACK_IMPORTED_MODULE_6__["GetFilmsToWatch"]()
+                                            );
+                                        };
+                                    },
+                                    multi: true,
+                                    deps: [_ngrx_store__WEBPACK_IMPORTED_MODULE_2__["Store"]],
+                                },
+                            ],
                         }),
                     ],
                     CoreModule
                 );
+
+                /***/
+            },
+
+        /***/ "./src/app/core/effects/films-to-watch.effect.ts":
+            /*!*******************************************************!*\
+  !*** ./src/app/core/effects/films-to-watch.effect.ts ***!
+  \*******************************************************/
+            /*! exports provided: FilmsToWatchEffects */
+            /***/ function(module, __webpack_exports__, __webpack_require__) {
+                "use strict";
+                __webpack_require__.r(__webpack_exports__);
+                /* harmony export (binding) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "FilmsToWatchEffects",
+                    function() {
+                        return FilmsToWatchEffects;
+                    }
+                );
+                /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+                    /*! tslib */ "./node_modules/tslib/tslib.es6.js"
+                );
+                /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+                    /*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js"
+                );
+                /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+                    /*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js"
+                );
+                /* harmony import */ var _ngrx_effects__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+                    /*! @ngrx/effects */ "./node_modules/@ngrx/effects/fesm2015/effects.js"
+                );
+                /* harmony import */ var _store_index__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+                    /*! ../store/index */ "./src/app/core/store/index.ts"
+                );
+                /* harmony import */ var _services_index__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+                    /*! ../services/index */ "./src/app/core/services/index.ts"
+                );
+                /* harmony import */ var _constants_index__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+                    /*! ../constants/index */ "./src/app/core/constants/index.ts"
+                );
+
+                let FilmsToWatchEffects = class FilmsToWatchEffects {
+                    constructor(actions$, localStorageService) {
+                        this.actions$ = actions$;
+                        this.localStorageService = localStorageService;
+                        this.localStorageActions$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_3__["createEffect"])(
+                            () =>
+                                this.actions$.pipe(
+                                    Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_3__["ofType"])(
+                                        _store_index__WEBPACK_IMPORTED_MODULE_4__["FilmsToWatchActionTypes"]
+                                            .ADD_FILM_TO_WATCH_LIST,
+                                        _store_index__WEBPACK_IMPORTED_MODULE_4__["FilmsToWatchActionTypes"]
+                                            .REMOVE_FILM_FROM_WATCH_LIST
+                                    ),
+                                    Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["tap"])(action => {
+                                        switch (action.type) {
+                                            case _store_index__WEBPACK_IMPORTED_MODULE_4__["FilmsToWatchActionTypes"]
+                                                .ADD_FILM_TO_WATCH_LIST:
+                                                this.localStorageService.setSavedState(action.payload);
+                                                break;
+                                            case _store_index__WEBPACK_IMPORTED_MODULE_4__["FilmsToWatchActionTypes"]
+                                                .REMOVE_FILM_FROM_WATCH_LIST:
+                                                this.localStorageService.removeFromState(action.payload);
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                    })
+                                ),
+                            { dispatch: false }
+                        );
+                        this.getFilmsToWatchActions$ = Object(
+                            _ngrx_effects__WEBPACK_IMPORTED_MODULE_3__["createEffect"]
+                        )(() =>
+                            this.actions$.pipe(
+                                Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_3__["ofType"])(
+                                    _store_index__WEBPACK_IMPORTED_MODULE_4__["FilmsToWatchActionTypes"]
+                                        .GET_FILMS_TO_WATCH
+                                ),
+                                Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(() => {
+                                    const localStorageMovies =
+                                        this.localStorageService.getSavedState(
+                                            _constants_index__WEBPACK_IMPORTED_MODULE_6__["FILMS_TO_WATCH_KEY"]
+                                        ) || [];
+                                    return new _store_index__WEBPACK_IMPORTED_MODULE_4__["GetFilmsToWatchSuccess"](
+                                        localStorageMovies
+                                    );
+                                })
+                            )
+                        );
+                    }
+                };
+                FilmsToWatchEffects.ctorParameters = () => [
+                    { type: _ngrx_effects__WEBPACK_IMPORTED_MODULE_3__["Actions"] },
+                    { type: _services_index__WEBPACK_IMPORTED_MODULE_5__["LocalStorageService"] },
+                ];
+                FilmsToWatchEffects = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"](
+                    [Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])()],
+                    FilmsToWatchEffects
+                );
+
+                /***/
+            },
+
+        /***/ "./src/app/core/effects/index.ts":
+            /*!***************************************!*\
+  !*** ./src/app/core/effects/index.ts ***!
+  \***************************************/
+            /*! exports provided: effects */
+            /***/ function(module, __webpack_exports__, __webpack_require__) {
+                "use strict";
+                __webpack_require__.r(__webpack_exports__);
+                /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "effects", function() {
+                    return effects;
+                });
+                /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+                    /*! tslib */ "./node_modules/tslib/tslib.es6.js"
+                );
+                /* harmony import */ var _films_to_watch_effect__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+                    /*! ./films-to-watch.effect */ "./src/app/core/effects/films-to-watch.effect.ts"
+                );
+
+                const effects = [_films_to_watch_effect__WEBPACK_IMPORTED_MODULE_1__["FilmsToWatchEffects"]];
+
+                /***/
+            },
+
+        /***/ "./src/app/core/index.ts":
+            /*!*******************************!*\
+  !*** ./src/app/core/index.ts ***!
+  \*******************************/
+            /*! exports provided: CoreModule, BASE_SEARCH_URL, BASE_SEARCH_IMAGES_URL, BASE_YOUTUBE_VIDEOS_URL, POSTER_IMAGE_SIZE_PX, POSTER, ACTOR_IMAGE_SIZE_PX, ACTOR, DEFAULT_IMAGE_SIZE_PX, API_KEY, OVER_THE_ALLOWED_LIMIT, SERVER_DELAY_TIME, DIGITS, NO_ACTOR_IMAGE_URL, NO_SUCH_MOVIES, ERROR, FILMS_TO_WATCH_KEY, transformResultMovies, ServiceModule, getSearchUrl, getImagesUrl, getMovieDetailsUrl, getMovieTrailerUrl, checkEmptyResults, StoreFacadeModule, SearchFilmsService, LocalStorageService, reducers, FilmsToWatchStoreFacade, FilmsToWatchActionTypes, AddFilmToWatchList, RemoveFilmFromWatchList, GetFilmsToWatch, GetFilmsToWatchSuccess, initialState, filmsToWatchReducer, selectFilmToWatchState, selectFilmToWatchList */
+            /***/ function(module, __webpack_exports__, __webpack_require__) {
+                "use strict";
+                __webpack_require__.r(__webpack_exports__);
+                /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+                    /*! tslib */ "./node_modules/tslib/tslib.es6.js"
+                );
+                /* harmony import */ var _constants_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+                    /*! ./constants/index */ "./src/app/core/constants/index.ts"
+                );
+                /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "BASE_SEARCH_URL", function() {
+                    return _constants_index__WEBPACK_IMPORTED_MODULE_1__["BASE_SEARCH_URL"];
+                });
+
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "BASE_SEARCH_IMAGES_URL",
+                    function() {
+                        return _constants_index__WEBPACK_IMPORTED_MODULE_1__["BASE_SEARCH_IMAGES_URL"];
+                    }
+                );
+
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "BASE_YOUTUBE_VIDEOS_URL",
+                    function() {
+                        return _constants_index__WEBPACK_IMPORTED_MODULE_1__["BASE_YOUTUBE_VIDEOS_URL"];
+                    }
+                );
+
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "POSTER_IMAGE_SIZE_PX",
+                    function() {
+                        return _constants_index__WEBPACK_IMPORTED_MODULE_1__["POSTER_IMAGE_SIZE_PX"];
+                    }
+                );
+
+                /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "POSTER", function() {
+                    return _constants_index__WEBPACK_IMPORTED_MODULE_1__["POSTER"];
+                });
+
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "ACTOR_IMAGE_SIZE_PX",
+                    function() {
+                        return _constants_index__WEBPACK_IMPORTED_MODULE_1__["ACTOR_IMAGE_SIZE_PX"];
+                    }
+                );
+
+                /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ACTOR", function() {
+                    return _constants_index__WEBPACK_IMPORTED_MODULE_1__["ACTOR"];
+                });
+
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "DEFAULT_IMAGE_SIZE_PX",
+                    function() {
+                        return _constants_index__WEBPACK_IMPORTED_MODULE_1__["DEFAULT_IMAGE_SIZE_PX"];
+                    }
+                );
+
+                /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "API_KEY", function() {
+                    return _constants_index__WEBPACK_IMPORTED_MODULE_1__["API_KEY"];
+                });
+
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "OVER_THE_ALLOWED_LIMIT",
+                    function() {
+                        return _constants_index__WEBPACK_IMPORTED_MODULE_1__["OVER_THE_ALLOWED_LIMIT"];
+                    }
+                );
+
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "SERVER_DELAY_TIME",
+                    function() {
+                        return _constants_index__WEBPACK_IMPORTED_MODULE_1__["SERVER_DELAY_TIME"];
+                    }
+                );
+
+                /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "DIGITS", function() {
+                    return _constants_index__WEBPACK_IMPORTED_MODULE_1__["DIGITS"];
+                });
+
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "NO_ACTOR_IMAGE_URL",
+                    function() {
+                        return _constants_index__WEBPACK_IMPORTED_MODULE_1__["NO_ACTOR_IMAGE_URL"];
+                    }
+                );
+
+                /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "NO_SUCH_MOVIES", function() {
+                    return _constants_index__WEBPACK_IMPORTED_MODULE_1__["NO_SUCH_MOVIES"];
+                });
+
+                /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ERROR", function() {
+                    return _constants_index__WEBPACK_IMPORTED_MODULE_1__["ERROR"];
+                });
+
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "FILMS_TO_WATCH_KEY",
+                    function() {
+                        return _constants_index__WEBPACK_IMPORTED_MODULE_1__["FILMS_TO_WATCH_KEY"];
+                    }
+                );
+
+                /* harmony import */ var _mappers_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+                    /*! ./mappers/index */ "./src/app/core/mappers/index.ts"
+                );
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "transformResultMovies",
+                    function() {
+                        return _mappers_index__WEBPACK_IMPORTED_MODULE_2__["transformResultMovies"];
+                    }
+                );
+
+                /* harmony import */ var _services_index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+                    /*! ./services/index */ "./src/app/core/services/index.ts"
+                );
+                /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ServiceModule", function() {
+                    return _services_index__WEBPACK_IMPORTED_MODULE_3__["ServiceModule"];
+                });
+
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "SearchFilmsService",
+                    function() {
+                        return _services_index__WEBPACK_IMPORTED_MODULE_3__["SearchFilmsService"];
+                    }
+                );
+
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "LocalStorageService",
+                    function() {
+                        return _services_index__WEBPACK_IMPORTED_MODULE_3__["LocalStorageService"];
+                    }
+                );
+
+                /* harmony import */ var _store_index__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+                    /*! ./store/index */ "./src/app/core/store/index.ts"
+                );
+                /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "reducers", function() {
+                    return _store_index__WEBPACK_IMPORTED_MODULE_4__["reducers"];
+                });
+
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "FilmsToWatchActionTypes",
+                    function() {
+                        return _store_index__WEBPACK_IMPORTED_MODULE_4__["FilmsToWatchActionTypes"];
+                    }
+                );
+
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "AddFilmToWatchList",
+                    function() {
+                        return _store_index__WEBPACK_IMPORTED_MODULE_4__["AddFilmToWatchList"];
+                    }
+                );
+
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "RemoveFilmFromWatchList",
+                    function() {
+                        return _store_index__WEBPACK_IMPORTED_MODULE_4__["RemoveFilmFromWatchList"];
+                    }
+                );
+
+                /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "GetFilmsToWatch", function() {
+                    return _store_index__WEBPACK_IMPORTED_MODULE_4__["GetFilmsToWatch"];
+                });
+
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "GetFilmsToWatchSuccess",
+                    function() {
+                        return _store_index__WEBPACK_IMPORTED_MODULE_4__["GetFilmsToWatchSuccess"];
+                    }
+                );
+
+                /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "initialState", function() {
+                    return _store_index__WEBPACK_IMPORTED_MODULE_4__["initialState"];
+                });
+
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "filmsToWatchReducer",
+                    function() {
+                        return _store_index__WEBPACK_IMPORTED_MODULE_4__["filmsToWatchReducer"];
+                    }
+                );
+
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "selectFilmToWatchState",
+                    function() {
+                        return _store_index__WEBPACK_IMPORTED_MODULE_4__["selectFilmToWatchState"];
+                    }
+                );
+
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "selectFilmToWatchList",
+                    function() {
+                        return _store_index__WEBPACK_IMPORTED_MODULE_4__["selectFilmToWatchList"];
+                    }
+                );
+
+                /* harmony import */ var _utils_index__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+                    /*! ./utils/index */ "./src/app/core/utils/index.ts"
+                );
+                /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getSearchUrl", function() {
+                    return _utils_index__WEBPACK_IMPORTED_MODULE_5__["getSearchUrl"];
+                });
+
+                /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getImagesUrl", function() {
+                    return _utils_index__WEBPACK_IMPORTED_MODULE_5__["getImagesUrl"];
+                });
+
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "getMovieDetailsUrl",
+                    function() {
+                        return _utils_index__WEBPACK_IMPORTED_MODULE_5__["getMovieDetailsUrl"];
+                    }
+                );
+
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "getMovieTrailerUrl",
+                    function() {
+                        return _utils_index__WEBPACK_IMPORTED_MODULE_5__["getMovieTrailerUrl"];
+                    }
+                );
+
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "checkEmptyResults",
+                    function() {
+                        return _utils_index__WEBPACK_IMPORTED_MODULE_5__["checkEmptyResults"];
+                    }
+                );
+
+                /* harmony import */ var _store_facades_index__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+                    /*! ./store-facades/index */ "./src/app/core/store-facades/index.ts"
+                );
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "StoreFacadeModule",
+                    function() {
+                        return _store_facades_index__WEBPACK_IMPORTED_MODULE_6__["StoreFacadeModule"];
+                    }
+                );
+
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "FilmsToWatchStoreFacade",
+                    function() {
+                        return _store_facades_index__WEBPACK_IMPORTED_MODULE_6__["FilmsToWatchStoreFacade"];
+                    }
+                );
+
+                /* harmony import */ var _core_module__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+                    /*! ./core.module */ "./src/app/core/core.module.ts"
+                );
+                /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CoreModule", function() {
+                    return _core_module__WEBPACK_IMPORTED_MODULE_7__["CoreModule"];
+                });
 
                 /***/
             },
@@ -932,6 +1493,141 @@ and limitations under the License.
             /*!****************************************!*\
   !*** ./src/app/core/services/index.ts ***!
   \****************************************/
+            /*! exports provided: ServiceModule, SearchFilmsService, LocalStorageService */
+            /***/ function(module, __webpack_exports__, __webpack_require__) {
+                "use strict";
+                __webpack_require__.r(__webpack_exports__);
+                /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+                    /*! tslib */ "./node_modules/tslib/tslib.es6.js"
+                );
+                /* harmony import */ var _search_films_service_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+                    /*! ./search-films-service/index */ "./src/app/core/services/search-films-service/index.ts"
+                );
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "SearchFilmsService",
+                    function() {
+                        return _search_films_service_index__WEBPACK_IMPORTED_MODULE_1__["SearchFilmsService"];
+                    }
+                );
+
+                /* harmony import */ var _local_storage_service_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+                    /*! ./local-storage-service/index */ "./src/app/core/services/local-storage-service/index.ts"
+                );
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "LocalStorageService",
+                    function() {
+                        return _local_storage_service_index__WEBPACK_IMPORTED_MODULE_2__["LocalStorageService"];
+                    }
+                );
+
+                /* harmony import */ var _service_module__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+                    /*! ./service.module */ "./src/app/core/services/service.module.ts"
+                );
+                /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ServiceModule", function() {
+                    return _service_module__WEBPACK_IMPORTED_MODULE_3__["ServiceModule"];
+                });
+
+                /***/
+            },
+
+        /***/ "./src/app/core/services/local-storage-service/index.ts":
+            /*!**************************************************************!*\
+  !*** ./src/app/core/services/local-storage-service/index.ts ***!
+  \**************************************************************/
+            /*! exports provided: LocalStorageService */
+            /***/ function(module, __webpack_exports__, __webpack_require__) {
+                "use strict";
+                __webpack_require__.r(__webpack_exports__);
+                /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+                    /*! tslib */ "./node_modules/tslib/tslib.es6.js"
+                );
+                /* harmony import */ var _local_storage_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+                    /*! ./local-storage.service */ "./src/app/core/services/local-storage-service/local-storage.service.ts"
+                );
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "LocalStorageService",
+                    function() {
+                        return _local_storage_service__WEBPACK_IMPORTED_MODULE_1__["LocalStorageService"];
+                    }
+                );
+
+                /***/
+            },
+
+        /***/ "./src/app/core/services/local-storage-service/local-storage.service.ts":
+            /*!******************************************************************************!*\
+  !*** ./src/app/core/services/local-storage-service/local-storage.service.ts ***!
+  \******************************************************************************/
+            /*! exports provided: LocalStorageService */
+            /***/ function(module, __webpack_exports__, __webpack_require__) {
+                "use strict";
+                __webpack_require__.r(__webpack_exports__);
+                /* harmony export (binding) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "LocalStorageService",
+                    function() {
+                        return LocalStorageService;
+                    }
+                );
+                /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+                    /*! tslib */ "./node_modules/tslib/tslib.es6.js"
+                );
+                /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+                    /*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js"
+                );
+                /* harmony import */ var _constants_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+                    /*! ../../constants/index */ "./src/app/core/constants/index.ts"
+                );
+
+                let LocalStorageService = class LocalStorageService {
+                    /**
+                     * Set checked movie to local storage by the given key.
+                     */
+                    setSavedState(payload) {
+                        const filmsInStorage =
+                            this.getSavedState(_constants_index__WEBPACK_IMPORTED_MODULE_2__["FILMS_TO_WATCH_KEY"]) ||
+                            [];
+                        const updatedFilmsInStorage = filmsInStorage.concat(payload);
+                        localStorage.setItem(
+                            _constants_index__WEBPACK_IMPORTED_MODULE_2__["FILMS_TO_WATCH_KEY"],
+                            JSON.stringify(updatedFilmsInStorage)
+                        );
+                    }
+                    /**
+                     * Remove unchecked movie from local storage by the given key.
+                     */
+                    removeFromState(payload) {
+                        const filmsInStorage = this.getSavedState(
+                            _constants_index__WEBPACK_IMPORTED_MODULE_2__["FILMS_TO_WATCH_KEY"]
+                        );
+                        const updatedFilmsInStorage = filmsInStorage.filter(movie => movie.id !== payload.id);
+                        localStorage.setItem(
+                            _constants_index__WEBPACK_IMPORTED_MODULE_2__["FILMS_TO_WATCH_KEY"],
+                            JSON.stringify(updatedFilmsInStorage)
+                        );
+                    }
+                    /**
+                     * Get data from local storage by the given key.
+                     */
+                    getSavedState(localStorageKey) {
+                        return JSON.parse(localStorage.getItem(localStorageKey));
+                    }
+                };
+                LocalStorageService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"](
+                    [Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])()],
+                    LocalStorageService
+                );
+
+                /***/
+            },
+
+        /***/ "./src/app/core/services/search-films-service/index.ts":
+            /*!*************************************************************!*\
+  !*** ./src/app/core/services/search-films-service/index.ts ***!
+  \*************************************************************/
             /*! exports provided: SearchFilmsService */
             /***/ function(module, __webpack_exports__, __webpack_require__) {
                 "use strict";
@@ -939,16 +1635,14 @@ and limitations under the License.
                 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
                     /*! tslib */ "./node_modules/tslib/tslib.es6.js"
                 );
-                /* harmony import */ var _search_films_service_search_films_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
-                    /*! ./search-films-service/search-films.service */ "./src/app/core/services/search-films-service/search-films.service.ts"
+                /* harmony import */ var _search_films_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+                    /*! ./search-films.service */ "./src/app/core/services/search-films-service/search-films.service.ts"
                 );
                 /* harmony reexport (safe) */ __webpack_require__.d(
                     __webpack_exports__,
                     "SearchFilmsService",
                     function() {
-                        return _search_films_service_search_films_service__WEBPACK_IMPORTED_MODULE_1__[
-                            "SearchFilmsService"
-                        ];
+                        return _search_films_service__WEBPACK_IMPORTED_MODULE_1__["SearchFilmsService"];
                     }
                 );
 
@@ -991,23 +1685,27 @@ and limitations under the License.
                 /* harmony import */ var _mappers_index__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
                     /*! ../../mappers/index */ "./src/app/core/mappers/index.ts"
                 );
-                /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
-                    /*! ../../constants */ "./src/app/core/constants/index.ts"
+                /* harmony import */ var _constants_index__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+                    /*! ../../constants/index */ "./src/app/core/constants/index.ts"
+                );
+                /* harmony import */ var _store_facades_index__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+                    /*! ../../store-facades/index */ "./src/app/core/store-facades/index.ts"
                 );
 
                 let SearchFilmsService = class SearchFilmsService {
-                    constructor(http) {
+                    constructor(http, filmsToWatchStoreFacade) {
                         /**
                          * If no more results flag.
                          */
                         this.isNoMoreResults = false;
                         this.http = http;
+                        this.filmsToWatchStoreFacade = filmsToWatchStoreFacade;
                     }
                     /**
                      * Makes response to API and fetching mapped-data.
                      */
                     getFilmsFromApi(searchQuery) {
-                        this.startPage = _constants__WEBPACK_IMPORTED_MODULE_7__["DIGITS"].ONE;
+                        this.startPage = _constants_index__WEBPACK_IMPORTED_MODULE_7__["DIGITS"].ONE;
                         this.isNoMoreResults = false;
                         this.behaviorSubject$ = new rxjs__WEBPACK_IMPORTED_MODULE_3__["BehaviorSubject"](
                             this.startPage
@@ -1017,17 +1715,20 @@ and limitations under the License.
                                 Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["timer"])(this.getDebounceTime())
                             ),
                             Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["switchMap"])(currPage =>
-                                this.http.get(
-                                    Object(_utils_index__WEBPACK_IMPORTED_MODULE_5__["getSearchUrl"])(
-                                        searchQuery,
-                                        currPage
+                                this.http
+                                    .get(
+                                        Object(_utils_index__WEBPACK_IMPORTED_MODULE_5__["getSearchUrl"])(
+                                            searchQuery,
+                                            currPage
+                                        )
                                     )
-                                )
+                                    .pipe(
+                                        Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(
+                                            data => (this.totalPages = data.total_pages)
+                                        ),
+                                        Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(data => data.results)
+                                    )
                             ),
-                            Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(
-                                data => (this.totalPages = data.total_pages)
-                            ),
-                            Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(data => data.results),
                             Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["switchMap"])(searchFilms =>
                                 this.getDetailsFilmsInfo(searchFilms).pipe(
                                     Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(moviesArr =>
@@ -1038,22 +1739,31 @@ and limitations under the License.
                                             Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["switchMap"])(
                                                 sourceErr =>
                                                     sourceErr.status ===
-                                                    _constants__WEBPACK_IMPORTED_MODULE_7__["OVER_THE_ALLOWED_LIMIT"]
+                                                    _constants_index__WEBPACK_IMPORTED_MODULE_7__[
+                                                        "OVER_THE_ALLOWED_LIMIT"
+                                                    ]
                                                         ? Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(true)
                                                         : Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])(
                                                               sourceErr
                                                           )
                                             )
                                         )
+                                    ),
+                                    Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(
+                                        () => (this.lastFetchingDate = Date.now())
                                     )
                                 )
-                            ),
-                            Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(
-                                () => (this.lastFetchingDate = Date.now())
                             ),
                             Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["scan"])(
                                 (acc, movies) => [...acc, ...movies],
                                 []
+                            ),
+                            Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["switchMap"])(movies =>
+                                this.filmsToWatchStoreFacade.filmsToWatch$.pipe(
+                                    Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(filmsToWatchArray =>
+                                        this.addCheckboxesFromStore(movies, filmsToWatchArray)
+                                    )
+                                )
                             ),
                             Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(err => {
                                 const errorMessage = err.error.status_message || err.error.errors.toString();
@@ -1081,10 +1791,10 @@ and limitations under the License.
                         const currentDate = Date.now();
                         let debouncer;
                         if (!this.lastFetchingDate) {
-                            debouncer = _constants__WEBPACK_IMPORTED_MODULE_7__["DIGITS"].ZERO;
+                            debouncer = _constants_index__WEBPACK_IMPORTED_MODULE_7__["DIGITS"].ZERO;
                         } else {
                             debouncer =
-                                _constants__WEBPACK_IMPORTED_MODULE_7__["SERVER_DELAY_TIME"] -
+                                _constants_index__WEBPACK_IMPORTED_MODULE_7__["SERVER_DELAY_TIME"] -
                                 (currentDate - this.lastFetchingDate);
                         }
                         return debouncer;
@@ -1115,9 +1825,21 @@ and limitations under the License.
                             ? Object(_mappers_index__WEBPACK_IMPORTED_MODULE_6__["transformResultMovies"])(movies)
                             : [{ title: "No such movies" }];
                     }
+                    /**
+                     * Joined result array from fetch and array with checkboxes from store.
+                     */
+                    addCheckboxesFromStore(movies, filmsToWatchArray) {
+                        return movies.map(movie => {
+                            const checkboxValue = Boolean(
+                                filmsToWatchArray.find(filmToWatch => filmToWatch.id === movie.id)
+                            );
+                            return Object.assign({}, movie, { checkboxValue });
+                        });
+                    }
                 };
                 SearchFilmsService.ctorParameters = () => [
                     { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] },
+                    { type: _store_facades_index__WEBPACK_IMPORTED_MODULE_8__["FilmsToWatchStoreFacade"] },
                 ];
                 SearchFilmsService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"](
                     [Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])()],
@@ -1147,8 +1869,11 @@ and limitations under the License.
                 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
                     /*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js"
                 );
-                /* harmony import */ var _search_films_service_search_films_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
-                    /*! ./search-films-service/search-films.service */ "./src/app/core/services/search-films-service/search-films.service.ts"
+                /* harmony import */ var _search_films_service_index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+                    /*! ./search-films-service/index */ "./src/app/core/services/search-films-service/index.ts"
+                );
+                /* harmony import */ var _local_storage_service_index__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+                    /*! ./local-storage-service/index */ "./src/app/core/services/local-storage-service/index.ts"
                 );
 
                 let ServiceModule = class ServiceModule {};
@@ -1157,14 +1882,578 @@ and limitations under the License.
                         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
                             imports: [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"]],
                             providers: [
-                                _search_films_service_search_films_service__WEBPACK_IMPORTED_MODULE_3__[
-                                    "SearchFilmsService"
-                                ],
+                                _search_films_service_index__WEBPACK_IMPORTED_MODULE_3__["SearchFilmsService"],
+                                _local_storage_service_index__WEBPACK_IMPORTED_MODULE_4__["LocalStorageService"],
                             ],
                         }),
                     ],
                     ServiceModule
                 );
+
+                /***/
+            },
+
+        /***/ "./src/app/core/store-facades/films-to-watch/films-to-watch.store-facade.ts":
+            /*!**********************************************************************************!*\
+  !*** ./src/app/core/store-facades/films-to-watch/films-to-watch.store-facade.ts ***!
+  \**********************************************************************************/
+            /*! exports provided: FilmsToWatchStoreFacade */
+            /***/ function(module, __webpack_exports__, __webpack_require__) {
+                "use strict";
+                __webpack_require__.r(__webpack_exports__);
+                /* harmony export (binding) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "FilmsToWatchStoreFacade",
+                    function() {
+                        return FilmsToWatchStoreFacade;
+                    }
+                );
+                /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+                    /*! tslib */ "./node_modules/tslib/tslib.es6.js"
+                );
+                /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+                    /*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js"
+                );
+                /* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+                    /*! @ngrx/store */ "./node_modules/@ngrx/store/fesm2015/store.js"
+                );
+                /* harmony import */ var _store_index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+                    /*! ../../store/index */ "./src/app/core/store/index.ts"
+                );
+
+                let FilmsToWatchStoreFacade = class FilmsToWatchStoreFacade {
+                    constructor(store) {
+                        this.store = store;
+                        this.filmsToWatch$ = this.store.select(
+                            _store_index__WEBPACK_IMPORTED_MODULE_3__["selectFilmToWatchList"]
+                        );
+                    }
+                    /**
+                     * Dispath AddFilmToWatchList action to store.
+                     */
+                    addFilmToWatchList(movie) {
+                        this.store.dispatch(new _store_index__WEBPACK_IMPORTED_MODULE_3__["AddFilmToWatchList"](movie));
+                    }
+                    /**
+                     * Dispath RemoveFilmFromWatchList action to store.
+                     */
+                    removeFilmFromWatchList(movie) {
+                        this.store.dispatch(
+                            new _store_index__WEBPACK_IMPORTED_MODULE_3__["RemoveFilmFromWatchList"](movie)
+                        );
+                    }
+                };
+                FilmsToWatchStoreFacade.ctorParameters = () => [
+                    { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_2__["Store"] },
+                ];
+                FilmsToWatchStoreFacade = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"](
+                    [Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])()],
+                    FilmsToWatchStoreFacade
+                );
+
+                /***/
+            },
+
+        /***/ "./src/app/core/store-facades/films-to-watch/index.ts":
+            /*!************************************************************!*\
+  !*** ./src/app/core/store-facades/films-to-watch/index.ts ***!
+  \************************************************************/
+            /*! exports provided: FilmsToWatchStoreFacade */
+            /***/ function(module, __webpack_exports__, __webpack_require__) {
+                "use strict";
+                __webpack_require__.r(__webpack_exports__);
+                /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+                    /*! tslib */ "./node_modules/tslib/tslib.es6.js"
+                );
+                /* harmony import */ var _films_to_watch_store_facade__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+                    /*! ./films-to-watch.store-facade */ "./src/app/core/store-facades/films-to-watch/films-to-watch.store-facade.ts"
+                );
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "FilmsToWatchStoreFacade",
+                    function() {
+                        return _films_to_watch_store_facade__WEBPACK_IMPORTED_MODULE_1__["FilmsToWatchStoreFacade"];
+                    }
+                );
+
+                /***/
+            },
+
+        /***/ "./src/app/core/store-facades/index.ts":
+            /*!*********************************************!*\
+  !*** ./src/app/core/store-facades/index.ts ***!
+  \*********************************************/
+            /*! exports provided: StoreFacadeModule, FilmsToWatchStoreFacade */
+            /***/ function(module, __webpack_exports__, __webpack_require__) {
+                "use strict";
+                __webpack_require__.r(__webpack_exports__);
+                /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+                    /*! tslib */ "./node_modules/tslib/tslib.es6.js"
+                );
+                /* harmony import */ var _films_to_watch_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+                    /*! ./films-to-watch/index */ "./src/app/core/store-facades/films-to-watch/index.ts"
+                );
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "FilmsToWatchStoreFacade",
+                    function() {
+                        return _films_to_watch_index__WEBPACK_IMPORTED_MODULE_1__["FilmsToWatchStoreFacade"];
+                    }
+                );
+
+                /* harmony import */ var _store_facades_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+                    /*! ./store-facades.module */ "./src/app/core/store-facades/store-facades.module.ts"
+                );
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "StoreFacadeModule",
+                    function() {
+                        return _store_facades_module__WEBPACK_IMPORTED_MODULE_2__["StoreFacadeModule"];
+                    }
+                );
+
+                /***/
+            },
+
+        /***/ "./src/app/core/store-facades/store-facades.module.ts":
+            /*!************************************************************!*\
+  !*** ./src/app/core/store-facades/store-facades.module.ts ***!
+  \************************************************************/
+            /*! exports provided: StoreFacadeModule */
+            /***/ function(module, __webpack_exports__, __webpack_require__) {
+                "use strict";
+                __webpack_require__.r(__webpack_exports__);
+                /* harmony export (binding) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "StoreFacadeModule",
+                    function() {
+                        return StoreFacadeModule;
+                    }
+                );
+                /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+                    /*! tslib */ "./node_modules/tslib/tslib.es6.js"
+                );
+                /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+                    /*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js"
+                );
+                /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+                    /*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js"
+                );
+                /* harmony import */ var _films_to_watch_index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+                    /*! ./films-to-watch/index */ "./src/app/core/store-facades/films-to-watch/index.ts"
+                );
+
+                let StoreFacadeModule = class StoreFacadeModule {};
+                StoreFacadeModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"](
+                    [
+                        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
+                            declarations: [],
+                            imports: [_angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"]],
+                            exports: [],
+                            providers: [_films_to_watch_index__WEBPACK_IMPORTED_MODULE_3__["FilmsToWatchStoreFacade"]],
+                        }),
+                    ],
+                    StoreFacadeModule
+                );
+
+                /***/
+            },
+
+        /***/ "./src/app/core/store/films-to-watch/films-to-watch.action.ts":
+            /*!********************************************************************!*\
+  !*** ./src/app/core/store/films-to-watch/films-to-watch.action.ts ***!
+  \********************************************************************/
+            /*! exports provided: FilmsToWatchActionTypes, AddFilmToWatchList, RemoveFilmFromWatchList, GetFilmsToWatch, GetFilmsToWatchSuccess */
+            /***/ function(module, __webpack_exports__, __webpack_require__) {
+                "use strict";
+                __webpack_require__.r(__webpack_exports__);
+                /* harmony export (binding) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "FilmsToWatchActionTypes",
+                    function() {
+                        return FilmsToWatchActionTypes;
+                    }
+                );
+                /* harmony export (binding) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "AddFilmToWatchList",
+                    function() {
+                        return AddFilmToWatchList;
+                    }
+                );
+                /* harmony export (binding) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "RemoveFilmFromWatchList",
+                    function() {
+                        return RemoveFilmFromWatchList;
+                    }
+                );
+                /* harmony export (binding) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "GetFilmsToWatch",
+                    function() {
+                        return GetFilmsToWatch;
+                    }
+                );
+                /* harmony export (binding) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "GetFilmsToWatchSuccess",
+                    function() {
+                        return GetFilmsToWatchSuccess;
+                    }
+                );
+                /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+                    /*! tslib */ "./node_modules/tslib/tslib.es6.js"
+                );
+
+                /**
+                 * Types of films-to-watch actions.
+                 */
+                var FilmsToWatchActionTypes;
+                (function(FilmsToWatchActionTypes) {
+                    FilmsToWatchActionTypes["ADD_FILM_TO_WATCH_LIST"] = "[Films-to-watch] ADD_FILM_TO_WATCH_LIST";
+                    FilmsToWatchActionTypes["REMOVE_FILM_FROM_WATCH_LIST"] =
+                        "[Films-to-watch] REMOVE_FILM_FROM_WATCH_LIST";
+                    FilmsToWatchActionTypes["GET_FILMS_TO_WATCH"] = "[Films-to-watch] GET_FILMS_TO_WATCH";
+                    FilmsToWatchActionTypes["GET_FILMS_TO_WATCH_SUCCESS"] =
+                        "[Films-to-watch] GET_FILMS_TO_WATCH_SUCCESS";
+                })(FilmsToWatchActionTypes || (FilmsToWatchActionTypes = {}));
+                /**
+                 * ADD_FILM_TO_WATCH_LIST action class.
+                 */
+                class AddFilmToWatchList {
+                    constructor(payload) {
+                        this.type = FilmsToWatchActionTypes.ADD_FILM_TO_WATCH_LIST;
+                        this.payload = payload;
+                    }
+                }
+                /**
+                 * REMOVE_FILM_FROM_WATCH_LIST action class.
+                 */
+                class RemoveFilmFromWatchList {
+                    constructor(payload) {
+                        this.type = FilmsToWatchActionTypes.REMOVE_FILM_FROM_WATCH_LIST;
+                        this.payload = payload;
+                    }
+                }
+                /**
+                 * GET_FILMS_TO_WATCH action class.
+                 */
+                class GetFilmsToWatch {
+                    constructor() {
+                        this.type = FilmsToWatchActionTypes.GET_FILMS_TO_WATCH;
+                    }
+                }
+                /**
+                 * GET_FILMS_TO_WATCH action class.
+                 */
+                class GetFilmsToWatchSuccess {
+                    constructor(payload) {
+                        this.type = FilmsToWatchActionTypes.GET_FILMS_TO_WATCH_SUCCESS;
+                        this.payload = payload;
+                    }
+                }
+
+                /***/
+            },
+
+        /***/ "./src/app/core/store/films-to-watch/films-to-watch.reducer.ts":
+            /*!*********************************************************************!*\
+  !*** ./src/app/core/store/films-to-watch/films-to-watch.reducer.ts ***!
+  \*********************************************************************/
+            /*! exports provided: initialState, filmsToWatchReducer */
+            /***/ function(module, __webpack_exports__, __webpack_require__) {
+                "use strict";
+                __webpack_require__.r(__webpack_exports__);
+                /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initialState", function() {
+                    return initialState;
+                });
+                /* harmony export (binding) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "filmsToWatchReducer",
+                    function() {
+                        return filmsToWatchReducer;
+                    }
+                );
+                /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+                    /*! tslib */ "./node_modules/tslib/tslib.es6.js"
+                );
+                /* harmony import */ var _films_to_watch_action__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+                    /*! ./films-to-watch.action */ "./src/app/core/store/films-to-watch/films-to-watch.action.ts"
+                );
+
+                /**
+                 * Initial state for reducer.
+                 */
+                const initialState = {
+                    filmsToWatch: [],
+                };
+                /**
+                 * Reducer function that reduce films to watch actions.
+                 */
+                const filmsToWatchReducer = (state = initialState, action) => {
+                    switch (action.type) {
+                        case _films_to_watch_action__WEBPACK_IMPORTED_MODULE_1__["FilmsToWatchActionTypes"]
+                            .ADD_FILM_TO_WATCH_LIST: {
+                            return Object.assign({}, state, { filmsToWatch: [...state.filmsToWatch, action.payload] });
+                        }
+                        case _films_to_watch_action__WEBPACK_IMPORTED_MODULE_1__["FilmsToWatchActionTypes"]
+                            .REMOVE_FILM_FROM_WATCH_LIST: {
+                            return Object.assign({}, state, {
+                                filmsToWatch: state.filmsToWatch.filter(movie => movie.id !== action.payload.id),
+                            });
+                        }
+                        case _films_to_watch_action__WEBPACK_IMPORTED_MODULE_1__["FilmsToWatchActionTypes"]
+                            .GET_FILMS_TO_WATCH_SUCCESS:
+                            return Object.assign({}, state, {
+                                filmsToWatch: [...state.filmsToWatch, ...action.payload],
+                            });
+                        default: {
+                            return state;
+                        }
+                    }
+                };
+
+                /***/
+            },
+
+        /***/ "./src/app/core/store/films-to-watch/films-to-watch.selector.ts":
+            /*!**********************************************************************!*\
+  !*** ./src/app/core/store/films-to-watch/films-to-watch.selector.ts ***!
+  \**********************************************************************/
+            /*! exports provided: selectFilmToWatchState, selectFilmToWatchList */
+            /***/ function(module, __webpack_exports__, __webpack_require__) {
+                "use strict";
+                __webpack_require__.r(__webpack_exports__);
+                /* harmony export (binding) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "selectFilmToWatchState",
+                    function() {
+                        return selectFilmToWatchState;
+                    }
+                );
+                /* harmony export (binding) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "selectFilmToWatchList",
+                    function() {
+                        return selectFilmToWatchList;
+                    }
+                );
+                /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+                    /*! tslib */ "./node_modules/tslib/tslib.es6.js"
+                );
+                /* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+                    /*! @ngrx/store */ "./node_modules/@ngrx/store/fesm2015/store.js"
+                );
+
+                const selectFilmToWatchState = state => state.filmsToWatch;
+                const selectFilmToWatchList = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(
+                    selectFilmToWatchState,
+                    state => state.filmsToWatch
+                );
+
+                /***/
+            },
+
+        /***/ "./src/app/core/store/films-to-watch/index.ts":
+            /*!****************************************************!*\
+  !*** ./src/app/core/store/films-to-watch/index.ts ***!
+  \****************************************************/
+            /*! exports provided: FilmsToWatchActionTypes, AddFilmToWatchList, RemoveFilmFromWatchList, GetFilmsToWatch, GetFilmsToWatchSuccess, initialState, filmsToWatchReducer, selectFilmToWatchState, selectFilmToWatchList */
+            /***/ function(module, __webpack_exports__, __webpack_require__) {
+                "use strict";
+                __webpack_require__.r(__webpack_exports__);
+                /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+                    /*! tslib */ "./node_modules/tslib/tslib.es6.js"
+                );
+                /* harmony import */ var _films_to_watch_action__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+                    /*! ./films-to-watch.action */ "./src/app/core/store/films-to-watch/films-to-watch.action.ts"
+                );
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "FilmsToWatchActionTypes",
+                    function() {
+                        return _films_to_watch_action__WEBPACK_IMPORTED_MODULE_1__["FilmsToWatchActionTypes"];
+                    }
+                );
+
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "AddFilmToWatchList",
+                    function() {
+                        return _films_to_watch_action__WEBPACK_IMPORTED_MODULE_1__["AddFilmToWatchList"];
+                    }
+                );
+
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "RemoveFilmFromWatchList",
+                    function() {
+                        return _films_to_watch_action__WEBPACK_IMPORTED_MODULE_1__["RemoveFilmFromWatchList"];
+                    }
+                );
+
+                /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "GetFilmsToWatch", function() {
+                    return _films_to_watch_action__WEBPACK_IMPORTED_MODULE_1__["GetFilmsToWatch"];
+                });
+
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "GetFilmsToWatchSuccess",
+                    function() {
+                        return _films_to_watch_action__WEBPACK_IMPORTED_MODULE_1__["GetFilmsToWatchSuccess"];
+                    }
+                );
+
+                /* harmony import */ var _films_to_watch_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+                    /*! ./films-to-watch.reducer */ "./src/app/core/store/films-to-watch/films-to-watch.reducer.ts"
+                );
+                /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "initialState", function() {
+                    return _films_to_watch_reducer__WEBPACK_IMPORTED_MODULE_2__["initialState"];
+                });
+
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "filmsToWatchReducer",
+                    function() {
+                        return _films_to_watch_reducer__WEBPACK_IMPORTED_MODULE_2__["filmsToWatchReducer"];
+                    }
+                );
+
+                /* harmony import */ var _films_to_watch_selector__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+                    /*! ./films-to-watch.selector */ "./src/app/core/store/films-to-watch/films-to-watch.selector.ts"
+                );
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "selectFilmToWatchState",
+                    function() {
+                        return _films_to_watch_selector__WEBPACK_IMPORTED_MODULE_3__["selectFilmToWatchState"];
+                    }
+                );
+
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "selectFilmToWatchList",
+                    function() {
+                        return _films_to_watch_selector__WEBPACK_IMPORTED_MODULE_3__["selectFilmToWatchList"];
+                    }
+                );
+
+                /***/
+            },
+
+        /***/ "./src/app/core/store/index.ts":
+            /*!*************************************!*\
+  !*** ./src/app/core/store/index.ts ***!
+  \*************************************/
+            /*! exports provided: reducers, FilmsToWatchActionTypes, AddFilmToWatchList, RemoveFilmFromWatchList, GetFilmsToWatch, GetFilmsToWatchSuccess, initialState, filmsToWatchReducer, selectFilmToWatchState, selectFilmToWatchList */
+            /***/ function(module, __webpack_exports__, __webpack_require__) {
+                "use strict";
+                __webpack_require__.r(__webpack_exports__);
+                /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+                    /*! tslib */ "./node_modules/tslib/tslib.es6.js"
+                );
+                /* harmony import */ var _films_to_watch_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+                    /*! ./films-to-watch/index */ "./src/app/core/store/films-to-watch/index.ts"
+                );
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "FilmsToWatchActionTypes",
+                    function() {
+                        return _films_to_watch_index__WEBPACK_IMPORTED_MODULE_1__["FilmsToWatchActionTypes"];
+                    }
+                );
+
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "AddFilmToWatchList",
+                    function() {
+                        return _films_to_watch_index__WEBPACK_IMPORTED_MODULE_1__["AddFilmToWatchList"];
+                    }
+                );
+
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "RemoveFilmFromWatchList",
+                    function() {
+                        return _films_to_watch_index__WEBPACK_IMPORTED_MODULE_1__["RemoveFilmFromWatchList"];
+                    }
+                );
+
+                /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "GetFilmsToWatch", function() {
+                    return _films_to_watch_index__WEBPACK_IMPORTED_MODULE_1__["GetFilmsToWatch"];
+                });
+
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "GetFilmsToWatchSuccess",
+                    function() {
+                        return _films_to_watch_index__WEBPACK_IMPORTED_MODULE_1__["GetFilmsToWatchSuccess"];
+                    }
+                );
+
+                /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "initialState", function() {
+                    return _films_to_watch_index__WEBPACK_IMPORTED_MODULE_1__["initialState"];
+                });
+
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "filmsToWatchReducer",
+                    function() {
+                        return _films_to_watch_index__WEBPACK_IMPORTED_MODULE_1__["filmsToWatchReducer"];
+                    }
+                );
+
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "selectFilmToWatchState",
+                    function() {
+                        return _films_to_watch_index__WEBPACK_IMPORTED_MODULE_1__["selectFilmToWatchState"];
+                    }
+                );
+
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "selectFilmToWatchList",
+                    function() {
+                        return _films_to_watch_index__WEBPACK_IMPORTED_MODULE_1__["selectFilmToWatchList"];
+                    }
+                );
+
+                /* harmony import */ var _reducers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+                    /*! ./reducers */ "./src/app/core/store/reducers.ts"
+                );
+                /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "reducers", function() {
+                    return _reducers__WEBPACK_IMPORTED_MODULE_2__["reducers"];
+                });
+
+                /***/
+            },
+
+        /***/ "./src/app/core/store/reducers.ts":
+            /*!****************************************!*\
+  !*** ./src/app/core/store/reducers.ts ***!
+  \****************************************/
+            /*! exports provided: reducers */
+            /***/ function(module, __webpack_exports__, __webpack_require__) {
+                "use strict";
+                __webpack_require__.r(__webpack_exports__);
+                /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "reducers", function() {
+                    return reducers;
+                });
+                /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+                    /*! tslib */ "./node_modules/tslib/tslib.es6.js"
+                );
+                /* harmony import */ var _films_to_watch_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+                    /*! ./films-to-watch/index */ "./src/app/core/store/films-to-watch/index.ts"
+                );
+
+                /**
+                 * Reducers Map.
+                 */
+                const reducers = {
+                    filmsToWatch: _films_to_watch_index__WEBPACK_IMPORTED_MODULE_1__["filmsToWatchReducer"],
+                };
 
                 /***/
             },
@@ -1218,8 +2507,8 @@ and limitations under the License.
                 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
                     /*! tslib */ "./node_modules/tslib/tslib.es6.js"
                 );
-                /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
-                    /*! ../constants */ "./src/app/core/constants/index.ts"
+                /* harmony import */ var _constants_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+                    /*! ../constants/index */ "./src/app/core/constants/index.ts"
                 );
 
                 /**
@@ -1228,16 +2517,16 @@ and limitations under the License.
                 const getImagesUrl = (searchValue, who) => {
                     switch (who) {
                         case "poster":
-                            return `${_constants__WEBPACK_IMPORTED_MODULE_1__["BASE_SEARCH_IMAGES_URL"]}${
-                                _constants__WEBPACK_IMPORTED_MODULE_1__["POSTER_IMAGE_SIZE_PX"]
+                            return `${_constants_index__WEBPACK_IMPORTED_MODULE_1__["BASE_SEARCH_IMAGES_URL"]}${
+                                _constants_index__WEBPACK_IMPORTED_MODULE_1__["POSTER_IMAGE_SIZE_PX"]
                             }${searchValue}`;
                         case "actor":
-                            return `${_constants__WEBPACK_IMPORTED_MODULE_1__["BASE_SEARCH_IMAGES_URL"]}${
-                                _constants__WEBPACK_IMPORTED_MODULE_1__["ACTOR_IMAGE_SIZE_PX"]
+                            return `${_constants_index__WEBPACK_IMPORTED_MODULE_1__["BASE_SEARCH_IMAGES_URL"]}${
+                                _constants_index__WEBPACK_IMPORTED_MODULE_1__["ACTOR_IMAGE_SIZE_PX"]
                             }${searchValue}`;
                         default:
-                            return `${_constants__WEBPACK_IMPORTED_MODULE_1__["BASE_SEARCH_IMAGES_URL"]}${
-                                _constants__WEBPACK_IMPORTED_MODULE_1__["DEFAULT_IMAGE_SIZE_PX"]
+                            return `${_constants_index__WEBPACK_IMPORTED_MODULE_1__["BASE_SEARCH_IMAGES_URL"]}${
+                                _constants_index__WEBPACK_IMPORTED_MODULE_1__["DEFAULT_IMAGE_SIZE_PX"]
                             }${searchValue}`;
                     }
                 };
@@ -1263,16 +2552,16 @@ and limitations under the License.
                 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
                     /*! tslib */ "./node_modules/tslib/tslib.es6.js"
                 );
-                /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
-                    /*! ../constants */ "./src/app/core/constants/index.ts"
+                /* harmony import */ var _constants_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+                    /*! ../constants/index */ "./src/app/core/constants/index.ts"
                 );
 
                 /**
                  * Returns search url for movie details.
                  */
                 const getMovieDetailsUrl = id => {
-                    return `${_constants__WEBPACK_IMPORTED_MODULE_1__["BASE_SEARCH_URL"]}movie/${id}?api_key=${
-                        _constants__WEBPACK_IMPORTED_MODULE_1__["API_KEY"]
+                    return `${_constants_index__WEBPACK_IMPORTED_MODULE_1__["BASE_SEARCH_URL"]}movie/${id}?api_key=${
+                        _constants_index__WEBPACK_IMPORTED_MODULE_1__["API_KEY"]
                     }&append_to_response=videos,credits`;
                 };
 
@@ -1325,16 +2614,16 @@ and limitations under the License.
                 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
                     /*! tslib */ "./node_modules/tslib/tslib.es6.js"
                 );
-                /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
-                    /*! ../constants */ "./src/app/core/constants/index.ts"
+                /* harmony import */ var _constants_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+                    /*! ../constants/index */ "./src/app/core/constants/index.ts"
                 );
 
                 /**
                  * Returns search url for search movies.
                  */
                 const getSearchUrl = (searchValue, page) => {
-                    return `${_constants__WEBPACK_IMPORTED_MODULE_1__["BASE_SEARCH_URL"]}search/movie?api_key=${
-                        _constants__WEBPACK_IMPORTED_MODULE_1__["API_KEY"]
+                    return `${_constants_index__WEBPACK_IMPORTED_MODULE_1__["BASE_SEARCH_URL"]}search/movie?api_key=${
+                        _constants_index__WEBPACK_IMPORTED_MODULE_1__["API_KEY"]
                     }&query=${searchValue}&page=${page}`;
                 };
 
@@ -1345,7 +2634,7 @@ and limitations under the License.
             /*!*************************************!*\
   !*** ./src/app/core/utils/index.ts ***!
   \*************************************/
-            /*! exports provided: getSearchUrl, getImagesUrl, getMovieDetailsUrl, getMovieTrailerUrl */
+            /*! exports provided: getSearchUrl, getImagesUrl, getMovieDetailsUrl, getMovieTrailerUrl, checkEmptyResults */
             /***/ function(module, __webpack_exports__, __webpack_require__) {
                 "use strict";
                 __webpack_require__.r(__webpack_exports__);
@@ -1388,6 +2677,214 @@ and limitations under the License.
                     }
                 );
 
+                /* harmony import */ var _check_empty_results_util__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+                    /*! ./check-empty-results.util */ "./src/app/core/utils/check-empty-results.util.ts"
+                );
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "checkEmptyResults",
+                    function() {
+                        return _check_empty_results_util__WEBPACK_IMPORTED_MODULE_5__["checkEmptyResults"];
+                    }
+                );
+
+                /***/
+            },
+
+        /***/ "./src/app/films-to-watch-page/films-to-watch-page.component.scss":
+            /*!************************************************************************!*\
+  !*** ./src/app/films-to-watch-page/films-to-watch-page.component.scss ***!
+  \************************************************************************/
+            /*! exports provided: default */
+            /***/ function(module, __webpack_exports__, __webpack_require__) {
+                "use strict";
+                __webpack_require__.r(__webpack_exports__);
+                /* harmony default export */ __webpack_exports__["default"] =
+                    ".mat-expansion-panel,\n.container {\n  width: 85%;\n  margin: 0.25rem auto;\n  margin-top: 1rem;\n  text-align: center;\n}\n\n.mat-panel-title {\n  flex-grow: 0;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvZmlsbXMtdG8td2F0Y2gtcGFnZS9DOlxcVXNlcnNcXEloYXJfUHJhdmF0b3JhdVxcRGVza3RvcFxcdGFza3NcXGFuZ3VsYXItYXBwLXNhbmRib3gvc3JjXFxhcHBcXGZpbG1zLXRvLXdhdGNoLXBhZ2VcXGZpbG1zLXRvLXdhdGNoLXBhZ2UuY29tcG9uZW50LnNjc3MiLCJzcmMvYXBwL2ZpbG1zLXRvLXdhdGNoLXBhZ2UvZmlsbXMtdG8td2F0Y2gtcGFnZS5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTs7RUFFSSxVQUFBO0VBQ0Esb0JBQUE7RUFDQSxnQkFBQTtFQUNBLGtCQUFBO0FDQ0o7O0FERUE7RUFDSSxZQUFBO0FDQ0oiLCJmaWxlIjoic3JjL2FwcC9maWxtcy10by13YXRjaC1wYWdlL2ZpbG1zLXRvLXdhdGNoLXBhZ2UuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIubWF0LWV4cGFuc2lvbi1wYW5lbCxcbi5jb250YWluZXIge1xuICAgIHdpZHRoOiA4NSU7XG4gICAgbWFyZ2luOiAwLjI1cmVtIGF1dG87XG4gICAgbWFyZ2luLXRvcDogMXJlbTtcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XG59XG5cbi5tYXQtcGFuZWwtdGl0bGUge1xuICAgIGZsZXgtZ3JvdzogMDtcbn1cbiIsIi5tYXQtZXhwYW5zaW9uLXBhbmVsLFxuLmNvbnRhaW5lciB7XG4gIHdpZHRoOiA4NSU7XG4gIG1hcmdpbjogMC4yNXJlbSBhdXRvO1xuICBtYXJnaW4tdG9wOiAxcmVtO1xuICB0ZXh0LWFsaWduOiBjZW50ZXI7XG59XG5cbi5tYXQtcGFuZWwtdGl0bGUge1xuICBmbGV4LWdyb3c6IDA7XG59Il19 */";
+
+                /***/
+            },
+
+        /***/ "./src/app/films-to-watch-page/films-to-watch-page.component.ts":
+            /*!**********************************************************************!*\
+  !*** ./src/app/films-to-watch-page/films-to-watch-page.component.ts ***!
+  \**********************************************************************/
+            /*! exports provided: FilmsToWatchPageComponent */
+            /***/ function(module, __webpack_exports__, __webpack_require__) {
+                "use strict";
+                __webpack_require__.r(__webpack_exports__);
+                /* harmony export (binding) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "FilmsToWatchPageComponent",
+                    function() {
+                        return FilmsToWatchPageComponent;
+                    }
+                );
+                /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+                    /*! tslib */ "./node_modules/tslib/tslib.es6.js"
+                );
+                /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+                    /*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js"
+                );
+                /* harmony import */ var _core_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+                    /*! ../core/index */ "./src/app/core/index.ts"
+                );
+
+                let FilmsToWatchPageComponent = class FilmsToWatchPageComponent {
+                    constructor(filmsToWatchStoreFacade) {
+                        /**
+                         * Property for Angular material open-close panel.
+                         */
+                        this.panelOpenState = false;
+                        this.filmsToWatchStoreFacade = filmsToWatchStoreFacade;
+                    }
+                    /**
+                     * Get films from store to filmsToWatch$ property when ther component will mount.
+                     */
+                    ngOnInit() {
+                        this.filmsToWatch$ = this.filmsToWatchStoreFacade.filmsToWatch$;
+                    }
+                    /**
+                     * Remove movie from Store, when the remove button was clicked.
+                     */
+                    onRemoveButtonClick(movie) {
+                        this.filmsToWatchStoreFacade.removeFilmFromWatchList(movie);
+                    }
+                };
+                FilmsToWatchPageComponent.ctorParameters = () => [
+                    { type: _core_index__WEBPACK_IMPORTED_MODULE_2__["FilmsToWatchStoreFacade"] },
+                ];
+                FilmsToWatchPageComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"](
+                    [
+                        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+                            selector: "app-films-to-watch-page",
+                            template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](
+                                __webpack_require__(
+                                    /*! raw-loader!./films-to-watch-page.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/films-to-watch-page/films-to-watch-page.component.html"
+                                )
+                            ).default,
+                            styles: [
+                                tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](
+                                    __webpack_require__(
+                                        /*! ./films-to-watch-page.component.scss */ "./src/app/films-to-watch-page/films-to-watch-page.component.scss"
+                                    )
+                                ).default,
+                            ],
+                        }),
+                    ],
+                    FilmsToWatchPageComponent
+                );
+
+                /***/
+            },
+
+        /***/ "./src/app/films-to-watch-page/films-to-watch-page.module.ts":
+            /*!*******************************************************************!*\
+  !*** ./src/app/films-to-watch-page/films-to-watch-page.module.ts ***!
+  \*******************************************************************/
+            /*! exports provided: FilmsToWatchPageModule */
+            /***/ function(module, __webpack_exports__, __webpack_require__) {
+                "use strict";
+                __webpack_require__.r(__webpack_exports__);
+                /* harmony export (binding) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "FilmsToWatchPageModule",
+                    function() {
+                        return FilmsToWatchPageModule;
+                    }
+                );
+                /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+                    /*! tslib */ "./node_modules/tslib/tslib.es6.js"
+                );
+                /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+                    /*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js"
+                );
+                /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+                    /*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js"
+                );
+                /* harmony import */ var _films_to_watch_page_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+                    /*! ./films-to-watch-page.component */ "./src/app/films-to-watch-page/films-to-watch-page.component.ts"
+                );
+                /* harmony import */ var _angular_material_list__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+                    /*! @angular/material/list */ "./node_modules/@angular/material/esm2015/list.js"
+                );
+                /* harmony import */ var _angular_material_expansion__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+                    /*! @angular/material/expansion */ "./node_modules/@angular/material/esm2015/expansion.js"
+                );
+                /* harmony import */ var _angular_material_button__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+                    /*! @angular/material/button */ "./node_modules/@angular/material/esm2015/button.js"
+                );
+
+                let FilmsToWatchPageModule = class FilmsToWatchPageModule {};
+                FilmsToWatchPageModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"](
+                    [
+                        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
+                            declarations: [
+                                _films_to_watch_page_component__WEBPACK_IMPORTED_MODULE_3__[
+                                    "FilmsToWatchPageComponent"
+                                ],
+                            ],
+                            imports: [
+                                _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
+                                _angular_material_list__WEBPACK_IMPORTED_MODULE_4__["MatListModule"],
+                                _angular_material_expansion__WEBPACK_IMPORTED_MODULE_5__["MatExpansionModule"],
+                                _angular_material_button__WEBPACK_IMPORTED_MODULE_6__["MatButtonModule"],
+                            ],
+                        }),
+                    ],
+                    FilmsToWatchPageModule
+                );
+
+                /***/
+            },
+
+        /***/ "./src/app/films-to-watch-page/index.ts":
+            /*!**********************************************!*\
+  !*** ./src/app/films-to-watch-page/index.ts ***!
+  \**********************************************/
+            /*! exports provided: FilmsToWatchPageModule */
+            /***/ function(module, __webpack_exports__, __webpack_require__) {
+                "use strict";
+                __webpack_require__.r(__webpack_exports__);
+                /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+                    /*! tslib */ "./node_modules/tslib/tslib.es6.js"
+                );
+                /* harmony import */ var _films_to_watch_page_module__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+                    /*! ./films-to-watch-page.module */ "./src/app/films-to-watch-page/films-to-watch-page.module.ts"
+                );
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "FilmsToWatchPageModule",
+                    function() {
+                        return _films_to_watch_page_module__WEBPACK_IMPORTED_MODULE_1__["FilmsToWatchPageModule"];
+                    }
+                );
+
+                /***/
+            },
+
+        /***/ "./src/app/movie-search-page/index.ts":
+            /*!********************************************!*\
+  !*** ./src/app/movie-search-page/index.ts ***!
+  \********************************************/
+            /*! exports provided: MovieSearchPageModule */
+            /***/ function(module, __webpack_exports__, __webpack_require__) {
+                "use strict";
+                __webpack_require__.r(__webpack_exports__);
+                /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+                    /*! tslib */ "./node_modules/tslib/tslib.es6.js"
+                );
+                /* harmony import */ var _movie_search_page_module__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+                    /*! ./movie-search-page.module */ "./src/app/movie-search-page/movie-search-page.module.ts"
+                );
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "MovieSearchPageModule",
+                    function() {
+                        return _movie_search_page_module__WEBPACK_IMPORTED_MODULE_1__["MovieSearchPageModule"];
+                    }
+                );
+
                 /***/
             },
 
@@ -1400,7 +2897,7 @@ and limitations under the License.
                 "use strict";
                 __webpack_require__.r(__webpack_exports__);
                 /* harmony default export */ __webpack_exports__["default"] =
-                    ".card-panel {\n  border: 0.06rem solid #5555;\n  margin: 0 0.625rem;\n  margin-bottom: 1rem;\n  padding: 0 0.625rem;\n  width: 380px;\n  min-height: 99%;\n  border-radius: 0.3rem;\n  background-color: #fffc;\n  text-align: center;\n}\n.card-panel .card-release-date {\n  text-align: center;\n}\n.card-panel .card-poster {\n  width: 100%;\n}\n.card-title {\n  text-align: center;\n  border-radius: 0.3rem;\n  padding: 0.625rem 0;\n  font-size: 1.375rem;\n}\n.actors-title {\n  margin: 0;\n  font-size: 1rem;\n  text-transform: uppercase;\n  text-align: center;\n}\n.actors-list {\n  display: flex;\n  justify-content: space-around;\n  flex-wrap: wrap;\n  padding: 0;\n  list-style: none;\n}\n.actors-list .actors-list__item {\n  margin: 1rem 0;\n  padding: 0;\n  max-width: 18%;\n  border-radius: 0.3rem;\n}\n.actors-list .actors-list__item .actors-list__actor-name {\n  margin: 0 auto;\n  min-height: 4.125rem;\n}\n.actors-list .actors-list__item .actors-list__actor-photo {\n  border-radius: 0.3rem;\n  width: 100%;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbW92aWUtc2VhcmNoLXBhZ2UvbW92aWUtbGlzdC1pdGVtL0M6XFxVc2Vyc1xcSWhhcl9QcmF2YXRvcmF1XFxEZXNrdG9wXFx0YXNrc1xcYW5ndWxhci1hcHAtc2FuZGJveC9zcmNcXGFwcFxcbW92aWUtc2VhcmNoLXBhZ2VcXG1vdmllLWxpc3QtaXRlbVxcbW92aWUtbGlzdC1pdGVtLmNvbXBvbmVudC5zY3NzIiwic3JjL2FwcC9tb3ZpZS1zZWFyY2gtcGFnZS9tb3ZpZS1saXN0LWl0ZW0vbW92aWUtbGlzdC1pdGVtLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksMkJBQUE7RUFDQSxrQkFBQTtFQUNBLG1CQUFBO0VBQ0EsbUJBQUE7RUFDQSxZQUFBO0VBQ0EsZUFBQTtFQUNBLHFCQUFBO0VBQ0EsdUJBQUE7RUFDQSxrQkFBQTtBQ0NKO0FEQ0k7RUFDSSxrQkFBQTtBQ0NSO0FERUk7RUFDSSxXQUFBO0FDQVI7QURJQTtFQUNJLGtCQUFBO0VBQ0EscUJBQUE7RUFDQSxtQkFBQTtFQUNBLG1CQUFBO0FDREo7QURJQTtFQUNJLFNBQUE7RUFDQSxlQUFBO0VBQ0EseUJBQUE7RUFDQSxrQkFBQTtBQ0RKO0FESUE7RUFDSSxhQUFBO0VBQ0EsNkJBQUE7RUFDQSxlQUFBO0VBQ0EsVUFBQTtFQUNBLGdCQUFBO0FDREo7QURHSTtFQUNJLGNBQUE7RUFDQSxVQUFBO0VBQ0EsY0FBQTtFQUNBLHFCQUFBO0FDRFI7QURHUTtFQUNJLGNBQUE7RUFDQSxvQkFBQTtBQ0RaO0FESVE7RUFDSSxxQkFBQTtFQUNBLFdBQUE7QUNGWiIsImZpbGUiOiJzcmMvYXBwL21vdmllLXNlYXJjaC1wYWdlL21vdmllLWxpc3QtaXRlbS9tb3ZpZS1saXN0LWl0ZW0uY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuY2FyZC1wYW5lbCB7XG4gICAgYm9yZGVyOiAwLjA2cmVtIHNvbGlkICM1NTU1O1xuICAgIG1hcmdpbjogMCAwLjYyNXJlbTtcbiAgICBtYXJnaW4tYm90dG9tOiAxcmVtO1xuICAgIHBhZGRpbmc6IDAgMC42MjVyZW07XG4gICAgd2lkdGg6IDM4MHB4O1xuICAgIG1pbi1oZWlnaHQ6IDk5JTtcbiAgICBib3JkZXItcmFkaXVzOiAwLjNyZW07XG4gICAgYmFja2dyb3VuZC1jb2xvcjogI2ZmZmM7XG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xuXG4gICAgJiAuY2FyZC1yZWxlYXNlLWRhdGUge1xuICAgICAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gICAgfVxuXG4gICAgJiAuY2FyZC1wb3N0ZXIge1xuICAgICAgICB3aWR0aDogMTAwJTtcbiAgICB9XG59XG5cbi5jYXJkLXRpdGxlIHtcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gICAgYm9yZGVyLXJhZGl1czogMC4zcmVtO1xuICAgIHBhZGRpbmc6IDAuNjI1cmVtIDA7XG4gICAgZm9udC1zaXplOiAxLjM3NXJlbTtcbn1cblxuLmFjdG9ycy10aXRsZSB7XG4gICAgbWFyZ2luOiAwO1xuICAgIGZvbnQtc2l6ZTogMXJlbTtcbiAgICB0ZXh0LXRyYW5zZm9ybTogdXBwZXJjYXNlO1xuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcbn1cblxuLmFjdG9ycy1saXN0IHtcbiAgICBkaXNwbGF5OiBmbGV4O1xuICAgIGp1c3RpZnktY29udGVudDogc3BhY2UtYXJvdW5kO1xuICAgIGZsZXgtd3JhcDogd3JhcDtcbiAgICBwYWRkaW5nOiAwO1xuICAgIGxpc3Qtc3R5bGU6IG5vbmU7XG5cbiAgICAmIC5hY3RvcnMtbGlzdF9faXRlbSB7XG4gICAgICAgIG1hcmdpbjogMXJlbSAwO1xuICAgICAgICBwYWRkaW5nOiAwO1xuICAgICAgICBtYXgtd2lkdGg6IDE4JTtcbiAgICAgICAgYm9yZGVyLXJhZGl1czogMC4zcmVtO1xuXG4gICAgICAgICYgLmFjdG9ycy1saXN0X19hY3Rvci1uYW1lIHtcbiAgICAgICAgICAgIG1hcmdpbjogMCBhdXRvO1xuICAgICAgICAgICAgbWluLWhlaWdodDogNC4xMjVyZW07XG4gICAgICAgIH1cblxuICAgICAgICAmIC5hY3RvcnMtbGlzdF9fYWN0b3ItcGhvdG8ge1xuICAgICAgICAgICAgYm9yZGVyLXJhZGl1czogMC4zcmVtO1xuICAgICAgICAgICAgd2lkdGg6IDEwMCU7XG4gICAgICAgIH1cbiAgICB9XG59XG4iLCIuY2FyZC1wYW5lbCB7XG4gIGJvcmRlcjogMC4wNnJlbSBzb2xpZCAjNTU1NTtcbiAgbWFyZ2luOiAwIDAuNjI1cmVtO1xuICBtYXJnaW4tYm90dG9tOiAxcmVtO1xuICBwYWRkaW5nOiAwIDAuNjI1cmVtO1xuICB3aWR0aDogMzgwcHg7XG4gIG1pbi1oZWlnaHQ6IDk5JTtcbiAgYm9yZGVyLXJhZGl1czogMC4zcmVtO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjZmZmYztcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xufVxuLmNhcmQtcGFuZWwgLmNhcmQtcmVsZWFzZS1kYXRlIHtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xufVxuLmNhcmQtcGFuZWwgLmNhcmQtcG9zdGVyIHtcbiAgd2lkdGg6IDEwMCU7XG59XG5cbi5jYXJkLXRpdGxlIHtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xuICBib3JkZXItcmFkaXVzOiAwLjNyZW07XG4gIHBhZGRpbmc6IDAuNjI1cmVtIDA7XG4gIGZvbnQtc2l6ZTogMS4zNzVyZW07XG59XG5cbi5hY3RvcnMtdGl0bGUge1xuICBtYXJnaW46IDA7XG4gIGZvbnQtc2l6ZTogMXJlbTtcbiAgdGV4dC10cmFuc2Zvcm06IHVwcGVyY2FzZTtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xufVxuXG4uYWN0b3JzLWxpc3Qge1xuICBkaXNwbGF5OiBmbGV4O1xuICBqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWFyb3VuZDtcbiAgZmxleC13cmFwOiB3cmFwO1xuICBwYWRkaW5nOiAwO1xuICBsaXN0LXN0eWxlOiBub25lO1xufVxuLmFjdG9ycy1saXN0IC5hY3RvcnMtbGlzdF9faXRlbSB7XG4gIG1hcmdpbjogMXJlbSAwO1xuICBwYWRkaW5nOiAwO1xuICBtYXgtd2lkdGg6IDE4JTtcbiAgYm9yZGVyLXJhZGl1czogMC4zcmVtO1xufVxuLmFjdG9ycy1saXN0IC5hY3RvcnMtbGlzdF9faXRlbSAuYWN0b3JzLWxpc3RfX2FjdG9yLW5hbWUge1xuICBtYXJnaW46IDAgYXV0bztcbiAgbWluLWhlaWdodDogNC4xMjVyZW07XG59XG4uYWN0b3JzLWxpc3QgLmFjdG9ycy1saXN0X19pdGVtIC5hY3RvcnMtbGlzdF9fYWN0b3ItcGhvdG8ge1xuICBib3JkZXItcmFkaXVzOiAwLjNyZW07XG4gIHdpZHRoOiAxMDAlO1xufSJdfQ== */";
+                    ".card-panel {\n  border: 0.06rem solid #5555;\n  margin: 0 0.625rem;\n  margin-bottom: 1rem;\n  padding: 0 0.625rem;\n  width: 380px;\n  min-height: 99%;\n  border-radius: 0.3rem;\n  background-color: #fffc;\n  text-align: center;\n}\n.card-panel .card-release-date {\n  text-align: center;\n}\n.card-panel .card-poster {\n  width: 100%;\n}\n.card-title {\n  text-align: center;\n  border-radius: 0.3rem;\n  padding: 0.625rem 0;\n  font-size: 1.375rem;\n}\n.actors-title {\n  margin: 0;\n  font-size: 1rem;\n  text-transform: uppercase;\n  text-align: center;\n}\n.actors-list {\n  display: flex;\n  justify-content: space-around;\n  flex-wrap: wrap;\n  padding: 0;\n  list-style: none;\n}\n.actors-list .actors-list__item {\n  margin: 1rem 0;\n  padding: 0;\n  max-width: 18%;\n  border-radius: 0.3rem;\n}\n.actors-list .actors-list__item .actors-list__actor-name {\n  margin: 0 auto;\n  min-height: 4.125rem;\n}\n.actors-list .actors-list__item .actors-list__actor-photo {\n  border-radius: 0.3rem;\n  width: 100%;\n}\n.wish-list {\n  margin-bottom: 0.25rem;\n}\n.wish-list__checkbox {\n  text-transform: uppercase;\n}\n@media screen and (max-width: 420px) {\n  .card-panel {\n    width: 300px;\n  }\n}\n@media screen and (max-width: 320px) {\n  .card-panel {\n    width: 280px;\n  }\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbW92aWUtc2VhcmNoLXBhZ2UvbW92aWUtbGlzdC1pdGVtL0M6XFxVc2Vyc1xcSWhhcl9QcmF2YXRvcmF1XFxEZXNrdG9wXFx0YXNrc1xcYW5ndWxhci1hcHAtc2FuZGJveC9zcmNcXGFwcFxcbW92aWUtc2VhcmNoLXBhZ2VcXG1vdmllLWxpc3QtaXRlbVxcbW92aWUtbGlzdC1pdGVtLmNvbXBvbmVudC5zY3NzIiwic3JjL2FwcC9tb3ZpZS1zZWFyY2gtcGFnZS9tb3ZpZS1saXN0LWl0ZW0vbW92aWUtbGlzdC1pdGVtLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksMkJBQUE7RUFDQSxrQkFBQTtFQUNBLG1CQUFBO0VBQ0EsbUJBQUE7RUFDQSxZQUFBO0VBQ0EsZUFBQTtFQUNBLHFCQUFBO0VBQ0EsdUJBQUE7RUFDQSxrQkFBQTtBQ0NKO0FEQ0k7RUFDSSxrQkFBQTtBQ0NSO0FERUk7RUFDSSxXQUFBO0FDQVI7QURJQTtFQUNJLGtCQUFBO0VBQ0EscUJBQUE7RUFDQSxtQkFBQTtFQUNBLG1CQUFBO0FDREo7QURJQTtFQUNJLFNBQUE7RUFDQSxlQUFBO0VBQ0EseUJBQUE7RUFDQSxrQkFBQTtBQ0RKO0FESUE7RUFDSSxhQUFBO0VBQ0EsNkJBQUE7RUFDQSxlQUFBO0VBQ0EsVUFBQTtFQUNBLGdCQUFBO0FDREo7QURHSTtFQUNJLGNBQUE7RUFDQSxVQUFBO0VBQ0EsY0FBQTtFQUNBLHFCQUFBO0FDRFI7QURHUTtFQUNJLGNBQUE7RUFDQSxvQkFBQTtBQ0RaO0FESVE7RUFDSSxxQkFBQTtFQUNBLFdBQUE7QUNGWjtBRE9BO0VBQ0ksc0JBQUE7QUNKSjtBRE9BO0VBQ0kseUJBQUE7QUNKSjtBRE9BO0VBQ0k7SUFDSSxZQUFBO0VDSk47QUFDRjtBRE9BO0VBQ0k7SUFDSSxZQUFBO0VDTE47QUFDRiIsImZpbGUiOiJzcmMvYXBwL21vdmllLXNlYXJjaC1wYWdlL21vdmllLWxpc3QtaXRlbS9tb3ZpZS1saXN0LWl0ZW0uY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuY2FyZC1wYW5lbCB7XG4gICAgYm9yZGVyOiAwLjA2cmVtIHNvbGlkICM1NTU1O1xuICAgIG1hcmdpbjogMCAwLjYyNXJlbTtcbiAgICBtYXJnaW4tYm90dG9tOiAxcmVtO1xuICAgIHBhZGRpbmc6IDAgMC42MjVyZW07XG4gICAgd2lkdGg6IDM4MHB4O1xuICAgIG1pbi1oZWlnaHQ6IDk5JTtcbiAgICBib3JkZXItcmFkaXVzOiAwLjNyZW07XG4gICAgYmFja2dyb3VuZC1jb2xvcjogI2ZmZmM7XG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xuXG4gICAgJiAuY2FyZC1yZWxlYXNlLWRhdGUge1xuICAgICAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gICAgfVxuXG4gICAgJiAuY2FyZC1wb3N0ZXIge1xuICAgICAgICB3aWR0aDogMTAwJTtcbiAgICB9XG59XG5cbi5jYXJkLXRpdGxlIHtcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gICAgYm9yZGVyLXJhZGl1czogMC4zcmVtO1xuICAgIHBhZGRpbmc6IDAuNjI1cmVtIDA7XG4gICAgZm9udC1zaXplOiAxLjM3NXJlbTtcbn1cblxuLmFjdG9ycy10aXRsZSB7XG4gICAgbWFyZ2luOiAwO1xuICAgIGZvbnQtc2l6ZTogMXJlbTtcbiAgICB0ZXh0LXRyYW5zZm9ybTogdXBwZXJjYXNlO1xuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcbn1cblxuLmFjdG9ycy1saXN0IHtcbiAgICBkaXNwbGF5OiBmbGV4O1xuICAgIGp1c3RpZnktY29udGVudDogc3BhY2UtYXJvdW5kO1xuICAgIGZsZXgtd3JhcDogd3JhcDtcbiAgICBwYWRkaW5nOiAwO1xuICAgIGxpc3Qtc3R5bGU6IG5vbmU7XG5cbiAgICAmIC5hY3RvcnMtbGlzdF9faXRlbSB7XG4gICAgICAgIG1hcmdpbjogMXJlbSAwO1xuICAgICAgICBwYWRkaW5nOiAwO1xuICAgICAgICBtYXgtd2lkdGg6IDE4JTtcbiAgICAgICAgYm9yZGVyLXJhZGl1czogMC4zcmVtO1xuXG4gICAgICAgICYgLmFjdG9ycy1saXN0X19hY3Rvci1uYW1lIHtcbiAgICAgICAgICAgIG1hcmdpbjogMCBhdXRvO1xuICAgICAgICAgICAgbWluLWhlaWdodDogNC4xMjVyZW07XG4gICAgICAgIH1cblxuICAgICAgICAmIC5hY3RvcnMtbGlzdF9fYWN0b3ItcGhvdG8ge1xuICAgICAgICAgICAgYm9yZGVyLXJhZGl1czogMC4zcmVtO1xuICAgICAgICAgICAgd2lkdGg6IDEwMCU7XG4gICAgICAgIH1cbiAgICB9XG59XG5cbi53aXNoLWxpc3Qge1xuICAgIG1hcmdpbi1ib3R0b206IDAuMjVyZW07XG59XG5cbi53aXNoLWxpc3RfX2NoZWNrYm94IHtcbiAgICB0ZXh0LXRyYW5zZm9ybTogdXBwZXJjYXNlO1xufVxuXG5AbWVkaWEgc2NyZWVuIGFuZCAobWF4LXdpZHRoOiA0MjBweCkge1xuICAgIC5jYXJkLXBhbmVsIHtcbiAgICAgICAgd2lkdGg6IDMwMHB4O1xuICAgIH1cbn1cblxuQG1lZGlhIHNjcmVlbiBhbmQgKG1heC13aWR0aDogMzIwcHgpIHtcbiAgICAuY2FyZC1wYW5lbCB7XG4gICAgICAgIHdpZHRoOiAyODBweDtcbiAgICB9XG59XG4iLCIuY2FyZC1wYW5lbCB7XG4gIGJvcmRlcjogMC4wNnJlbSBzb2xpZCAjNTU1NTtcbiAgbWFyZ2luOiAwIDAuNjI1cmVtO1xuICBtYXJnaW4tYm90dG9tOiAxcmVtO1xuICBwYWRkaW5nOiAwIDAuNjI1cmVtO1xuICB3aWR0aDogMzgwcHg7XG4gIG1pbi1oZWlnaHQ6IDk5JTtcbiAgYm9yZGVyLXJhZGl1czogMC4zcmVtO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjZmZmYztcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xufVxuLmNhcmQtcGFuZWwgLmNhcmQtcmVsZWFzZS1kYXRlIHtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xufVxuLmNhcmQtcGFuZWwgLmNhcmQtcG9zdGVyIHtcbiAgd2lkdGg6IDEwMCU7XG59XG5cbi5jYXJkLXRpdGxlIHtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xuICBib3JkZXItcmFkaXVzOiAwLjNyZW07XG4gIHBhZGRpbmc6IDAuNjI1cmVtIDA7XG4gIGZvbnQtc2l6ZTogMS4zNzVyZW07XG59XG5cbi5hY3RvcnMtdGl0bGUge1xuICBtYXJnaW46IDA7XG4gIGZvbnQtc2l6ZTogMXJlbTtcbiAgdGV4dC10cmFuc2Zvcm06IHVwcGVyY2FzZTtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xufVxuXG4uYWN0b3JzLWxpc3Qge1xuICBkaXNwbGF5OiBmbGV4O1xuICBqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWFyb3VuZDtcbiAgZmxleC13cmFwOiB3cmFwO1xuICBwYWRkaW5nOiAwO1xuICBsaXN0LXN0eWxlOiBub25lO1xufVxuLmFjdG9ycy1saXN0IC5hY3RvcnMtbGlzdF9faXRlbSB7XG4gIG1hcmdpbjogMXJlbSAwO1xuICBwYWRkaW5nOiAwO1xuICBtYXgtd2lkdGg6IDE4JTtcbiAgYm9yZGVyLXJhZGl1czogMC4zcmVtO1xufVxuLmFjdG9ycy1saXN0IC5hY3RvcnMtbGlzdF9faXRlbSAuYWN0b3JzLWxpc3RfX2FjdG9yLW5hbWUge1xuICBtYXJnaW46IDAgYXV0bztcbiAgbWluLWhlaWdodDogNC4xMjVyZW07XG59XG4uYWN0b3JzLWxpc3QgLmFjdG9ycy1saXN0X19pdGVtIC5hY3RvcnMtbGlzdF9fYWN0b3ItcGhvdG8ge1xuICBib3JkZXItcmFkaXVzOiAwLjNyZW07XG4gIHdpZHRoOiAxMDAlO1xufVxuXG4ud2lzaC1saXN0IHtcbiAgbWFyZ2luLWJvdHRvbTogMC4yNXJlbTtcbn1cblxuLndpc2gtbGlzdF9fY2hlY2tib3gge1xuICB0ZXh0LXRyYW5zZm9ybTogdXBwZXJjYXNlO1xufVxuXG5AbWVkaWEgc2NyZWVuIGFuZCAobWF4LXdpZHRoOiA0MjBweCkge1xuICAuY2FyZC1wYW5lbCB7XG4gICAgd2lkdGg6IDMwMHB4O1xuICB9XG59XG5AbWVkaWEgc2NyZWVuIGFuZCAobWF4LXdpZHRoOiAzMjBweCkge1xuICAuY2FyZC1wYW5lbCB7XG4gICAgd2lkdGg6IDI4MHB4O1xuICB9XG59Il19 */";
 
                 /***/
             },
@@ -1427,11 +2924,31 @@ and limitations under the License.
                     /*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js"
                 );
 
-                let MovieListItemComponent = class MovieListItemComponent {};
+                let MovieListItemComponent = class MovieListItemComponent {
+                    constructor() {
+                        /**
+                         * Create output new EventEmmiter with data about movie
+                         * when user is clicked to 'Add movie to wish list' button.
+                         */
+                        this.checkBoxClicked = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
+                    }
+                    /**
+                     * Emit movie with checkbox value if ckeckbox was clicked.
+                     */
+                    onCheckboxClicked() {
+                        this.checkBoxClicked.emit(this.film);
+                    }
+                };
                 tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"](
                     [Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()],
                     MovieListItemComponent.prototype,
                     "film",
+                    void 0
+                );
+                tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"](
+                    [Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"])()],
+                    MovieListItemComponent.prototype,
+                    "checkBoxClicked",
                     void 0
                 );
                 MovieListItemComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"](
@@ -1497,6 +3014,21 @@ and limitations under the License.
                 );
 
                 let MovieListComponent = class MovieListComponent {
+                    constructor() {
+                        /**
+                         * Create output new EventEmmiter.
+                         */
+                        this.checkBoxClicked = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
+                    }
+                    /**
+                     * Emit movie with checkbox value from movie-list-item-component if ckeckbox was clicked.
+                     */
+                    onCheckBoxClicked(movie) {
+                        this.checkBoxClicked.emit(movie);
+                    }
+                    /**
+                     * trackBy function for optimize painting movies on the page.
+                     */
                     trackByFn(_, film) {
                         return film.id;
                     }
@@ -1505,6 +3037,12 @@ and limitations under the License.
                     [Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()],
                     MovieListComponent.prototype,
                     "resultsFilms",
+                    void 0
+                );
+                tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"](
+                    [Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"])()],
+                    MovieListComponent.prototype,
+                    "checkBoxClicked",
                     void 0
                 );
                 MovieListComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"](
@@ -1542,7 +3080,7 @@ and limitations under the License.
                 "use strict";
                 __webpack_require__.r(__webpack_exports__);
                 /* harmony default export */ __webpack_exports__["default"] =
-                    ".container {\n  margin: 0 auto;\n  margin-bottom: 1rem;\n  min-height: calc(100vh - 1rem);\n}\n\n.wrapper {\n  margin: 0 auto;\n  min-width: 540px;\n  width: 90%;\n  padding-bottom: 1rem;\n}\n\n.load-more-button,\n.mat-spinner {\n  display: block;\n  margin: 0 auto;\n  margin-top: 0.625rem;\n}\n\n.mat-toolbar {\n  padding: 2.5rem 1rem;\n}\n\n.mat-h1 {\n  display: block;\n  padding: 0;\n  margin: 0;\n}\n\n.no-movies-paragraph {\n  text-align: center;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbW92aWUtc2VhcmNoLXBhZ2UvQzpcXFVzZXJzXFxJaGFyX1ByYXZhdG9yYXVcXERlc2t0b3BcXHRhc2tzXFxhbmd1bGFyLWFwcC1zYW5kYm94L3NyY1xcYXBwXFxtb3ZpZS1zZWFyY2gtcGFnZVxcbW92aWUtc2VhcmNoLXBhZ2UuY29tcG9uZW50LnNjc3MiLCJzcmMvYXBwL21vdmllLXNlYXJjaC1wYWdlL21vdmllLXNlYXJjaC1wYWdlLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksY0FBQTtFQUNBLG1CQUFBO0VBQ0EsOEJBQUE7QUNDSjs7QURFQTtFQUNJLGNBQUE7RUFDQSxnQkFBQTtFQUNBLFVBQUE7RUFDQSxvQkFBQTtBQ0NKOztBREVBOztFQUVJLGNBQUE7RUFDQSxjQUFBO0VBQ0Esb0JBQUE7QUNDSjs7QURFQTtFQUNJLG9CQUFBO0FDQ0o7O0FERUE7RUFDSSxjQUFBO0VBQ0EsVUFBQTtFQUNBLFNBQUE7QUNDSjs7QURFQTtFQUNJLGtCQUFBO0FDQ0oiLCJmaWxlIjoic3JjL2FwcC9tb3ZpZS1zZWFyY2gtcGFnZS9tb3ZpZS1zZWFyY2gtcGFnZS5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5jb250YWluZXIge1xuICAgIG1hcmdpbjogMCBhdXRvO1xuICAgIG1hcmdpbi1ib3R0b206IDFyZW07XG4gICAgbWluLWhlaWdodDogY2FsYygxMDB2aCAtIDFyZW0pO1xufVxuXG4ud3JhcHBlciB7XG4gICAgbWFyZ2luOiAwIGF1dG87XG4gICAgbWluLXdpZHRoOiA1NDBweDtcbiAgICB3aWR0aDogOTAlO1xuICAgIHBhZGRpbmctYm90dG9tOiAxcmVtO1xufVxuXG4ubG9hZC1tb3JlLWJ1dHRvbixcbi5tYXQtc3Bpbm5lciB7XG4gICAgZGlzcGxheTogYmxvY2s7XG4gICAgbWFyZ2luOiAwIGF1dG87XG4gICAgbWFyZ2luLXRvcDogMC42MjVyZW07XG59XG5cbi5tYXQtdG9vbGJhciB7XG4gICAgcGFkZGluZzogMi41cmVtIDFyZW07XG59XG5cbi5tYXQtaDEge1xuICAgIGRpc3BsYXk6IGJsb2NrO1xuICAgIHBhZGRpbmc6IDA7XG4gICAgbWFyZ2luOiAwO1xufVxuXG4ubm8tbW92aWVzLXBhcmFncmFwaCB7XG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xufVxuIiwiLmNvbnRhaW5lciB7XG4gIG1hcmdpbjogMCBhdXRvO1xuICBtYXJnaW4tYm90dG9tOiAxcmVtO1xuICBtaW4taGVpZ2h0OiBjYWxjKDEwMHZoIC0gMXJlbSk7XG59XG5cbi53cmFwcGVyIHtcbiAgbWFyZ2luOiAwIGF1dG87XG4gIG1pbi13aWR0aDogNTQwcHg7XG4gIHdpZHRoOiA5MCU7XG4gIHBhZGRpbmctYm90dG9tOiAxcmVtO1xufVxuXG4ubG9hZC1tb3JlLWJ1dHRvbixcbi5tYXQtc3Bpbm5lciB7XG4gIGRpc3BsYXk6IGJsb2NrO1xuICBtYXJnaW46IDAgYXV0bztcbiAgbWFyZ2luLXRvcDogMC42MjVyZW07XG59XG5cbi5tYXQtdG9vbGJhciB7XG4gIHBhZGRpbmc6IDIuNXJlbSAxcmVtO1xufVxuXG4ubWF0LWgxIHtcbiAgZGlzcGxheTogYmxvY2s7XG4gIHBhZGRpbmc6IDA7XG4gIG1hcmdpbjogMDtcbn1cblxuLm5vLW1vdmllcy1wYXJhZ3JhcGgge1xuICB0ZXh0LWFsaWduOiBjZW50ZXI7XG59Il19 */";
+                    ".container {\n  margin: 0 auto;\n  margin-bottom: 1rem;\n  min-height: calc(100vh - 5rem);\n}\n\n.wrapper {\n  margin: 0 auto;\n  width: 90%;\n  padding-bottom: 1rem;\n}\n\n.load-more-button,\n.mat-spinner {\n  display: block;\n  margin: 0 auto;\n  margin-top: 0.625rem;\n}\n\n.mat-toolbar {\n  padding: 2.5rem 1rem;\n}\n\n.mat-h1 {\n  display: block;\n  padding: 0;\n  margin: 0;\n}\n\n.no-movies-paragraph {\n  text-align: center;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbW92aWUtc2VhcmNoLXBhZ2UvQzpcXFVzZXJzXFxJaGFyX1ByYXZhdG9yYXVcXERlc2t0b3BcXHRhc2tzXFxhbmd1bGFyLWFwcC1zYW5kYm94L3NyY1xcYXBwXFxtb3ZpZS1zZWFyY2gtcGFnZVxcbW92aWUtc2VhcmNoLXBhZ2UuY29tcG9uZW50LnNjc3MiLCJzcmMvYXBwL21vdmllLXNlYXJjaC1wYWdlL21vdmllLXNlYXJjaC1wYWdlLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksY0FBQTtFQUNBLG1CQUFBO0VBQ0EsOEJBQUE7QUNDSjs7QURFQTtFQUNJLGNBQUE7RUFDQSxVQUFBO0VBQ0Esb0JBQUE7QUNDSjs7QURFQTs7RUFFSSxjQUFBO0VBQ0EsY0FBQTtFQUNBLG9CQUFBO0FDQ0o7O0FERUE7RUFDSSxvQkFBQTtBQ0NKOztBREVBO0VBQ0ksY0FBQTtFQUNBLFVBQUE7RUFDQSxTQUFBO0FDQ0o7O0FERUE7RUFDSSxrQkFBQTtBQ0NKIiwiZmlsZSI6InNyYy9hcHAvbW92aWUtc2VhcmNoLXBhZ2UvbW92aWUtc2VhcmNoLXBhZ2UuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuY29udGFpbmVyIHtcbiAgICBtYXJnaW46IDAgYXV0bztcbiAgICBtYXJnaW4tYm90dG9tOiAxcmVtO1xuICAgIG1pbi1oZWlnaHQ6IGNhbGMoMTAwdmggLSA1cmVtKTtcbn1cblxuLndyYXBwZXIge1xuICAgIG1hcmdpbjogMCBhdXRvO1xuICAgIHdpZHRoOiA5MCU7XG4gICAgcGFkZGluZy1ib3R0b206IDFyZW07XG59XG5cbi5sb2FkLW1vcmUtYnV0dG9uLFxuLm1hdC1zcGlubmVyIHtcbiAgICBkaXNwbGF5OiBibG9jaztcbiAgICBtYXJnaW46IDAgYXV0bztcbiAgICBtYXJnaW4tdG9wOiAwLjYyNXJlbTtcbn1cblxuLm1hdC10b29sYmFyIHtcbiAgICBwYWRkaW5nOiAyLjVyZW0gMXJlbTtcbn1cblxuLm1hdC1oMSB7XG4gICAgZGlzcGxheTogYmxvY2s7XG4gICAgcGFkZGluZzogMDtcbiAgICBtYXJnaW46IDA7XG59XG5cbi5uby1tb3ZpZXMtcGFyYWdyYXBoIHtcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XG59XG4iLCIuY29udGFpbmVyIHtcbiAgbWFyZ2luOiAwIGF1dG87XG4gIG1hcmdpbi1ib3R0b206IDFyZW07XG4gIG1pbi1oZWlnaHQ6IGNhbGMoMTAwdmggLSA1cmVtKTtcbn1cblxuLndyYXBwZXIge1xuICBtYXJnaW46IDAgYXV0bztcbiAgd2lkdGg6IDkwJTtcbiAgcGFkZGluZy1ib3R0b206IDFyZW07XG59XG5cbi5sb2FkLW1vcmUtYnV0dG9uLFxuLm1hdC1zcGlubmVyIHtcbiAgZGlzcGxheTogYmxvY2s7XG4gIG1hcmdpbjogMCBhdXRvO1xuICBtYXJnaW4tdG9wOiAwLjYyNXJlbTtcbn1cblxuLm1hdC10b29sYmFyIHtcbiAgcGFkZGluZzogMi41cmVtIDFyZW07XG59XG5cbi5tYXQtaDEge1xuICBkaXNwbGF5OiBibG9jaztcbiAgcGFkZGluZzogMDtcbiAgbWFyZ2luOiAwO1xufVxuXG4ubm8tbW92aWVzLXBhcmFncmFwaCB7XG4gIHRleHQtYWxpZ246IGNlbnRlcjtcbn0iXX0= */";
 
                 /***/
             },
@@ -1568,21 +3106,18 @@ and limitations under the License.
                 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
                     /*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js"
                 );
-                /* harmony import */ var _core_services__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-                    /*! ../core/services */ "./src/app/core/services/index.ts"
-                );
-                /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+                /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
                     /*! rxjs */ "./node_modules/rxjs/_esm2015/index.js"
                 );
-                /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+                /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
                     /*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js"
                 );
-                /* harmony import */ var _core_utils_check_empty_results_util__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
-                    /*! ../core/utils/check-empty-results.util */ "./src/app/core/utils/check-empty-results.util.ts"
+                /* harmony import */ var _core_index__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+                    /*! ../core/index */ "./src/app/core/index.ts"
                 );
 
                 let MovieSearchPageComponent = class MovieSearchPageComponent {
-                    constructor(searchFilmsService) {
+                    constructor(searchFilmsService, filmsToWatchStoreFacade) {
                         /**
                          * Loading flag.
                          */
@@ -1596,6 +3131,7 @@ and limitations under the License.
                          */
                         this.isSearchedFilms = false;
                         this.searchFilmsService = searchFilmsService;
+                        this.filmsToWatchStoreFacade = filmsToWatchStoreFacade;
                     }
                     /**
                      *  Makes response to API and fetching mapped-data to resultsFilms$ Array.
@@ -1604,18 +3140,16 @@ and limitations under the License.
                         this.isSearchedFilms = false;
                         this.isNoMoreResults = false;
                         if (!searchQuery || !searchQuery.trim()) {
-                            this.resultsFilms$ = Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])([
+                            this.resultsFilms$ = Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])([
                                 { title: "Type something for search" },
                             ]);
                         } else {
                             this.isLoading = true;
                             this.resultsFilms$ = this.searchFilmsService.getFilmsFromApi(searchQuery).pipe(
-                                Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(data => {
+                                Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["tap"])(data => {
                                     this.isLoading = false;
                                     this.isSearchedFilms = Object(
-                                        _core_utils_check_empty_results_util__WEBPACK_IMPORTED_MODULE_5__[
-                                            "checkEmptyResults"
-                                        ]
+                                        _core_index__WEBPACK_IMPORTED_MODULE_4__["checkEmptyResults"]
                                     )(data);
                                 })
                             );
@@ -1629,9 +3163,20 @@ and limitations under the License.
                         this.searchFilmsService.nextPage();
                         this.isNoMoreResults = this.searchFilmsService.isNoMoreResults;
                     }
+                    /**
+                     * Change isChecked property if checkbox was clicked.
+                     */
+                    onCheckBoxClicked(movie) {
+                        if (movie.checkboxValue) {
+                            this.filmsToWatchStoreFacade.addFilmToWatchList(movie);
+                        } else {
+                            this.filmsToWatchStoreFacade.removeFilmFromWatchList(movie);
+                        }
+                    }
                 };
                 MovieSearchPageComponent.ctorParameters = () => [
-                    { type: _core_services__WEBPACK_IMPORTED_MODULE_2__["SearchFilmsService"] },
+                    { type: _core_index__WEBPACK_IMPORTED_MODULE_4__["SearchFilmsService"] },
+                    { type: _core_index__WEBPACK_IMPORTED_MODULE_4__["FilmsToWatchStoreFacade"] },
                 ];
                 MovieSearchPageComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"](
                     [
@@ -1698,19 +3243,22 @@ and limitations under the License.
                 /* harmony import */ var _angular_material_checkbox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
                     /*! @angular/material/checkbox */ "./node_modules/@angular/material/esm2015/checkbox.js"
                 );
-                /* harmony import */ var _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+                /* harmony import */ var _angular_material_list__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+                    /*! @angular/material/list */ "./node_modules/@angular/material/esm2015/list.js"
+                );
+                /* harmony import */ var _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
                     /*! @angular/material/progress-spinner */ "./node_modules/@angular/material/esm2015/progress-spinner.js"
                 );
-                /* harmony import */ var _search_input_search_input_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+                /* harmony import */ var _search_input_search_input_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
                     /*! ./search-input/search-input.component */ "./src/app/movie-search-page/search-input/search-input.component.ts"
                 );
-                /* harmony import */ var _movie_search_page_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+                /* harmony import */ var _movie_search_page_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
                     /*! ./movie-search-page.component */ "./src/app/movie-search-page/movie-search-page.component.ts"
                 );
-                /* harmony import */ var _movie_list_item_movie_list_item_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
+                /* harmony import */ var _movie_list_item_movie_list_item_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
                     /*! ./movie-list-item/movie-list-item.component */ "./src/app/movie-search-page/movie-list-item/movie-list-item.component.ts"
                 );
-                /* harmony import */ var _movie_list_movie_list_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
+                /* harmony import */ var _movie_list_movie_list_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
                     /*! ./movie-list/movie-list.component */ "./src/app/movie-search-page/movie-list/movie-list.component.ts"
                 );
 
@@ -1719,14 +3267,14 @@ and limitations under the License.
                     [
                         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
                             declarations: [
-                                _movie_search_page_component__WEBPACK_IMPORTED_MODULE_10__["MovieSearchPageComponent"],
-                                _search_input_search_input_component__WEBPACK_IMPORTED_MODULE_9__[
+                                _movie_search_page_component__WEBPACK_IMPORTED_MODULE_11__["MovieSearchPageComponent"],
+                                _search_input_search_input_component__WEBPACK_IMPORTED_MODULE_10__[
                                     "SearchInputComponent"
                                 ],
-                                _movie_list_item_movie_list_item_component__WEBPACK_IMPORTED_MODULE_11__[
+                                _movie_list_item_movie_list_item_component__WEBPACK_IMPORTED_MODULE_12__[
                                     "MovieListItemComponent"
                                 ],
-                                _movie_list_movie_list_component__WEBPACK_IMPORTED_MODULE_12__["MovieListComponent"],
+                                _movie_list_movie_list_component__WEBPACK_IMPORTED_MODULE_13__["MovieListComponent"],
                             ],
                             imports: [
                                 _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
@@ -1735,13 +3283,14 @@ and limitations under the License.
                                 _angular_material_toolbar__WEBPACK_IMPORTED_MODULE_5__["MatToolbarModule"],
                                 _angular_material_button__WEBPACK_IMPORTED_MODULE_6__["MatButtonModule"],
                                 _angular_material_checkbox__WEBPACK_IMPORTED_MODULE_7__["MatCheckboxModule"],
-                                _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_8__[
+                                _angular_material_list__WEBPACK_IMPORTED_MODULE_8__["MatListModule"],
+                                _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_9__[
                                     "MatProgressSpinnerModule"
                                 ],
                             ],
                             providers: [],
                             exports: [
-                                _movie_search_page_component__WEBPACK_IMPORTED_MODULE_10__["MovieSearchPageComponent"],
+                                _movie_search_page_component__WEBPACK_IMPORTED_MODULE_11__["MovieSearchPageComponent"],
                             ],
                         }),
                     ],
@@ -1760,7 +3309,7 @@ and limitations under the License.
                 "use strict";
                 __webpack_require__.r(__webpack_exports__);
                 /* harmony default export */ __webpack_exports__["default"] =
-                    ".mat-form-field {\n  padding: 0.625rem;\n  width: calc(100% - 1.25rem);\n}\n\n.submit-button {\n  margin-left: 0.625rem;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbW92aWUtc2VhcmNoLXBhZ2Uvc2VhcmNoLWlucHV0L0M6XFxVc2Vyc1xcSWhhcl9QcmF2YXRvcmF1XFxEZXNrdG9wXFx0YXNrc1xcYW5ndWxhci1hcHAtc2FuZGJveC9zcmNcXGFwcFxcbW92aWUtc2VhcmNoLXBhZ2VcXHNlYXJjaC1pbnB1dFxcc2VhcmNoLWlucHV0LmNvbXBvbmVudC5zY3NzIiwic3JjL2FwcC9tb3ZpZS1zZWFyY2gtcGFnZS9zZWFyY2gtaW5wdXQvc2VhcmNoLWlucHV0LmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksaUJBQUE7RUFDQSwyQkFBQTtBQ0NKOztBREVBO0VBQ0kscUJBQUE7QUNDSiIsImZpbGUiOiJzcmMvYXBwL21vdmllLXNlYXJjaC1wYWdlL3NlYXJjaC1pbnB1dC9zZWFyY2gtaW5wdXQuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIubWF0LWZvcm0tZmllbGQge1xuICAgIHBhZGRpbmc6IDAuNjI1cmVtO1xuICAgIHdpZHRoOiBjYWxjKDEwMCUgLSAxLjI1cmVtKTtcbn1cblxuLnN1Ym1pdC1idXR0b24ge1xuICAgIG1hcmdpbi1sZWZ0OiAwLjYyNXJlbTtcbn1cbiIsIi5tYXQtZm9ybS1maWVsZCB7XG4gIHBhZGRpbmc6IDAuNjI1cmVtO1xuICB3aWR0aDogY2FsYygxMDAlIC0gMS4yNXJlbSk7XG59XG5cbi5zdWJtaXQtYnV0dG9uIHtcbiAgbWFyZ2luLWxlZnQ6IDAuNjI1cmVtO1xufSJdfQ== */";
+                    ".mat-form-field {\n  padding: 0.625rem;\n  width: calc(100% - 1.25rem);\n}\n\n.submit-button {\n  margin-left: 0.625rem;\n}\n\n@media screen and (max-width: 768px) {\n  .submit-button {\n    display: block;\n    margin: auto;\n  }\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbW92aWUtc2VhcmNoLXBhZ2Uvc2VhcmNoLWlucHV0L0M6XFxVc2Vyc1xcSWhhcl9QcmF2YXRvcmF1XFxEZXNrdG9wXFx0YXNrc1xcYW5ndWxhci1hcHAtc2FuZGJveC9zcmNcXGFwcFxcbW92aWUtc2VhcmNoLXBhZ2VcXHNlYXJjaC1pbnB1dFxcc2VhcmNoLWlucHV0LmNvbXBvbmVudC5zY3NzIiwic3JjL2FwcC9tb3ZpZS1zZWFyY2gtcGFnZS9zZWFyY2gtaW5wdXQvc2VhcmNoLWlucHV0LmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksaUJBQUE7RUFDQSwyQkFBQTtBQ0NKOztBREVBO0VBQ0kscUJBQUE7QUNDSjs7QURFQTtFQUNJO0lBQ0ksY0FBQTtJQUNBLFlBQUE7RUNDTjtBQUNGIiwiZmlsZSI6InNyYy9hcHAvbW92aWUtc2VhcmNoLXBhZ2Uvc2VhcmNoLWlucHV0L3NlYXJjaC1pbnB1dC5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5tYXQtZm9ybS1maWVsZCB7XG4gICAgcGFkZGluZzogMC42MjVyZW07XG4gICAgd2lkdGg6IGNhbGMoMTAwJSAtIDEuMjVyZW0pO1xufVxuXG4uc3VibWl0LWJ1dHRvbiB7XG4gICAgbWFyZ2luLWxlZnQ6IDAuNjI1cmVtO1xufVxuXG5AbWVkaWEgc2NyZWVuIGFuZCAobWF4LXdpZHRoOiA3NjhweCkge1xuICAgIC5zdWJtaXQtYnV0dG9uIHtcbiAgICAgICAgZGlzcGxheTogYmxvY2s7XG4gICAgICAgIG1hcmdpbjogYXV0bztcbiAgICB9XG59XG4iLCIubWF0LWZvcm0tZmllbGQge1xuICBwYWRkaW5nOiAwLjYyNXJlbTtcbiAgd2lkdGg6IGNhbGMoMTAwJSAtIDEuMjVyZW0pO1xufVxuXG4uc3VibWl0LWJ1dHRvbiB7XG4gIG1hcmdpbi1sZWZ0OiAwLjYyNXJlbTtcbn1cblxuQG1lZGlhIHNjcmVlbiBhbmQgKG1heC13aWR0aDogNzY4cHgpIHtcbiAgLnN1Ym1pdC1idXR0b24ge1xuICAgIGRpc3BsYXk6IGJsb2NrO1xuICAgIG1hcmdpbjogYXV0bztcbiAgfVxufSJdfQ== */";
 
                 /***/
             },
@@ -1833,6 +3382,181 @@ and limitations under the License.
                 /***/
             },
 
+        /***/ "./src/app/navigation-menu/index.ts":
+            /*!******************************************!*\
+  !*** ./src/app/navigation-menu/index.ts ***!
+  \******************************************/
+            /*! exports provided: NavigationMenuModule */
+            /***/ function(module, __webpack_exports__, __webpack_require__) {
+                "use strict";
+                __webpack_require__.r(__webpack_exports__);
+                /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+                    /*! tslib */ "./node_modules/tslib/tslib.es6.js"
+                );
+                /* harmony import */ var _navigation_menu_module__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+                    /*! ./navigation-menu.module */ "./src/app/navigation-menu/navigation-menu.module.ts"
+                );
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "NavigationMenuModule",
+                    function() {
+                        return _navigation_menu_module__WEBPACK_IMPORTED_MODULE_1__["NavigationMenuModule"];
+                    }
+                );
+
+                /***/
+            },
+
+        /***/ "./src/app/navigation-menu/navigation-menu.component.scss":
+            /*!****************************************************************!*\
+  !*** ./src/app/navigation-menu/navigation-menu.component.scss ***!
+  \****************************************************************/
+            /*! exports provided: default */
+            /***/ function(module, __webpack_exports__, __webpack_require__) {
+                "use strict";
+                __webpack_require__.r(__webpack_exports__);
+                /* harmony default export */ __webpack_exports__["default"] =
+                    ".wrapper {\n  display: flex;\n  justify-content: space-between;\n  width: 90%;\n  margin: 0 auto;\n}\n\n.title {\n  margin: auto 0;\n}\n\n.title__link {\n  text-decoration: none;\n  color: #fff;\n}\n\n.navigation-menu {\n  list-style: none;\n}\n\n.navigation-menu__link {\n  box-sizing: border-box;\n  display: inline;\n}\n\n.link {\n  font-weight: 700;\n  box-sizing: border-box;\n  color: #fff7;\n  text-decoration: none;\n  padding: 1rem;\n}\n\n.active {\n  color: #fff;\n}\n\n@media screen and (max-width: 450px) {\n  .wrapper {\n    justify-content: center;\n  }\n\n  .title__link {\n    display: none;\n  }\n\n  .link {\n    font-size: 1rem;\n  }\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbmF2aWdhdGlvbi1tZW51L0M6XFxVc2Vyc1xcSWhhcl9QcmF2YXRvcmF1XFxEZXNrdG9wXFx0YXNrc1xcYW5ndWxhci1hcHAtc2FuZGJveC9zcmNcXGFwcFxcbmF2aWdhdGlvbi1tZW51XFxuYXZpZ2F0aW9uLW1lbnUuY29tcG9uZW50LnNjc3MiLCJzcmMvYXBwL25hdmlnYXRpb24tbWVudS9uYXZpZ2F0aW9uLW1lbnUuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSxhQUFBO0VBQ0EsOEJBQUE7RUFDQSxVQUFBO0VBQ0EsY0FBQTtBQ0NKOztBREVBO0VBQ0ksY0FBQTtBQ0NKOztBREVBO0VBQ0kscUJBQUE7RUFDQSxXQUFBO0FDQ0o7O0FERUE7RUFDSSxnQkFBQTtBQ0NKOztBREVBO0VBQ0ksc0JBQUE7RUFDQSxlQUFBO0FDQ0o7O0FERUE7RUFDSSxnQkFBQTtFQUNBLHNCQUFBO0VBQ0EsWUFBQTtFQUNBLHFCQUFBO0VBQ0EsYUFBQTtBQ0NKOztBREVBO0VBQ0ksV0FBQTtBQ0NKOztBREVBO0VBQ0k7SUFDSSx1QkFBQTtFQ0NOOztFREVFO0lBQ0ksYUFBQTtFQ0NOOztFREVFO0lBQ0ksZUFBQTtFQ0NOO0FBQ0YiLCJmaWxlIjoic3JjL2FwcC9uYXZpZ2F0aW9uLW1lbnUvbmF2aWdhdGlvbi1tZW51LmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLndyYXBwZXIge1xuICAgIGRpc3BsYXk6IGZsZXg7XG4gICAganVzdGlmeS1jb250ZW50OiBzcGFjZS1iZXR3ZWVuO1xuICAgIHdpZHRoOiA5MCU7XG4gICAgbWFyZ2luOiAwIGF1dG87XG59XG5cbi50aXRsZSB7XG4gICAgbWFyZ2luOiBhdXRvIDA7XG59XG5cbi50aXRsZV9fbGluayB7XG4gICAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xuICAgIGNvbG9yOiAjZmZmO1xufVxuXG4ubmF2aWdhdGlvbi1tZW51IHtcbiAgICBsaXN0LXN0eWxlOiBub25lO1xufVxuXG4ubmF2aWdhdGlvbi1tZW51X19saW5rIHtcbiAgICBib3gtc2l6aW5nOiBib3JkZXItYm94O1xuICAgIGRpc3BsYXk6IGlubGluZTtcbn1cblxuLmxpbmsge1xuICAgIGZvbnQtd2VpZ2h0OiA3MDA7XG4gICAgYm94LXNpemluZzogYm9yZGVyLWJveDtcbiAgICBjb2xvcjogI2ZmZjc7XG4gICAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xuICAgIHBhZGRpbmc6IDFyZW07XG59XG5cbi5hY3RpdmUge1xuICAgIGNvbG9yOiAjZmZmO1xufVxuXG5AbWVkaWEgc2NyZWVuIGFuZCAobWF4LXdpZHRoOiA0NTBweCkge1xuICAgIC53cmFwcGVyIHtcbiAgICAgICAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XG4gICAgfVxuXG4gICAgLnRpdGxlX19saW5rIHtcbiAgICAgICAgZGlzcGxheTogbm9uZTtcbiAgICB9XG5cbiAgICAubGluayB7XG4gICAgICAgIGZvbnQtc2l6ZTogMXJlbTtcbiAgICB9XG59XG4iLCIud3JhcHBlciB7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGp1c3RpZnktY29udGVudDogc3BhY2UtYmV0d2VlbjtcbiAgd2lkdGg6IDkwJTtcbiAgbWFyZ2luOiAwIGF1dG87XG59XG5cbi50aXRsZSB7XG4gIG1hcmdpbjogYXV0byAwO1xufVxuXG4udGl0bGVfX2xpbmsge1xuICB0ZXh0LWRlY29yYXRpb246IG5vbmU7XG4gIGNvbG9yOiAjZmZmO1xufVxuXG4ubmF2aWdhdGlvbi1tZW51IHtcbiAgbGlzdC1zdHlsZTogbm9uZTtcbn1cblxuLm5hdmlnYXRpb24tbWVudV9fbGluayB7XG4gIGJveC1zaXppbmc6IGJvcmRlci1ib3g7XG4gIGRpc3BsYXk6IGlubGluZTtcbn1cblxuLmxpbmsge1xuICBmb250LXdlaWdodDogNzAwO1xuICBib3gtc2l6aW5nOiBib3JkZXItYm94O1xuICBjb2xvcjogI2ZmZjc7XG4gIHRleHQtZGVjb3JhdGlvbjogbm9uZTtcbiAgcGFkZGluZzogMXJlbTtcbn1cblxuLmFjdGl2ZSB7XG4gIGNvbG9yOiAjZmZmO1xufVxuXG5AbWVkaWEgc2NyZWVuIGFuZCAobWF4LXdpZHRoOiA0NTBweCkge1xuICAud3JhcHBlciB7XG4gICAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XG4gIH1cblxuICAudGl0bGVfX2xpbmsge1xuICAgIGRpc3BsYXk6IG5vbmU7XG4gIH1cblxuICAubGluayB7XG4gICAgZm9udC1zaXplOiAxcmVtO1xuICB9XG59Il19 */";
+
+                /***/
+            },
+
+        /***/ "./src/app/navigation-menu/navigation-menu.component.ts":
+            /*!**************************************************************!*\
+  !*** ./src/app/navigation-menu/navigation-menu.component.ts ***!
+  \**************************************************************/
+            /*! exports provided: NavigationMenuComponent */
+            /***/ function(module, __webpack_exports__, __webpack_require__) {
+                "use strict";
+                __webpack_require__.r(__webpack_exports__);
+                /* harmony export (binding) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "NavigationMenuComponent",
+                    function() {
+                        return NavigationMenuComponent;
+                    }
+                );
+                /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+                    /*! tslib */ "./node_modules/tslib/tslib.es6.js"
+                );
+                /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+                    /*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js"
+                );
+
+                let NavigationMenuComponent = class NavigationMenuComponent {};
+                NavigationMenuComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"](
+                    [
+                        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+                            selector: "app-navigation-menu",
+                            template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](
+                                __webpack_require__(
+                                    /*! raw-loader!./navigation-menu.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/navigation-menu/navigation-menu.component.html"
+                                )
+                            ).default,
+                            styles: [
+                                tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](
+                                    __webpack_require__(
+                                        /*! ./navigation-menu.component.scss */ "./src/app/navigation-menu/navigation-menu.component.scss"
+                                    )
+                                ).default,
+                            ],
+                        }),
+                    ],
+                    NavigationMenuComponent
+                );
+
+                /***/
+            },
+
+        /***/ "./src/app/navigation-menu/navigation-menu.module.ts":
+            /*!***********************************************************!*\
+  !*** ./src/app/navigation-menu/navigation-menu.module.ts ***!
+  \***********************************************************/
+            /*! exports provided: NavigationMenuModule */
+            /***/ function(module, __webpack_exports__, __webpack_require__) {
+                "use strict";
+                __webpack_require__.r(__webpack_exports__);
+                /* harmony export (binding) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "NavigationMenuModule",
+                    function() {
+                        return NavigationMenuModule;
+                    }
+                );
+                /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+                    /*! tslib */ "./node_modules/tslib/tslib.es6.js"
+                );
+                /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+                    /*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js"
+                );
+                /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+                    /*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js"
+                );
+                /* harmony import */ var _angular_material_toolbar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+                    /*! @angular/material/toolbar */ "./node_modules/@angular/material/esm2015/toolbar.js"
+                );
+                /* harmony import */ var _angular_material_button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+                    /*! @angular/material/button */ "./node_modules/@angular/material/esm2015/button.js"
+                );
+                /* harmony import */ var _angular_material_checkbox__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+                    /*! @angular/material/checkbox */ "./node_modules/@angular/material/esm2015/checkbox.js"
+                );
+                /* harmony import */ var _navigation_menu_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+                    /*! ./navigation-menu.component */ "./src/app/navigation-menu/navigation-menu.component.ts"
+                );
+                /* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+                    /*! ../app-routing.module */ "./src/app/app-routing.module.ts"
+                );
+
+                let NavigationMenuModule = class NavigationMenuModule {};
+                NavigationMenuModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"](
+                    [
+                        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
+                            declarations: [
+                                _navigation_menu_component__WEBPACK_IMPORTED_MODULE_6__["NavigationMenuComponent"],
+                            ],
+                            imports: [
+                                _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
+                                _angular_material_toolbar__WEBPACK_IMPORTED_MODULE_3__["MatToolbarModule"],
+                                _angular_material_button__WEBPACK_IMPORTED_MODULE_4__["MatButtonModule"],
+                                _angular_material_checkbox__WEBPACK_IMPORTED_MODULE_5__["MatCheckboxModule"],
+                                _app_routing_module__WEBPACK_IMPORTED_MODULE_7__["AppRoutingModule"],
+                            ],
+                            providers: [],
+                            exports: [
+                                _navigation_menu_component__WEBPACK_IMPORTED_MODULE_6__["NavigationMenuComponent"],
+                            ],
+                        }),
+                    ],
+                    NavigationMenuModule
+                );
+
+                /***/
+            },
+
+        /***/ "./src/environments/environment.prod.ts":
+            /*!**********************************************!*\
+  !*** ./src/environments/environment.prod.ts ***!
+  \**********************************************/
+            /*! exports provided: environment */
+            /***/ function(module, __webpack_exports__, __webpack_require__) {
+                "use strict";
+                __webpack_require__.r(__webpack_exports__);
+                /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "environment", function() {
+                    return environment;
+                });
+                /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+                    /*! tslib */ "./node_modules/tslib/tslib.es6.js"
+                );
+
+                // tslint:disable-next-line: typedef
+                const environment = {
+                    production: true,
+                };
+
+                /***/
+            },
+
         /***/ "./src/environments/environment.ts":
             /*!*****************************************!*\
   !*** ./src/environments/environment.ts ***!
@@ -1862,6 +3586,38 @@ and limitations under the License.
                  * on performance if an error is thrown.
                  */
                 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+
+                /***/
+            },
+
+        /***/ "./src/environments/index.ts":
+            /*!***********************************!*\
+  !*** ./src/environments/index.ts ***!
+  \***********************************/
+            /*! exports provided: environment, environmentProduction */
+            /***/ function(module, __webpack_exports__, __webpack_require__) {
+                "use strict";
+                __webpack_require__.r(__webpack_exports__);
+                /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+                    /*! tslib */ "./node_modules/tslib/tslib.es6.js"
+                );
+                /* harmony import */ var _environment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+                    /*! ./environment */ "./src/environments/environment.ts"
+                );
+                /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "environment", function() {
+                    return _environment__WEBPACK_IMPORTED_MODULE_1__["environment"];
+                });
+
+                /* harmony import */ var _environment_prod__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+                    /*! ./environment.prod */ "./src/environments/environment.prod.ts"
+                );
+                /* harmony reexport (safe) */ __webpack_require__.d(
+                    __webpack_exports__,
+                    "environmentProduction",
+                    function() {
+                        return _environment_prod__WEBPACK_IMPORTED_MODULE_2__["environment"];
+                    }
+                );
 
                 /***/
             },
