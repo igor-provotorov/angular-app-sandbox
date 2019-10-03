@@ -5,6 +5,4 @@ import { Component } from "@angular/core";
     templateUrl: "./films-to-watch-page.component.html",
     styleUrls: ["./films-to-watch-page.component.scss"],
 })
-export class FilmsToWatchPageComponent {
-    constructor() {}
-}
+export class FilmsToWatchPageComponent {}
