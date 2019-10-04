@@ -8,10 +8,10 @@ import { CoreModule } from "./core/core.module";
 import { AppRoutingModule } from "./app-routing.module";
 import { MovieSearchPageModule } from "./movie-search-page/movie-search-page.module";
 import { NavigationMenuModule } from "./navigation-menu/navigation-menu.module";
-import { FilmsToWatchPageComponent } from "./films-to-watch-page/films-to-watch-page.component";
+import { FilmsToWatchPageModule } from "./films-to-watch-page/films-to-watch-page.module";
 
 @NgModule({
-    declarations: [AppComponent, FilmsToWatchPageComponent],
+    declarations: [AppComponent],
     imports: [
         BrowserModule,
         CoreModule,
@@ -19,6 +19,7 @@ import { FilmsToWatchPageComponent } from "./films-to-watch-page/films-to-watch-
         BrowserAnimationsModule,
         AppRoutingModule,
         NavigationMenuModule,
+        FilmsToWatchPageModule,
     ],
     providers: [],
     bootstrap: [AppComponent],
