@@ -19,9 +19,12 @@ export class MovieListItemComponent {
      * Create output new EventEmmiter.
      */
     @Output()
-    public checkBoxClicked: EventEmitter<boolean> = new EventEmitter<boolean>();
+    public checkBoxClicked: EventEmitter<number> = new EventEmitter<number>();
 
+    /**
+     * Emit true value if checkbox was clicked.
+     */
     onCheckboxClicked(): void {
-        this.checkBoxClicked.emit(true);
+        this.checkBoxClicked.emit(this.film.id);
     }
 }

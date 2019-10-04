@@ -70,4 +70,8 @@ export class MovieSearchPageComponent {
         this.searchFilmsService.nextPage();
         this.isNoMoreResults = this.searchFilmsService.isNoMoreResults;
     }
+
+    public onCheckBoxClicked(event: any): void {
+        console.log(event);
+    }
 }
