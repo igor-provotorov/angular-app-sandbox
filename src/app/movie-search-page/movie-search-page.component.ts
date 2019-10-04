@@ -1,9 +1,13 @@
 import { Component, ChangeDetectionStrategy } from "@angular/core";
 import { SearchFilmsService } from "../core/services";
 import { Observable, of } from "rxjs";
-import { tap } from "rxjs/operators";
+import { tap, withLatestFrom } from "rxjs/operators";
 
-import { ModifiedResultMovie, NoSuchMovies } from "../core/services/search-films-service/models/index";
+import {
+    ModifiedResultMovie,
+    NoSuchMovies,
+    MovieWithCheckboxValue,
+} from "../core/services/search-films-service/models/index";
 import { checkEmptyResults } from "../core/utils/check-empty-results.util";
 
 @Component({
@@ -71,7 +75,10 @@ export class MovieSearchPageComponent {
         this.isNoMoreResults = this.searchFilmsService.isNoMoreResults;
     }
 
-    public onCheckBoxClicked(event: any): void {
+    /**
+     * Change isChecked property if checkbox was clicked.
+     */
+    public onCheckBoxClicked(event: MovieWithCheckboxValue): void {
         console.log(event);
     }
 }

@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from "@angular/core";
 
-import { ModifiedResultMovie } from "src/app/core/services/search-films-service/models/index";
+import { ModifiedResultMovie, MovieWithCheckboxValue } from "src/app/core/services/search-films-service/models/index";
 
 @Component({
     selector: "app-movie-list",
@@ -19,12 +19,12 @@ export class MovieListComponent {
      * Create output new EventEmmiter.
      */
     @Output()
-    public checkBoxClicked: EventEmitter<number> = new EventEmitter<number>();
+    public checkBoxClicked: EventEmitter<MovieWithCheckboxValue> = new EventEmitter<MovieWithCheckboxValue>();
 
     /**
-     * Emit true value if checkbox was clicked from movie-list-item-component.
+     * Emit movie with checkbox value from movie-list-item-component if ckeckbox was clicked.
      */
-    public onCheckBoxClicked(event: number): void {
+    public onCheckBoxClicked(event: MovieWithCheckboxValue): void {
         this.checkBoxClicked.emit(event);
     }
 
