@@ -22,6 +22,9 @@ export class FilmsToWatchPageComponent implements OnInit {
      */
     public filmsToWach$: Observable<Array<MovieWithCheckboxValue>>;
 
+    /**
+     * Property for Angular material open-close panel.
+     */
     public panelOpenState = false;
 
     constructor(store: Store<State>) {
