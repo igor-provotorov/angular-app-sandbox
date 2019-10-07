@@ -1,4 +1,9 @@
-.container {
-    margin: 0 auto;
-    width: 90%;
+.mat-expansion-panel {
+    width: 85%;
+    margin: 0.25rem auto;
+    margin-top: 1rem;
+}
+
+.mat-panel-title {
+    flex-grow: 0;
 }

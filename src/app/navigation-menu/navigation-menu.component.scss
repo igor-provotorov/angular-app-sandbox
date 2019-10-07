@@ -34,3 +34,9 @@
 .active {
     color: #f00c;
 }
+
+@media screen and (max-width: 450px) {
+    .title__link {
+        display: none;
+    }
+}

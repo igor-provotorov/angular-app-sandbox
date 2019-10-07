@@ -6,6 +6,7 @@ import { MatInputModule } from "@angular/material/input";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MatListModule } from "@angular/material/list";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
 import { SearchInputComponent } from "./search-input/search-input.component";
@@ -22,6 +23,7 @@ import { MovieListComponent } from "./movie-list/movie-list.component";
         MatToolbarModule,
         MatButtonModule,
         MatCheckboxModule,
+        MatListModule,
         MatProgressSpinnerModule,
     ],
     providers: [],

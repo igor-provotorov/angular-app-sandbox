@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy } from "@angular/core";
 import { SearchFilmsService } from "../core/services";
 import { Observable, of } from "rxjs";
-import { tap, withLatestFrom } from "rxjs/operators";
+import { tap } from "rxjs/operators";
 
 import {
     ModifiedResultMovie,
@@ -9,6 +9,9 @@ import {
     MovieWithCheckboxValue,
 } from "../core/services/search-films-service/models/index";
 import { checkEmptyResults } from "../core/utils/check-empty-results.util";
+import { Store } from "@ngrx/store";
+import { State } from "../core/store/reducers";
+import { AddFilmToWatchList, RemoveFilmFromWatchList } from "../core/store/films-to-watch/films-to-watch.action";
 
 @Component({
     selector: "app-movie-search-page",
@@ -21,6 +24,11 @@ export class MovieSearchPageComponent {
      * SearchFilmsService.
      */
     private searchFilmsService: SearchFilmsService;
+
+    /**
+     * Store
+     */
+    private store: Store<State>;
 
     /**
      * Loading flag.
@@ -42,8 +50,9 @@ export class MovieSearchPageComponent {
      */
     public resultsFilms$: Observable<Array<ModifiedResultMovie | NoSuchMovies>>;
 
-    constructor(searchFilmsService: SearchFilmsService) {
+    constructor(searchFilmsService: SearchFilmsService, store: Store<State>) {
         this.searchFilmsService = searchFilmsService;
+        this.store = store;
     }
 
     /**
@@ -78,7 +87,11 @@ export class MovieSearchPageComponent {
     /**
      * Change isChecked property if checkbox was clicked.
      */
-    public onCheckBoxClicked(event: MovieWithCheckboxValue): void {
-        console.log(event);
+    public onCheckBoxClicked(movie: MovieWithCheckboxValue): void {
+        if (movie.checkboxValue) {
+            this.store.dispatch(new AddFilmToWatchList(movie));
+        } else {
+            this.store.dispatch(new RemoveFilmFromWatchList(movie));
+        }
     }
 }
