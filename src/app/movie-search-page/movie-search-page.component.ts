@@ -3,18 +3,14 @@ import { Component, ChangeDetectionStrategy } from "@angular/core";
 import { Observable, of } from "rxjs";
 import { tap } from "rxjs/operators";
 
-import { Store } from "@ngrx/store";
-
 import {
     SearchFilmsService,
     ModifiedResultMovie,
     NoSuchMovies,
     MovieWithCheckboxValue,
     checkEmptyResults,
-    State,
-    AddFilmToWatchList,
-    RemoveFilmFromWatchList,
 } from "../core/index";
+import { FilmsToWatchStoreFacade } from "../core/store-facades/films-to-watch/films-to-watch.store-facade";
 
 @Component({
     selector: "app-movie-search-page",
@@ -29,9 +25,9 @@ export class MovieSearchPageComponent {
     private searchFilmsService: SearchFilmsService;
 
     /**
-     * Store
+     * FilmsToWatch Store Facade.
      */
-    private store: Store<State>;
+    private filmsToWatchStoreFacade: FilmsToWatchStoreFacade;
 
     /**
      * Loading flag.
@@ -53,9 +49,9 @@ export class MovieSearchPageComponent {
      */
     public resultsFilms$: Observable<Array<ModifiedResultMovie | NoSuchMovies>>;
 
-    constructor(searchFilmsService: SearchFilmsService, store: Store<State>) {
+    constructor(searchFilmsService: SearchFilmsService, filmsToWatchStoreFacade: FilmsToWatchStoreFacade) {
         this.searchFilmsService = searchFilmsService;
-        this.store = store;
+        this.filmsToWatchStoreFacade = filmsToWatchStoreFacade;
     }
 
     /**
@@ -92,9 +88,9 @@ export class MovieSearchPageComponent {
      */
     public onCheckBoxClicked(movie: MovieWithCheckboxValue): void {
         if (movie.checkboxValue) {
-            this.store.dispatch(new AddFilmToWatchList(movie));
+            this.filmsToWatchStoreFacade.AddFilmToWatchList(movie);
         } else {
-            this.store.dispatch(new RemoveFilmFromWatchList(movie));
+            this.filmsToWatchStoreFacade.RemoveFilmFromWatchList(movie);
         }
     }
 }

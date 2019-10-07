@@ -1,9 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import { Store } from "@ngrx/store";
 
 import { Observable } from "rxjs";
 
-import { MovieWithCheckboxValue, State, selectFilmToWatchList } from "../core/index";
+import { MovieWithCheckboxValue, FilmsToWatchStoreFacade } from "../core/index";
 
 @Component({
     selector: "app-films-to-watch-page",
@@ -12,9 +11,9 @@ import { MovieWithCheckboxValue, State, selectFilmToWatchList } from "../core/in
 })
 export class FilmsToWatchPageComponent implements OnInit {
     /**
-     * Store injection.
+     * FilmsToWatchStoreFacade injection.
      */
-    private store: Store<State>;
+    private filmsToWatchStoreFacade: FilmsToWatchStoreFacade;
 
     /**
      * Observable films to watch from store.
@@ -26,14 +25,14 @@ export class FilmsToWatchPageComponent implements OnInit {
      */
     public panelOpenState = false;
 
-    constructor(store: Store<State>) {
-        this.store = store;
+    constructor(filmsToWatchStoreFacade: FilmsToWatchStoreFacade) {
+        this.filmsToWatchStoreFacade = filmsToWatchStoreFacade;
     }
 
     /**
      * Get films from store to filmsToWatch$ property when ther component will mount.
      */
     public ngOnInit(): void {
-        this.filmsToWatch$ = this.store.select(selectFilmToWatchList);
+        this.filmsToWatch$ = this.filmsToWatchStoreFacade.filmsToWatch$;
     }
 }
