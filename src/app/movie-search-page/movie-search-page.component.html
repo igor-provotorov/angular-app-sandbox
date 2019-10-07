@@ -6,7 +6,7 @@
             (checkBoxClicked)="onCheckBoxClicked($event)"
         ></app-movie-list>
         <p class="no-movies-paragraph mat-typography" *ngIf="isNoMoreResults">There are no more movies</p>
-        <mat-spinner *ngIf="isLoading && !isNoMoreResults"></mat-spinner>
+        <mat-spinner *ngIf="isLoading && !isNoMoreResults" diameter="50"></mat-spinner>
         <button
             class="load-more-button"
             *ngIf="isSearchedFilms"
