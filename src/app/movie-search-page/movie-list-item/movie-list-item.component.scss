@@ -64,3 +64,15 @@
 .wish-list__checkbox {
     text-transform: uppercase;
 }
+
+@media screen and (max-width: 420px) {
+    .card-panel {
+        width: 300px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .card-panel {
+        width: 280px;
+    }
+}

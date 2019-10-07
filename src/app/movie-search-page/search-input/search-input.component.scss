@@ -6,3 +6,10 @@
 .submit-button {
     margin-left: 0.625rem;
 }
+
+@media screen and (max-width: 768px) {
+    .submit-button {
+        display: block;
+        margin: auto;
+    }
+}
