@@ -1,10 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { Store } from "@ngrx/store";
-import { State } from "../core/store/reducers";
+
 import { Observable } from "rxjs";
-import { MovieWithCheckboxValue } from "../core/services/search-films-service/models";
-import { FilmsToWatchState } from "../core/store/films-to-watch/films-to-watch.reducer";
-import { map } from "rxjs/operators";
+
+import { MovieWithCheckboxValue } from "../core/services/search-films-service/models/index";
+import { State, selectFilmToWatchList } from "../core/store/index";
 
 @Component({
     selector: "app-films-to-watch-page",
@@ -35,6 +35,6 @@ export class FilmsToWatchPageComponent implements OnInit {
      * Get films from store to filmsToWach$ property when ther component will mount.
      */
     public ngOnInit(): void {
-        this.filmsToWach$ = this.store.select("filmsToWatch").pipe(map((data: FilmsToWatchState) => data.filmsToWatch));
+        this.filmsToWach$ = this.store.select(selectFilmToWatchList);
     }
 }

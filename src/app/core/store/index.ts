@@ -5,5 +5,7 @@ export {
     FilmsToWatchState,
     selectFilmToWatchState,
     selectFilmToWatchList,
+    AddFilmToWatchList,
+    RemoveFilmFromWatchList,
 } from "./films-to-watch/index";
 export { State, reducers } from "./reducers";

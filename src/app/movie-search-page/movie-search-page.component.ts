@@ -1,17 +1,19 @@
 import { Component, ChangeDetectionStrategy } from "@angular/core";
-import { SearchFilmsService } from "../core/services";
+
 import { Observable, of } from "rxjs";
 import { tap } from "rxjs/operators";
 
+import { Store } from "@ngrx/store";
+
+import { SearchFilmsService } from "../core/services/index";
 import {
     ModifiedResultMovie,
     NoSuchMovies,
     MovieWithCheckboxValue,
 } from "../core/services/search-films-service/models/index";
-import { checkEmptyResults } from "../core/utils/check-empty-results.util";
-import { Store } from "@ngrx/store";
-import { State } from "../core/store/reducers";
-import { AddFilmToWatchList, RemoveFilmFromWatchList } from "../core/store/films-to-watch/films-to-watch.action";
+import { checkEmptyResults } from "../core/utils/index";
+import { State } from "../core/store/index";
+import { AddFilmToWatchList, RemoveFilmFromWatchList } from "../core/store/index";
 
 @Component({
     selector: "app-movie-search-page",
