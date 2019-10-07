@@ -19,7 +19,7 @@ export class FilmsToWatchPageComponent implements OnInit {
     /**
      * Observable films to watch from store.
      */
-    public filmsToWach$: Observable<Array<MovieWithCheckboxValue>>;
+    public filmsToWatch$: Observable<Array<MovieWithCheckboxValue>>;
 
     /**
      * Property for Angular material open-close panel.
@@ -31,9 +31,9 @@ export class FilmsToWatchPageComponent implements OnInit {
     }
 
     /**
-     * Get films from store to filmsToWach$ property when ther component will mount.
+     * Get films from store to filmsToWatch$ property when ther component will mount.
      */
     public ngOnInit(): void {
-        this.filmsToWach$ = this.store.select(selectFilmToWatchList);
+        this.filmsToWatch$ = this.store.select(selectFilmToWatchList);
     }
 }

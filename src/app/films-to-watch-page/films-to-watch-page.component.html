@@ -1,6 +1,6 @@
 <mat-accordion>
     <mat-expansion-panel
-        *ngFor="let film of filmsToWach$ | async"
+        *ngFor="let film of filmsToWatch$ | async"
         class="mat-expansion-panel"
         (opened)="panelOpenState = true"
         (closed)="panelOpenState = false"
@@ -16,3 +16,6 @@
         <p>{{ film.overview }}</p>
     </mat-expansion-panel>
 </mat-accordion>
+<div class="container mat-h2" *ngIf="!(filmsToWatch$ | async).length">
+    There are no movies in list
+</div>
