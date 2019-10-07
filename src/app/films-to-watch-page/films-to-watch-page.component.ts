@@ -3,8 +3,7 @@ import { Store } from "@ngrx/store";
 
 import { Observable } from "rxjs";
 
-import { MovieWithCheckboxValue } from "../core/services/search-films-service/models/index";
-import { State, selectFilmToWatchList } from "../core/store/index";
+import { MovieWithCheckboxValue, State, selectFilmToWatchList } from "../core/index";
 
 @Component({
     selector: "app-films-to-watch-page",

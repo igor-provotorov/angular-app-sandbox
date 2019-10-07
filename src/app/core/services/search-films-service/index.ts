@@ -1,4 +1,4 @@
-export { SearchFilmsService } from "./search-films-service/search-films.service";
+export { SearchFilmsService } from "./search-films.service";
 export {
     SearchFilms,
     ResultMovie,
@@ -15,4 +15,4 @@ export {
     Languages,
     Videos,
     MovieWithCheckboxValue,
-} from "./search-films-service/models/index";
+} from "./models/index";

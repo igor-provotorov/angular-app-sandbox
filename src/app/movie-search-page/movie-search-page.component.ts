@@ -5,15 +5,16 @@ import { tap } from "rxjs/operators";
 
 import { Store } from "@ngrx/store";
 
-import { SearchFilmsService } from "../core/services/index";
 import {
+    SearchFilmsService,
     ModifiedResultMovie,
     NoSuchMovies,
     MovieWithCheckboxValue,
-} from "../core/services/search-films-service/models/index";
-import { checkEmptyResults } from "../core/utils/index";
-import { State } from "../core/store/index";
-import { AddFilmToWatchList, RemoveFilmFromWatchList } from "../core/store/index";
+    checkEmptyResults,
+    State,
+    AddFilmToWatchList,
+    RemoveFilmFromWatchList,
+} from "../core/index";
 
 @Component({
     selector: "app-movie-search-page",

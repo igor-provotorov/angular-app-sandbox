@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from "@angular/core";
 
-import { ModifiedResultMovie, MovieWithCheckboxValue } from "src/app/core/services/search-films-service/models/index";
+import { ModifiedResultMovie, MovieWithCheckboxValue } from "src/app/core/index";
 
 @Component({
     selector: "app-movie-list",
