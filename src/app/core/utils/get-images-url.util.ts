@@ -1,4 +1,9 @@
-import { BASE_SEARCH_IMAGES_URL, POSTER_IMAGE_SIZE_PX, ACTOR_IMAGE_SIZE_PX, DEFAULT_IMAGE_SIZE_PX } from "../constants";
+import {
+    BASE_SEARCH_IMAGES_URL,
+    POSTER_IMAGE_SIZE_PX,
+    ACTOR_IMAGE_SIZE_PX,
+    DEFAULT_IMAGE_SIZE_PX,
+} from "../constants/index";
 
 /**
  * Returns images url for pictures in movies.

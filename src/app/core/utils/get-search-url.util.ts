@@ -1,4 +1,4 @@
-import { BASE_SEARCH_URL, API_KEY } from "../constants";
+import { BASE_SEARCH_URL, API_KEY } from "../constants/index";
 
 /**
  * Returns search url for search movies.

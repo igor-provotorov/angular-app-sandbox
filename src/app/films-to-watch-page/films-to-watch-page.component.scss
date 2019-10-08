@@ -1,4 +1,11 @@
+.mat-expansion-panel,
 .container {
-    margin: 0 auto;
-    width: 90%;
+    width: 85%;
+    margin: 0.25rem auto;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.mat-panel-title {
+    flex-grow: 0;
 }

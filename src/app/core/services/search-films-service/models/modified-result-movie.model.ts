@@ -1,4 +1,4 @@
-import { Actor } from "./index";
+import { Actor } from "./actor.model";
 
 export interface ModifiedResultMovie {
     id: number;

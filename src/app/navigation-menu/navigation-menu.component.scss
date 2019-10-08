@@ -34,3 +34,17 @@
 .active {
     color: #f00c;
 }
+
+@media screen and (max-width: 450px) {
+    .wrapper {
+        justify-content: center;
+    }
+
+    .title__link {
+        display: none;
+    }
+
+    .link {
+        font-size: 1rem;
+    }
+}

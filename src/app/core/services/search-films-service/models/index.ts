@@ -12,3 +12,4 @@ export { ProductionCompanies } from "./production-companies.model";
 export { ProductionCountries } from "./production-countries.model";
 export { Languages } from "./languages.model";
 export { Videos } from "./videos.model";
+export { MovieWithCheckboxValue } from "./movie-with-checkbox-value.model";

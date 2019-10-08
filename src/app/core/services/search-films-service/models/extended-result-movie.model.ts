@@ -1,4 +1,9 @@
-import { Genres, Credits, Videos, ProductionCompanies, ProductionCountries, Languages } from "./index";
+import { Genres } from "./genres.model";
+import { Credits } from "./credits.model";
+import { Videos } from "./videos.model";
+import { ProductionCompanies } from "./production-companies.model";
+import { ProductionCountries } from "./production-countries.model";
+import { Languages } from "./languages.model";
 
 export interface ExtendedResultMovie {
     adult: boolean;

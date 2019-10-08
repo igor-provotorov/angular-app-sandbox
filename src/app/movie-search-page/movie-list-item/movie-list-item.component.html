@@ -19,4 +19,9 @@
             <img class="actors-list__actor-photo" [src]="actor.profile_path" [alt]="actor.name" />
         </li>
     </ul>
+    <div class="wish-list" *ngIf="film.id">
+        <mat-checkbox class="wish-list__checkbox" color="primary" (click)="onCheckboxClicked()"
+            >Add movie to wish list</mat-checkbox
+        >
+    </div>
 </li>

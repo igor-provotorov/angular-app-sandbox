@@ -1,10 +1,16 @@
 import { Component, ChangeDetectionStrategy } from "@angular/core";
-import { SearchFilmsService } from "../core/services";
+
 import { Observable, of } from "rxjs";
 import { tap } from "rxjs/operators";
 
-import { ModifiedResultMovie, NoSuchMovies } from "../core/services/search-films-service/models/index";
-import { checkEmptyResults } from "../core/utils/check-empty-results.util";
+import {
+    SearchFilmsService,
+    ModifiedResultMovie,
+    NoSuchMovies,
+    MovieWithCheckboxValue,
+    checkEmptyResults,
+    FilmsToWatchStoreFacade,
+} from "../core/index";
 
 @Component({
     selector: "app-movie-search-page",
@@ -17,6 +23,11 @@ export class MovieSearchPageComponent {
      * SearchFilmsService.
      */
     private searchFilmsService: SearchFilmsService;
+
+    /**
+     * FilmsToWatch Store Facade.
+     */
+    private filmsToWatchStoreFacade: FilmsToWatchStoreFacade;
 
     /**
      * Loading flag.
@@ -38,8 +49,9 @@ export class MovieSearchPageComponent {
      */
     public resultsFilms$: Observable<Array<ModifiedResultMovie | NoSuchMovies>>;
 
-    constructor(searchFilmsService: SearchFilmsService) {
+    constructor(searchFilmsService: SearchFilmsService, filmsToWatchStoreFacade: FilmsToWatchStoreFacade) {
         this.searchFilmsService = searchFilmsService;
+        this.filmsToWatchStoreFacade = filmsToWatchStoreFacade;
     }
 
     /**
@@ -69,5 +81,16 @@ export class MovieSearchPageComponent {
         this.isLoading = true;
         this.searchFilmsService.nextPage();
         this.isNoMoreResults = this.searchFilmsService.isNoMoreResults;
+    }
+
+    /**
+     * Change isChecked property if checkbox was clicked.
+     */
+    public onCheckBoxClicked(movie: MovieWithCheckboxValue): void {
+        if (movie.checkboxValue) {
+            this.filmsToWatchStoreFacade.addFilmToWatchList(movie);
+        } else {
+            this.filmsToWatchStoreFacade.removeFilmFromWatchList(movie);
+        }
     }
 }

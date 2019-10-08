@@ -1,4 +1,4 @@
-import { VideoTrailer } from "./index";
+import { VideoTrailer } from "./video-trailer.model";
 
 export interface Videos {
     results: Array<VideoTrailer>;
