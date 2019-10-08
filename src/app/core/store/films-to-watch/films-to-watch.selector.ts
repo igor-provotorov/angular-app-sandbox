@@ -1,8 +1,8 @@
 import { createSelector, MemoizedSelector, DefaultProjectorFn } from "@ngrx/store";
 
 import { State } from "../../store/index";
-import { FilmsToWatchState } from "./models/index";
 import { MovieWithCheckboxValue } from "../../services/index";
+import { FilmsToWatchState } from "./films-to-watch-state.model";
 
 export const selectFilmToWatchState: (param: State) => FilmsToWatchState = (state: State): FilmsToWatchState =>
     state.filmsToWatch;

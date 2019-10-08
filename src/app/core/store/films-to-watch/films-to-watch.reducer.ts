@@ -1,6 +1,6 @@
 import { FilmsToWatchActionTypes, FilmsToWatchActions } from "./films-to-watch.action";
+import { FilmsToWatchState } from "./films-to-watch-state.model";
 import { MovieWithCheckboxValue } from "../../services/index";
-import { FilmsToWatchState } from "./models/index";
 
 /**
  * Initial state for reducer.
