@@ -1,5 +1,5 @@
 import { NO_SUCH_MOVIES, ERROR } from "../constants/index";
-import { ModifiedResultMovie, NoSuchMovies } from "../services/search-films-service/models/index";
+import { ModifiedResultMovie, NoSuchMovies } from "../services/index";
 
 /**
  * Check if results is empty or response is .

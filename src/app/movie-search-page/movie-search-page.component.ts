@@ -9,8 +9,8 @@ import {
     NoSuchMovies,
     MovieWithCheckboxValue,
     checkEmptyResults,
+    FilmsToWatchStoreFacade,
 } from "../core/index";
-import { FilmsToWatchStoreFacade } from "../core/store-facades/films-to-watch/films-to-watch.store-facade";
 
 @Component({
     selector: "app-movie-search-page",
@@ -88,9 +88,9 @@ export class MovieSearchPageComponent {
      */
     public onCheckBoxClicked(movie: MovieWithCheckboxValue): void {
         if (movie.checkboxValue) {
-            this.filmsToWatchStoreFacade.AddFilmToWatchList(movie);
+            this.filmsToWatchStoreFacade.addFilmToWatchList(movie);
         } else {
-            this.filmsToWatchStoreFacade.RemoveFilmFromWatchList(movie);
+            this.filmsToWatchStoreFacade.removeFilmFromWatchList(movie);
         }
     }
 }

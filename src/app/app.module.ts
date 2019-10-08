@@ -4,11 +4,11 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 import { AppComponent } from "./app.component";
 
-import { CoreModule } from "./core/core.module";
+import { CoreModule } from "./core/index";
+import { MovieSearchPageModule } from "./movie-search-page/index";
+import { NavigationMenuModule } from "./navigation-menu/index";
+import { FilmsToWatchPageModule } from "./films-to-watch-page/index";
 import { AppRoutingModule } from "./app-routing.module";
-import { MovieSearchPageModule } from "./movie-search-page/movie-search-page.module";
-import { NavigationMenuModule } from "./navigation-menu/navigation-menu.module";
-import { FilmsToWatchPageModule } from "./films-to-watch-page/films-to-watch-page.module";
 
 @NgModule({
     declarations: [AppComponent],

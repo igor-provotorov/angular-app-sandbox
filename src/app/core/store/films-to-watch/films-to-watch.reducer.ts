@@ -1,12 +1,6 @@
 import { FilmsToWatchActionTypes, FilmsToWatchActions } from "./films-to-watch.action";
-import { MovieWithCheckboxValue } from "../../services/search-films-service/models";
-
-/**
- * Interface for filmsToWatch.
- */
-export interface FilmsToWatchState {
-    filmsToWatch: Array<MovieWithCheckboxValue>;
-}
+import { MovieWithCheckboxValue } from "../../services/index";
+import { FilmsToWatchState } from "./models/index";
 
 /**
  * Initial state for reducer.

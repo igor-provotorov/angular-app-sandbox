@@ -1,6 +1,6 @@
 import { Action } from "@ngrx/store";
 
-import { MovieWithCheckboxValue } from "../../services/search-films-service/models/index";
+import { MovieWithCheckboxValue } from "../../services/index";
 
 /**
  * Types of films-to-watch actions.

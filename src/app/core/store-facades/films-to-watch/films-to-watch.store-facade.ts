@@ -5,7 +5,7 @@ import { Observable } from "rxjs";
 import { Store } from "@ngrx/store";
 
 import { State, selectFilmToWatchList, AddFilmToWatchList, RemoveFilmFromWatchList } from "../../store/index";
-import { MovieWithCheckboxValue } from "../../index";
+import { MovieWithCheckboxValue } from "../../services/index";
 
 @Injectable()
 export class FilmsToWatchStoreFacade {
@@ -27,14 +27,14 @@ export class FilmsToWatchStoreFacade {
     /**
      * Dispath AddFilmToWatchList action to store.
      */
-    AddFilmToWatchList(movie: MovieWithCheckboxValue): void {
+    addFilmToWatchList(movie: MovieWithCheckboxValue): void {
         this.store.dispatch(new AddFilmToWatchList(movie));
     }
 
     /**
      * Dispath RemoveFilmFromWatchList action to store.
      */
-    RemoveFilmFromWatchList(movie: MovieWithCheckboxValue): void {
+    removeFilmFromWatchList(movie: MovieWithCheckboxValue): void {
         this.store.dispatch(new RemoveFilmFromWatchList(movie));
     }
 }

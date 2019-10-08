@@ -1,12 +1,11 @@
 import { NgModule } from "@angular/core";
 import { StoreModule } from "@ngrx/store";
 
-import { ServiceModule } from "./services/service.module";
-import { reducers } from "./store/reducers";
-import { FilmsToWatchStoreFacade } from "./index";
+import { ServiceModule } from "./services/index";
+import { reducers } from "./store/index";
+import { StoreFacadeModule } from "./store-facades/index";
 
 @NgModule({
-    imports: [ServiceModule, StoreModule.forRoot(reducers)],
-    providers: [FilmsToWatchStoreFacade],
+    imports: [ServiceModule, StoreModule.forRoot(reducers), StoreFacadeModule],
 })
 export class CoreModule {}
