@@ -1,13 +1,21 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 
-import { Observable, of, forkJoin, BehaviorSubject, throwError, timer } from "rxjs";
-import { map, switchMap, scan, catchError, retryWhen, tap, debounce } from "rxjs/operators";
+import { Observable, of, forkJoin, BehaviorSubject, throwError, timer, zip, combineLatest } from "rxjs";
+import { map, switchMap, scan, catchError, retryWhen, tap, debounce, mergeMap } from "rxjs/operators";
 
-import { SearchFilms, ResultMovie, ModifiedResultMovie, NoSuchMovies, ExtendedResultMovie } from "./models/index";
+import {
+    SearchFilms,
+    ResultMovie,
+    ModifiedResultMovie,
+    NoSuchMovies,
+    ExtendedResultMovie,
+    MovieWithCheckboxValue,
+} from "./models/index";
 import { getSearchUrl, getMovieDetailsUrl } from "../../utils/index";
 import { transformResultMovies } from "../../mappers/index";
-import { OVER_THE_ALLOWED_LIMIT, DIGITS, SERVER_DELAY_TIME } from "../../constants";
+import { OVER_THE_ALLOWED_LIMIT, DIGITS, SERVER_DELAY_TIME } from "../../constants/index";
+import { FilmsToWatchStoreFacade } from "../../store-facades/index";
 
 @Injectable()
 export class SearchFilmsService {
@@ -28,8 +36,20 @@ export class SearchFilmsService {
      */
     private lastFetchingDate: number;
 
-    constructor(http: HttpClient) {
+    /**
+     * FilmsToWatchStoreFacade injection.
+     */
+    private filmsToWatchStoreFacade: FilmsToWatchStoreFacade;
+
+    /**
+     * Observable films to watch from store.
+     */
+    public filmsToWatch$: Observable<Array<MovieWithCheckboxValue>>;
+
+    constructor(http: HttpClient, filmsToWatchStoreFacade: FilmsToWatchStoreFacade) {
         this.http = http;
+        this.filmsToWatchStoreFacade = filmsToWatchStoreFacade;
+        this.filmsToWatch$ = this.filmsToWatchStoreFacade.filmsToWatch$;
     }
 
     /**
@@ -45,7 +65,7 @@ export class SearchFilmsService {
     /**
      * Makes response to API and fetching mapped-data.
      */
-    public getFilmsFromApi(searchQuery: string): Observable<Array<ModifiedResultMovie | NoSuchMovies>> {
+    public getFilmsFromApi(searchQuery: string): Observable<Array<MovieWithCheckboxValue | NoSuchMovies>> {
         this.startPage = DIGITS.ONE;
         this.isNoMoreResults = false;
         this.behaviorSubject$ = new BehaviorSubject<number>(this.startPage);
@@ -75,11 +95,22 @@ export class SearchFilmsService {
                 ],
                 []
             ),
-            catchError((err: HttpErrorResponse) => {
-                const errorMessage: string = err.error.status_message || err.error.errors.toString();
+            switchMap((movies: Array<ModifiedResultMovie | NoSuchMovies>) => {
+                console.log(movies);
+                return this.filmsToWatch$.pipe(
+                    map((filmsToWatchArray: Array<MovieWithCheckboxValue>) =>
+                        this.addCheckboxesFromStore(movies, filmsToWatchArray)
+                    )
+                );
+            }),
 
-                return of([{ title: `#Error: ${errorMessage}` }]);
-            })
+            tap(data => console.log("after", data))
+
+            // catchError((err: HttpErrorResponse) => {
+            //     const errorMessage: string = err.error.status_message || err.error.errors.toString();
+
+            //     return of([{ title: `#Error: ${errorMessage}` }]);
+            // })
         );
     }
 
@@ -129,5 +160,26 @@ export class SearchFilmsService {
      */
     private checkNoMovies(movies: Array<ExtendedResultMovie>): Array<ModifiedResultMovie | NoSuchMovies> {
         return movies.length ? transformResultMovies(movies) : [{ title: "No such movies" }];
+    }
+
+    /**
+     * Joined result array from fetch and array with checkboxes from store.
+     */
+    private addCheckboxesFromStore(
+        movies: Array<ModifiedResultMovie | NoSuchMovies>,
+        filmsToWatchArray: Array<MovieWithCheckboxValue>
+    ): Array<MovieWithCheckboxValue | NoSuchMovies> {
+        return movies.map((movie: ModifiedResultMovie | NoSuchMovies) => {
+            if (filmsToWatchArray.find((filmToWatch: MovieWithCheckboxValue) => filmToWatch.id === movie.id)) {
+                return {
+                    ...movie,
+                    checkboxValue: true,
+                };
+            }
+            return {
+                ...movie,
+                checkboxValue: false,
+            };
+        });
     }
 }
