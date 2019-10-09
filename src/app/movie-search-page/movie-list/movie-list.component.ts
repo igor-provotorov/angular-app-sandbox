@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from "@angular/core";
 
-import { ModifiedResultMovie, MovieWithCheckboxValue } from "src/app/core/index";
+import { MovieWithCheckboxValue, NoSuchMovies } from "src/app/core/index";
 
 @Component({
     selector: "app-movie-list",
@@ -13,7 +13,7 @@ export class MovieListComponent {
      * Import array of data about found movies.
      */
     @Input()
-    public resultsFilms: Array<ModifiedResultMovie>;
+    public resultsFilms: Array<MovieWithCheckboxValue | NoSuchMovies>;
 
     /**
      * Create output new EventEmmiter.
@@ -24,14 +24,14 @@ export class MovieListComponent {
     /**
      * Emit movie with checkbox value from movie-list-item-component if ckeckbox was clicked.
      */
-    public onCheckBoxClicked(event: MovieWithCheckboxValue): void {
-        this.checkBoxClicked.emit(event);
+    public onCheckBoxClicked(movie: MovieWithCheckboxValue): void {
+        this.checkBoxClicked.emit(movie);
     }
 
     /**
      * trackBy function for optimize painting movies on the page.
      */
-    trackByFn(_: number, film: ModifiedResultMovie): number {
+    trackByFn(_: number, film: MovieWithCheckboxValue): number {
         return film.id;
     }
 }

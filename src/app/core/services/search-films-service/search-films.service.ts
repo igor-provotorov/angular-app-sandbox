@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 
-import { Observable, of, forkJoin, BehaviorSubject, throwError, timer, zip, combineLatest } from "rxjs";
-import { map, switchMap, scan, catchError, retryWhen, tap, debounce, mergeMap } from "rxjs/operators";
+import { Observable, of, forkJoin, BehaviorSubject, throwError, timer } from "rxjs";
+import { map, switchMap, scan, catchError, retryWhen, tap, debounce } from "rxjs/operators";
 
 import {
     SearchFilms,
@@ -41,15 +41,9 @@ export class SearchFilmsService {
      */
     private filmsToWatchStoreFacade: FilmsToWatchStoreFacade;
 
-    /**
-     * Observable films to watch from store.
-     */
-    public filmsToWatch$: Observable<Array<MovieWithCheckboxValue>>;
-
     constructor(http: HttpClient, filmsToWatchStoreFacade: FilmsToWatchStoreFacade) {
         this.http = http;
         this.filmsToWatchStoreFacade = filmsToWatchStoreFacade;
-        this.filmsToWatch$ = this.filmsToWatchStoreFacade.filmsToWatch$;
     }
 
     /**
@@ -72,9 +66,12 @@ export class SearchFilmsService {
 
         return this.behaviorSubject$.pipe(
             debounce(() => timer(this.getDebounceTime())),
-            switchMap((currPage: number) => this.http.get<SearchFilms>(getSearchUrl(searchQuery, currPage))),
-            tap((data: SearchFilms) => (this.totalPages = data.total_pages)),
-            map((data: SearchFilms) => data.results),
+            switchMap((currPage: number) =>
+                this.http.get<SearchFilms>(getSearchUrl(searchQuery, currPage)).pipe(
+                    tap((data: SearchFilms) => (this.totalPages = data.total_pages)),
+                    map((data: SearchFilms) => data.results)
+                )
+            ),
             switchMap((searchFilms: Array<ResultMovie>) =>
                 this.getDetailsFilmsInfo(searchFilms).pipe(
                     map((moviesArr: Array<ExtendedResultMovie>) => this.checkNoMovies(moviesArr)),
@@ -84,10 +81,10 @@ export class SearchFilmsService {
                                 sourceErr.status === OVER_THE_ALLOWED_LIMIT ? of(true) : throwError(sourceErr)
                             )
                         )
-                    )
+                    ),
+                    tap(() => (this.lastFetchingDate = Date.now()))
                 )
             ),
-            tap(() => (this.lastFetchingDate = Date.now())),
             scan(
                 (acc: Array<ModifiedResultMovie | NoSuchMovies>, movies: Array<ModifiedResultMovie | NoSuchMovies>) => [
                     ...acc,
@@ -95,22 +92,18 @@ export class SearchFilmsService {
                 ],
                 []
             ),
-            switchMap((movies: Array<ModifiedResultMovie | NoSuchMovies>) => {
-                console.log(movies);
-                return this.filmsToWatch$.pipe(
+            switchMap((movies: Array<ModifiedResultMovie | NoSuchMovies>) =>
+                this.filmsToWatchStoreFacade.filmsToWatch$.pipe(
                     map((filmsToWatchArray: Array<MovieWithCheckboxValue>) =>
                         this.addCheckboxesFromStore(movies, filmsToWatchArray)
                     )
-                );
-            }),
+                )
+            ),
+            catchError((err: HttpErrorResponse) => {
+                const errorMessage: string = err.error.status_message || err.error.errors.toString();
 
-            tap(data => console.log("after", data))
-
-            // catchError((err: HttpErrorResponse) => {
-            //     const errorMessage: string = err.error.status_message || err.error.errors.toString();
-
-            //     return of([{ title: `#Error: ${errorMessage}` }]);
-            // })
+                return of([{ title: `#Error: ${errorMessage}` }]);
+            })
         );
     }
 
