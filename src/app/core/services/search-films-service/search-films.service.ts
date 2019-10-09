@@ -163,16 +163,11 @@ export class SearchFilmsService {
         filmsToWatchArray: Array<MovieWithCheckboxValue>
     ): Array<MovieWithCheckboxValue | NoSuchMovies> {
         return movies.map((movie: ModifiedResultMovie | NoSuchMovies) => {
-            if (filmsToWatchArray.find((filmToWatch: MovieWithCheckboxValue) => filmToWatch.id === movie.id)) {
-                return {
-                    ...movie,
-                    checkboxValue: true,
-                };
-            }
-            return {
-                ...movie,
-                checkboxValue: false,
-            };
+            const checkboxValue: boolean = Boolean(
+                filmsToWatchArray.find((filmToWatch: MovieWithCheckboxValue) => filmToWatch.id === movie.id)
+            );
+
+            return { ...movie, checkboxValue };
         });
     }
 }
