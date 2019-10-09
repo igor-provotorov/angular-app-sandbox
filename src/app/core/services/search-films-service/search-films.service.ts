@@ -4,10 +4,18 @@ import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Observable, of, forkJoin, BehaviorSubject, throwError, timer } from "rxjs";
 import { map, switchMap, scan, catchError, retryWhen, tap, debounce } from "rxjs/operators";
 
-import { SearchFilms, ResultMovie, ModifiedResultMovie, NoSuchMovies, ExtendedResultMovie } from "./models/index";
+import {
+    SearchFilms,
+    ResultMovie,
+    ModifiedResultMovie,
+    NoSuchMovies,
+    ExtendedResultMovie,
+    MovieWithCheckboxValue,
+} from "./models/index";
 import { getSearchUrl, getMovieDetailsUrl } from "../../utils/index";
 import { transformResultMovies } from "../../mappers/index";
-import { OVER_THE_ALLOWED_LIMIT, DIGITS, SERVER_DELAY_TIME } from "../../constants";
+import { OVER_THE_ALLOWED_LIMIT, DIGITS, SERVER_DELAY_TIME } from "../../constants/index";
+import { FilmsToWatchStoreFacade } from "../../store-facades/index";
 
 @Injectable()
 export class SearchFilmsService {
@@ -28,8 +36,14 @@ export class SearchFilmsService {
      */
     private lastFetchingDate: number;
 
-    constructor(http: HttpClient) {
+    /**
+     * FilmsToWatchStoreFacade injection.
+     */
+    private filmsToWatchStoreFacade: FilmsToWatchStoreFacade;
+
+    constructor(http: HttpClient, filmsToWatchStoreFacade: FilmsToWatchStoreFacade) {
         this.http = http;
+        this.filmsToWatchStoreFacade = filmsToWatchStoreFacade;
     }
 
     /**
@@ -45,16 +59,19 @@ export class SearchFilmsService {
     /**
      * Makes response to API and fetching mapped-data.
      */
-    public getFilmsFromApi(searchQuery: string): Observable<Array<ModifiedResultMovie | NoSuchMovies>> {
+    public getFilmsFromApi(searchQuery: string): Observable<Array<MovieWithCheckboxValue | NoSuchMovies>> {
         this.startPage = DIGITS.ONE;
         this.isNoMoreResults = false;
         this.behaviorSubject$ = new BehaviorSubject<number>(this.startPage);
 
         return this.behaviorSubject$.pipe(
             debounce(() => timer(this.getDebounceTime())),
-            switchMap((currPage: number) => this.http.get<SearchFilms>(getSearchUrl(searchQuery, currPage))),
-            tap((data: SearchFilms) => (this.totalPages = data.total_pages)),
-            map((data: SearchFilms) => data.results),
+            switchMap((currPage: number) =>
+                this.http.get<SearchFilms>(getSearchUrl(searchQuery, currPage)).pipe(
+                    tap((data: SearchFilms) => (this.totalPages = data.total_pages)),
+                    map((data: SearchFilms) => data.results)
+                )
+            ),
             switchMap((searchFilms: Array<ResultMovie>) =>
                 this.getDetailsFilmsInfo(searchFilms).pipe(
                     map((moviesArr: Array<ExtendedResultMovie>) => this.checkNoMovies(moviesArr)),
@@ -64,16 +81,23 @@ export class SearchFilmsService {
                                 sourceErr.status === OVER_THE_ALLOWED_LIMIT ? of(true) : throwError(sourceErr)
                             )
                         )
-                    )
+                    ),
+                    tap(() => (this.lastFetchingDate = Date.now()))
                 )
             ),
-            tap(() => (this.lastFetchingDate = Date.now())),
             scan(
                 (acc: Array<ModifiedResultMovie | NoSuchMovies>, movies: Array<ModifiedResultMovie | NoSuchMovies>) => [
                     ...acc,
                     ...movies,
                 ],
                 []
+            ),
+            switchMap((movies: Array<ModifiedResultMovie | NoSuchMovies>) =>
+                this.filmsToWatchStoreFacade.filmsToWatch$.pipe(
+                    map((filmsToWatchArray: Array<MovieWithCheckboxValue>) =>
+                        this.addCheckboxesFromStore(movies, filmsToWatchArray)
+                    )
+                )
             ),
             catchError((err: HttpErrorResponse) => {
                 const errorMessage: string = err.error.status_message || err.error.errors.toString();
@@ -129,5 +153,21 @@ export class SearchFilmsService {
      */
     private checkNoMovies(movies: Array<ExtendedResultMovie>): Array<ModifiedResultMovie | NoSuchMovies> {
         return movies.length ? transformResultMovies(movies) : [{ title: "No such movies" }];
+    }
+
+    /**
+     * Joined result array from fetch and array with checkboxes from store.
+     */
+    private addCheckboxesFromStore(
+        movies: Array<ModifiedResultMovie | NoSuchMovies>,
+        filmsToWatchArray: Array<MovieWithCheckboxValue>
+    ): Array<MovieWithCheckboxValue | NoSuchMovies> {
+        return movies.map((movie: ModifiedResultMovie | NoSuchMovies) => {
+            const checkboxValue: boolean = Boolean(
+                filmsToWatchArray.find((filmToWatch: MovieWithCheckboxValue) => filmToWatch.id === movie.id)
+            );
+
+            return { ...movie, checkboxValue };
+        });
     }
 }

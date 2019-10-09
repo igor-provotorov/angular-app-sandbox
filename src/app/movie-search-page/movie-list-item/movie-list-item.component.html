@@ -20,7 +20,11 @@
         </li>
     </ul>
     <div class="wish-list" *ngIf="film.id">
-        <mat-checkbox class="wish-list__checkbox" color="primary" (click)="onCheckboxClicked()"
+        <mat-checkbox
+            class="wish-list__checkbox"
+            color="primary"
+            (change)="onCheckboxClicked($event)"
+            [(ngModel)]="film.checkboxValue"
             >Add movie to wish list</mat-checkbox
         >
     </div>

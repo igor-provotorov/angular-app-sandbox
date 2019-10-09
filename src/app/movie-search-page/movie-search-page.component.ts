@@ -5,7 +5,6 @@ import { tap } from "rxjs/operators";
 
 import {
     SearchFilmsService,
-    ModifiedResultMovie,
     NoSuchMovies,
     MovieWithCheckboxValue,
     checkEmptyResults,
@@ -47,7 +46,7 @@ export class MovieSearchPageComponent {
     /**
      * Array of films from API.
      */
-    public resultsFilms$: Observable<Array<ModifiedResultMovie | NoSuchMovies>>;
+    public resultsFilms$: Observable<Array<MovieWithCheckboxValue | NoSuchMovies>>;
 
     constructor(searchFilmsService: SearchFilmsService, filmsToWatchStoreFacade: FilmsToWatchStoreFacade) {
         this.searchFilmsService = searchFilmsService;
@@ -66,7 +65,7 @@ export class MovieSearchPageComponent {
         } else {
             this.isLoading = true;
             this.resultsFilms$ = this.searchFilmsService.getFilmsFromApi(searchQuery).pipe(
-                tap((data: Array<ModifiedResultMovie | NoSuchMovies>) => {
+                tap((data: Array<MovieWithCheckboxValue | NoSuchMovies>) => {
                     this.isLoading = false;
                     this.isSearchedFilms = checkEmptyResults(data);
                 })
