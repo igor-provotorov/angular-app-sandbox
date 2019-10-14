@@ -7,6 +7,9 @@ import { StoreFacadeModule } from "./store-facades/index";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { environment } from "../../environments/environment";
 
+import { EffectsModule } from "@ngrx/effects";
+import { FilmsToWatchEffects } from "./store/films-to-watch/films-to-watch.effect";
+
 @NgModule({
     imports: [
         ServiceModule,
@@ -16,6 +19,7 @@ import { environment } from "../../environments/environment";
             maxAge: 25,
             logOnly: environment.production,
         }),
+        EffectsModule.forRoot([FilmsToWatchEffects]),
     ],
 })
 export class CoreModule {}

@@ -8,6 +8,8 @@ import { MovieWithCheckboxValue } from "../../services/index";
 export enum FilmsToWatchActionTypes {
     ADD_FILM_TO_WATCH_LIST = "[Films-to-watch] ADD_FILM_TO_WATCH_LIST",
     REMOVE_FILM_FROM_WATCH_LIST = "[Films-to-watch] REMOVE_FILM_FROM_WATCH_LIST",
+    GET_FILMS_TO_WATCH = "[Films-to-watch] GET_FILMS_TO_WATCH",
+    GET_FILMS_TO_WATCH_SUCCESS = "[Films-to-watch] GET_FILMS_TO_WATCH_SUCCESS",
 }
 
 /**
@@ -43,6 +45,42 @@ export class RemoveFilmFromWatchList implements Action {
 }
 
 /**
+ * GET_FILMS_TO_WATCH action class.
+ */
+export class GetFilmsToWatch implements Action {
+    readonly type = FilmsToWatchActionTypes.GET_FILMS_TO_WATCH;
+
+    /**
+     * Payload property with array of MovieWithCheckboxValue interface.
+     */
+    public payload: Array<MovieWithCheckboxValue>;
+
+    constructor(payload: Array<MovieWithCheckboxValue>) {
+        this.payload = payload;
+    }
+}
+
+/**
+ * GET_FILMS_TO_WATCH action class.
+ */
+export class GetFilmsToWatchSuccess implements Action {
+    readonly type = FilmsToWatchActionTypes.GET_FILMS_TO_WATCH_SUCCESS;
+
+    /**
+     * Payload property with array of MovieWithCheckboxValue interface.
+     */
+    public payload: Array<MovieWithCheckboxValue>;
+
+    constructor(payload: Array<MovieWithCheckboxValue>) {
+        this.payload = payload;
+    }
+}
+
+/**
  * Combined films-to-watch actions.
  */
-export type FilmsToWatchActions = AddFilmToWatchList | RemoveFilmFromWatchList;
+export type FilmsToWatchActions =
+    | AddFilmToWatchList
+    | RemoveFilmFromWatchList
+    | GetFilmsToWatch
+    | GetFilmsToWatchSuccess;

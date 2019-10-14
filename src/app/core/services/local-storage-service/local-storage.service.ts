@@ -1,20 +1,33 @@
 import { Injectable } from "@angular/core";
 
-import { FilmsToWatchState } from "../../store/index";
+import { MovieWithCheckboxValue } from "../search-films-service";
 
 @Injectable()
 export class LocalStorageService {
     /**
-     * Set data to local storage by the given key.
+     * Set checked movie to local storage by the given key.
      */
-    public setSavedState(localStorageKey: string, state: FilmsToWatchState): void {
-        localStorage.setItem(localStorageKey, JSON.stringify(state));
+    public setSavedState(payload: MovieWithCheckboxValue): void {
+        const actions: Array<MovieWithCheckboxValue> = this.getSavedState("FILMS_TO_WATCH") || [];
+        const newActions: Array<MovieWithCheckboxValue> = actions.concat(payload);
+        localStorage.setItem("FILMS_TO_WATCH", JSON.stringify(newActions));
+    }
+
+    /**
+     * Remove unchecked movie from local storage by the given key.
+     */
+    public removeFromState(payload: MovieWithCheckboxValue): void {
+        const actions: Array<MovieWithCheckboxValue> = this.getSavedState("FILMS_TO_WATCH");
+        const newActions: Array<MovieWithCheckboxValue> = actions.filter(
+            (movie: MovieWithCheckboxValue) => movie.id !== payload.id
+        );
+        localStorage.setItem("FILMS_TO_WATCH", JSON.stringify(newActions));
     }
 
     /**
      * Get data from local storage by the given key.
      */
-    public getSavedState(localStorageKey: string): FilmsToWatchState {
+    public getSavedState(localStorageKey: string): Array<MovieWithCheckboxValue> {
         return JSON.parse(localStorage.getItem(localStorageKey));
     }
 }
