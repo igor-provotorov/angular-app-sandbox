@@ -17,6 +17,7 @@ const NO_ACTOR_IMAGE_URL: string =
     "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/User-Pict-Profil.svg/400px-User-Pict-Profil.svg.png";
 const NO_SUCH_MOVIES: string = "No such movies";
 const ERROR: string = "#Error:";
+const FILMS_TO_WATCH_KEY: string = "FILMS_TO_WATCH";
 
 export {
     BASE_SEARCH_URL,
@@ -34,4 +35,5 @@ export {
     NO_ACTOR_IMAGE_URL,
     NO_SUCH_MOVIES,
     ERROR,
+    FILMS_TO_WATCH_KEY,
 };
