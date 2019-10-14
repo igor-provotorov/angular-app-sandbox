@@ -12,10 +12,10 @@ export const initialState: FilmsToWatchState = {
 /**
  * Reducer function that reduce films to watch actions.
  */
-export function filmsToWatchReducer(
+export const filmsToWatchReducer: (state: FilmsToWatchState, action: FilmsToWatchActions) => FilmsToWatchState = (
     state: FilmsToWatchState = initialState,
     action: FilmsToWatchActions
-): FilmsToWatchState {
+): FilmsToWatchState => {
     switch (action.type) {
         case FilmsToWatchActionTypes.ADD_FILM_TO_WATCH_LIST: {
             return {
@@ -27,7 +27,7 @@ export function filmsToWatchReducer(
             return {
                 ...state,
                 filmsToWatch: state.filmsToWatch.filter(
-                    (item: MovieWithCheckboxValue) => item.id !== action.payload.id
+                    (movie: MovieWithCheckboxValue) => movie.id !== action.payload.id
                 ),
             };
         }
@@ -35,4 +35,4 @@ export function filmsToWatchReducer(
             return state;
         }
     }
-}
+};
