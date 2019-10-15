@@ -5,9 +5,10 @@ import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { EffectsModule } from "@ngrx/effects";
 
 import { ServiceModule } from "./services/index";
-import { reducers, State, GetFilmsToWatch, FilmsToWatchEffects } from "./store/index";
+import { reducers, State, GetFilmsToWatch } from "./store/index";
 import { StoreFacadeModule } from "./store-facades/index";
 import { environment } from "../../environments/index";
+import { effects } from "./effects/index";
 
 @NgModule({
     imports: [
@@ -18,7 +19,7 @@ import { environment } from "../../environments/index";
             maxAge: 25,
             logOnly: environment.production,
         }),
-        EffectsModule.forRoot([FilmsToWatchEffects]),
+        EffectsModule.forRoot(effects),
     ],
     providers: [
         {
