@@ -7,7 +7,7 @@ import { EffectsModule } from "@ngrx/effects";
 import { ServiceModule } from "./services/index";
 import { reducers, State, GetFilmsToWatch, FilmsToWatchEffects } from "./store/index";
 import { StoreFacadeModule } from "./store-facades/index";
-import { environment } from "../../environments/environment";
+import { environment } from "../../environments/index";
 
 @NgModule({
     imports: [
