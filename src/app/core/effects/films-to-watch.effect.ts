@@ -4,10 +4,9 @@ import { tap, map } from "rxjs/operators";
 
 import { Actions, ofType, createEffect } from "@ngrx/effects";
 
-import { FilmsToWatchActionTypes, FilmsToWatchActions, GetFilmsToWatchSuccess } from "./films-to-watch.action";
-import { LocalStorageService } from "../../services/local-storage-service/index";
-import { MovieWithCheckboxValue } from "../../services/index";
-import { FILMS_TO_WATCH_KEY } from "../../constants/index";
+import { FilmsToWatchActionTypes, FilmsToWatchActions, GetFilmsToWatchSuccess } from "../store/index";
+import { LocalStorageService, MovieWithCheckboxValue } from "../services/index";
+import { FILMS_TO_WATCH_KEY } from "../constants/index";
 
 @Injectable()
 export class FilmsToWatchEffects {
