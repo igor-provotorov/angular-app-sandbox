@@ -49,15 +49,6 @@ export class RemoveFilmFromWatchList implements Action {
  */
 export class GetFilmsToWatch implements Action {
     readonly type = FilmsToWatchActionTypes.GET_FILMS_TO_WATCH;
-
-    /**
-     * Payload property with array of MovieWithCheckboxValue interface.
-     */
-    public payload: Array<MovieWithCheckboxValue>;
-
-    constructor(payload: Array<MovieWithCheckboxValue>) {
-        this.payload = payload;
-    }
 }
 
 /**
