@@ -1,10 +1,11 @@
 import { NgModule } from "@angular/core";
 import { HttpClientModule } from "@angular/common/http";
 
-import { SearchFilmsService } from "./search-films-service/search-films.service";
+import { SearchFilmsService } from "./search-films-service/index";
+import { LocalStorageService } from "./local-storage-service/index";
 
 @NgModule({
     imports: [HttpClientModule],
-    providers: [SearchFilmsService],
+    providers: [SearchFilmsService, LocalStorageService],
 })
 export class ServiceModule {}

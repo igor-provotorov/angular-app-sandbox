@@ -14,6 +14,7 @@
             >
         </mat-expansion-panel-header>
         <p>{{ film.overview }}</p>
+        <button mat-raised-button color="primary" (click)="onRemoveButtonClick(film)">Remove movie from list</button>
     </mat-expansion-panel>
 </mat-accordion>
 <div class="container mat-h2" *ngIf="!(filmsToWatch$ | async).length">

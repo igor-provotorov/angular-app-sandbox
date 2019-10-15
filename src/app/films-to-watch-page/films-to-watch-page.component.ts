@@ -35,4 +35,11 @@ export class FilmsToWatchPageComponent implements OnInit {
     public ngOnInit(): void {
         this.filmsToWatch$ = this.filmsToWatchStoreFacade.filmsToWatch$;
     }
+
+    /**
+     * Remove movie from Store, when the remove button was clicked.
+     */
+    public onRemoveButtonClick(movie: MovieWithCheckboxValue): void {
+        this.filmsToWatchStoreFacade.removeFilmFromWatchList(movie);
+    }
 }
