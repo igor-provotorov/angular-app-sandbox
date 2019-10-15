@@ -31,6 +31,11 @@ export const filmsToWatchReducer: (state: FilmsToWatchState, action: FilmsToWatc
                 ),
             };
         }
+        case FilmsToWatchActionTypes.GET_FILMS_TO_WATCH_SUCCESS:
+            return {
+                ...state,
+                filmsToWatch: [...state.filmsToWatch, ...action.payload],
+            };
         default: {
             return state;
         }
