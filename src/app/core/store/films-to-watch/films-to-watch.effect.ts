@@ -1,11 +1,13 @@
 import { Injectable } from "@angular/core";
 
-import { tap } from "rxjs/operators";
+import { tap, map } from "rxjs/operators";
 
 import { Actions, ofType, createEffect } from "@ngrx/effects";
 
-import { LocalStorageService } from "../../services/index";
-import { FilmsToWatchActionTypes, FilmsToWatchActions } from "./films-to-watch.action";
+import { FilmsToWatchActionTypes, FilmsToWatchActions, GetFilmsToWatchSuccess } from "./films-to-watch.action";
+import { LocalStorageService } from "../../services/local-storage-service/index";
+import { MovieWithCheckboxValue } from "../../services/index";
+import { FILMS_TO_WATCH_KEY } from "../../constants/index";
 
 @Injectable()
 export class FilmsToWatchEffects {
@@ -20,14 +22,20 @@ export class FilmsToWatchEffects {
     private localStorageService: LocalStorageService;
 
     /**
-     * Create effect Observable property.
+     * Property for create effect to work with local storage actions.
      */
-    public storeActions$: Actions<FilmsToWatchActions>;
+    public localStorageActions$: Actions<FilmsToWatchActions>;
+
+    /**
+     * Property for create effect to get movies from local storage
+     * action, when the app will initialize.
+     */
+    public getFilmsToWatchActions$: Actions<FilmsToWatchActions>;
 
     constructor(actions$: Actions<FilmsToWatchActions>, localStorageService: LocalStorageService) {
         this.actions$ = actions$;
         this.localStorageService = localStorageService;
-        this.storeActions$ = createEffect(
+        this.localStorageActions$ = createEffect(
             () =>
                 this.actions$.pipe(
                     ofType(
@@ -48,6 +56,18 @@ export class FilmsToWatchEffects {
                     })
                 ),
             { dispatch: false }
+        );
+
+        this.getFilmsToWatchActions$ = createEffect(() =>
+            this.actions$.pipe(
+                ofType(FilmsToWatchActionTypes.GET_FILMS_TO_WATCH),
+                map(() => {
+                    const localStorageMovies: Array<MovieWithCheckboxValue> =
+                        this.localStorageService.getSavedState(FILMS_TO_WATCH_KEY) || [];
+
+                    return new GetFilmsToWatchSuccess(localStorageMovies);
+                })
+            )
         );
     }
 }
